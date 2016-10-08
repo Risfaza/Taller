@@ -31,6 +31,10 @@ public class Person
 	@Index
 	Date lastLogin;
 	
+	public Person(){
+		
+	}
+	
 	/**
 	 */
 	public Person(String email) {

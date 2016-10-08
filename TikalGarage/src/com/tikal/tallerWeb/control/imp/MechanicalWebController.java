@@ -1,7 +1,6 @@
 package com.tikal.tallerWeb.control.imp;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,25 +9,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.modelo.servicio.Person;
 
 @Controller
+@RequestMapping("/prueba")
 public class MechanicalWebController {
-
+	
+	static {
+        ObjectifyService.register(Person.class);
+    }
 	@RequestMapping(value = { "/prueba" }, method = RequestMethod.GET)
 	public void prueba(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.getWriter().println("llega");
 		// return "akdsjf";
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = {"/add"}, method = RequestMethod.GET)
 	public void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String name = "Israel";
@@ -50,13 +48,13 @@ public class MechanicalWebController {
 
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = {"/list"}, method = RequestMethod.GET)
 	public void listCustomer(HttpServletResponse response) throws IOException {
 
 //		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 //		Query query = new Query("DatosClienteOS").addSort("email", Query.SortDirection.DESCENDING);
 //		List<Entity> customers = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-		ObjectifyService.ofy().load().type(Person.class).list();
+//		ObjectifyService.ofy().load().type(Person.class).list();
 
 		Gson g = new Gson();
 		String b = g.toJson(ObjectifyService.ofy().load().type(Person.class).list());

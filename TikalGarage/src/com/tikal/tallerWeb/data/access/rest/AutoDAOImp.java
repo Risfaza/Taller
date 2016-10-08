@@ -55,112 +55,90 @@ public class AutoDAOImp // implements AutoDAO
 		// existiera, si regresa 404 se crea.
 		ObjectifyService.ofy().save().entity(dato).now();
 
-		try {
-			Map<String, Object> map = new HashMap<>();
-			map.put("numeroSerie", dato.getNumeroSerie());
-			// factory.getTemplate().postForLocation(factory.getRootUlr() +
-			// "/autos/{numeroSerie}", dato, map);
-			Key customerKey = KeyFactory.createKey("Auto", dato.getNumeroSerie());
-			Entity car = new Entity("Auto", customerKey);
-			car.setProperty("color", dato.getColor());
-			car.setProperty("equipamiento", dato.getEquipamiento());
-			car.setProperty("marca", dato.getMarca());
-			car.setProperty("modelo", dato.getModelo());
-			car.setProperty("placas", dato.getPlacas());
-			car.setProperty("tipo", dato.getTipo());
-			car.setProperty("version", dato.getVersion());
-
-			DataStoreClass.datastore.put(car);
-
-		} catch (HttpClientErrorException ex) {
-
-		}
+//		try {
+//			Map<String, Object> map = new HashMap<>();
+//			map.put("numeroSerie", dato.getNumeroSerie());
+//			// factory.getTemplate().postForLocation(factory.getRootUlr() +
+//			// "/autos/{numeroSerie}", dato, map);
+//			Key customerKey = KeyFactory.createKey("Auto", dato.getNumeroSerie());
+//			Entity car = new Entity("Auto", customerKey);
+//			car.setProperty("color", dato.getColor());
+//			car.setProperty("equipamiento", dato.getEquipamiento());
+//			car.setProperty("marca", dato.getMarca());
+//			car.setProperty("modelo", dato.getModelo());
+//			car.setProperty("placas", dato.getPlacas());
+//			car.setProperty("tipo", dato.getTipo());
+//			car.setProperty("version", dato.getVersion());
+//
+//			DataStoreClass.datastore.put(car);
+//
+//		} catch (HttpClientErrorException ex) {
+//
+//		}
 	}
 
 	public List<ServicioIndexAutoData> buscar(final String numeroSerie, final List<ServicioIndexAutoData> cmd) {
 		if (StringUtils.isEmpty(numeroSerie)) {
 			return new ArrayList<ServicioIndexAutoData>();
 		}
-		ServicioIndexAutoData sia= new ServicioIndexAutoData();
+		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
+		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).filter("numeroSerie",numeroSerie).list();
+		for(Auto auto:lista){
+			ServicioIndexAutoData sia= new ServicioIndexAutoData();
+			sia.setNumeroSerie(auto.getNumeroSerie());
+			sia.setPlacas(auto.getPlacas());
+			sia.setTipo(auto.getTipo());
+			respuesta.add(sia);
+		}
+		
+		return respuesta;
 		// PaginaIndexAuto indice =
 		// factory.getTemplate().getForObject(factory.getRootUlr() +
 		// "/index/auto", PaginaIndexAuto.class);
-		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
-		Query query = new Query("Auto");
-		query.addFilter("numeroSerie", FilterOperator.EQUAL, numeroSerie);
-		PreparedQuery pq = DataStoreClass.datastore.prepare(query);
-
-		Entity e = pq.asSingleEntity();
-		if (e != null) {
-			sia.setNumeroSerie((String) e.getProperty("numeroSerie"));
-			sia.setPlacas((String) e.getProperty("placas"));
-			sia.setTipo((String) e.getProperty("tipo"));
-			respuesta.add(sia);
-			return respuesta;
-		}
-		return null;
-		// for(ServicioIndexAutoData x: indice.getItems()) {
-		// if(x.getNumeroSerie().startsWith(StringUtils.upperCase(numeroSerie)))
-		// {
-		// respuesta.add(x);
-		// }
-		// }
+//		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
+//		Query query = new Query("Auto");
+//		query.addFilter("numeroSerie", FilterOperator.EQUAL, numeroSerie);
+//		PreparedQuery pq = DataStoreClass.datastore.prepare(query);
+//
+//		Entity e = pq.asSingleEntity();
+//		if (e != null) {
+//			sia.setNumeroSerie((String) e.getProperty("numeroSerie"));
+//			sia.setPlacas((String) e.getProperty("placas"));
+//			sia.setTipo((String) e.getProperty("tipo"));
+//			respuesta.add(sia);
+//			return respuesta;
+//		}
+//		return null;
+//		// for(ServicioIndexAutoData x: indice.getItems()) {
+//		// if(x.getNumeroSerie().startsWith(StringUtils.upperCase(numeroSerie)))
+//		// {
+//		// respuesta.add(x);
+//		// }
+//		// }
 	}
 
 	public Auto cargar(String numeroSerie) {
 		if (StringUtils.isEmpty(numeroSerie)) {
 			return new Auto();
 		}
-		// PaginaIndexAuto indice =
-		// factory.getTemplate().getForObject(factory.getRootUlr() +
-		// "/index/auto", PaginaIndexAuto.class);
-		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
-		Query query = new Query("Auto");
-		query.addFilter("name", FilterOperator.EQUAL, numeroSerie);
-		PreparedQuery pq = DataStoreClass.datastore.prepare(query);
-
-		Entity e = pq.asSingleEntity();
-		if (e != null) {
-			Auto res = new Auto();
-			res.setColor((String) e.getProperty("color"));
-			res.setEquipamiento((Equipamiento) e.getProperty("equipamiento"));
-			res.setMarca((String) e.getProperty("marca"));
-			res.setModelo((String) e.getProperty("modelo"));
-			res.setNumeroSerie((String) e.getProperty("numeroSerie"));
-			res.setPlacas((String) e.getProperty("placas"));
-			res.setTipo((String) e.getProperty("tipo"));
-			res.setVersion((String) e.getProperty("version"));
-			return res;
+		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).filter("numeroSerie",numeroSerie).list();
+		for(Auto auto:lista){
+			return auto;
 		}
-		return null;
-		// Map<String, Object> map = new HashMap<>();
-		// map.put("id", numeroSerie);
-		// Auto r = factory.getTemplate().getForObject(factory.getRootUlr() +
-		// "/autos/{id}", Auto.class, map);
-		// return r;
+		return new Auto();
 	}
 
-	// @Override
-	// public List<ServicioIndexAutoData> getIndiceAutos() {
-	// PaginaIndexAuto r =
-	// factory.getTemplate().getForObject(factory.getRootUlr() + "/index/auto",
-	// PaginaIndexAuto.class);
-	// return r.getItems();
-	// }
-
-	public void getIndiceAutos(final List<ServicioIndexAutoData> cmd) {
-		// Thread task = new AsyncRestCall<List<ServicioIndexAutoData>>() {
+	public List<ServicioIndexAutoData> getIndiceAutos(){
+		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
+		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).list();
+		for(Auto auto:lista){
+			ServicioIndexAutoData sia= new ServicioIndexAutoData();
+			sia.setNumeroSerie(auto.getNumeroSerie());
+			sia.setPlacas(auto.getPlacas());
+			sia.setTipo(auto.getTipo());
+			respuesta.add(sia);
+		}
 		
-		// @Override
-		// public List<ServicioIndexAutoData> executeCall() {
-		// return getIndiceAutos();
-		// }
-
-		// @Override
-		// public Callback getCallBack() {
-		// return cmd;
-		// }
-		// };
-		// task.start();
+		return respuesta;
 	}
 }
