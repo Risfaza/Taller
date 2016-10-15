@@ -16,22 +16,16 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
-import com.tikal.tallerWeb.modelo.pagination.PaginaServicio;
-import com.tikal.tallerWeb.modelo.pagination.PaginaServicioIndex;
 import com.tikal.tallerWeb.rest.util.AsyncRestCall;
 import com.tikal.tallerWeb.rest.util.Callback;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
@@ -122,28 +116,31 @@ public class ServicioDAOImp implements ServicioDAO {
     public List<ServicioIndex> getIndiceServiciosMismoAuto(String numeroSerie) {
         Map<String, Object> map = new HashMap<>();
         map.put("numeroSerieAuto", numeroSerie);
-//        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio?numeroSerieAuto={numeroSerieAuto}", PaginaServicioIndex.class, map);
-//        return r.getItems();
-        return null;
+        List<ServicioIndex> servicios= ObjectifyService.ofy().load().type(ServicioIndex.class).filter("idAuto",numeroSerie).list();
+        return servicios;
     }
 
     @Override
     public List<ServicioIndex> getIndiceServiciosPorStatus(String status) {
         Map<String, Object> map = new HashMap<>();
         map.put("status", status);
+        List<ServicioIndex> servicios= ObjectifyService.ofy().load().type(ServicioIndex.class).filter("status",status).list();
 //        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio?statusServicio={status}", PaginaServicioIndex.class, map);
 //        return r.getItems();
-        return null;
+        return servicios;
     }
 
     @Override
     public List<Servicio> getByDate(DateTime fechaInicial, DateTime fechaFinal) {
         Map<String, Object> map = new HashMap<>();
+        
         map.put("fechaInicial", fechaInicial);
         map.put("fechaFinal", fechaFinal);
+        List<Servicio> servicios= ObjectifyService.ofy().load().type(Servicio.class).filter("fechaInicio >=",fechaInicial).filter("fechaInicio <=",fechaFinal).list();
+        
 //        PaginaServicio r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios?fechaInicial={fechaInicial}&fechaFinal={fechaFinal}", PaginaServicio.class, map);
 //        return r.getItems();
-        return null;
+        return servicios;
     }
 
 }
