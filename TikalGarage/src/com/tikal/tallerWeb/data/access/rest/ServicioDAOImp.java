@@ -108,7 +108,6 @@ public class ServicioDAOImp implements ServicioDAO {
         Map<String, Object> map = new HashMap<>();
         map.put("idServicio", sinceId);
 //        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio?sinceId={idServicio}", PaginaServicioIndex.class, map);
-//        return r.getItems();
         return null;
     }
 
