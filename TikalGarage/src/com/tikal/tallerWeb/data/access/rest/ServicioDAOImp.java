@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
 import com.tikal.tallerWeb.modelo.pagination.PaginaServicio;
 import com.tikal.tallerWeb.modelo.pagination.PaginaServicioIndex;
@@ -50,16 +51,19 @@ public class ServicioDAOImp implements ServicioDAO {
 //    
     @Override
     public void guardar(Servicio dato) {
-//        if (dato.getId() == null) {
+    	ObjectifyService.ofy().save().entity(dato);
+        if (dato.getId() == null) {
 //            URI resource = factory.getTemplate().postForLocation(factory.getRootUlr() + "/servicios", dato);
 //            String[] uri = StringUtils.split(resource.toString(), '/');
 //            String id = uri[uri.length - 1];
 //            dato.setId(Long.valueOf(id));
-//        } else {
+//        	dato.setId(Long.valueOf(ObjectifyService.ofy().load().type(Servicio.class).list().size()-1));
+        } else {
 //            Map<String, Object> map = new HashMap<>();
 //            map.put("id", dato.getId());
 //            factory.getTemplate().postForLocation(factory.getRootUlr() + "/servicios/{id}", dato, map);
-//        }
+        }
+        
     }
 
     @Override
@@ -68,18 +72,25 @@ public class ServicioDAOImp implements ServicioDAO {
         map.put("id", id);
 //        Servicio r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{id}", Servicio.class, map);
 //        return r;
-        return null;
+        return ObjectifyService.ofy().load().type(Servicio.class).filter("id",id).list().get(0);
     }
 
     @Override
     public List<ServicioIndex> getIndiceServicios() {
 //        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio", PaginaServicioIndex.class);
+    	return ObjectifyService.ofy().load().type(ServicioIndex.class).list();
 //        List<ServicioIndex> respuesta = new LinkedList<>();
-//        for (int i = r.getItems().size() - 1; i >= 0 ; i--) {
-//            respuesta.add(r.getItems().get(i));
+//        for (int i = r.size() - 1; i >= 0 ; i--) {
+//        	ServicioIndex s= new ServicioIndex();
+//        	s.setCobranza(r.get(i).getCobranza());
+//        	s.setDescripcion(r.get(i).getDescripcion());
+//        	
+//        	
+//        	respuesta.add(s);
 //        }
 //        return respuesta;
-    	return null;
+    	
+//    	return null;
     }
     
     @Override

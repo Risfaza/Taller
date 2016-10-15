@@ -34,7 +34,7 @@ public interface AutoDAO {
     
     Auto cargar(String numeroSerie);
     
-   	
+   	List<ServicioIndexAutoData> getIndiceAutos();
     
     /**
      * consulta todos de manera asyncrona

@@ -16,19 +16,18 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
 
 import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
+import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 
 /**
  * @author Nekorp
@@ -44,18 +43,22 @@ public class BitacoraDAOImp implements BitacoraDAO {
     public List<Evento> cargar(Long idServicio) {
         Map<String, Object> map = new HashMap<>();
         map.put("idServicio", idServicio);
+        Evento e= new Evento();
+        
+        return ObjectifyService.ofy().load().type(Evento.class).filter("id",idServicio).list();
 //        Evento[] r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{idServicio}/bitacora", Evento[].class, map);
 //        return Arrays.asList(r);
-        return null;
+//        return null;
     }
 
     @Override
     public List<Evento> guardar(Long idServicio, List<Evento> datos) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idServicio", idServicio);
+    	   Map<String, Object> map = new HashMap<>();
+           map.put("idServicio", idServicio);
+           ObjectifyService.ofy().save().entities(datos);
+           return ObjectifyService.ofy().load().type(Evento.class).filter("id",idServicio).list();
 //        Evento[] r = factory.getTemplate().postForObject(factory.getRootUlr() + "/servicios/{idServicio}/bitacora", datos, Evento[].class, map);
 //        return Arrays.asList(r);
-        return null;
     }
 
 }

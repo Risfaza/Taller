@@ -3,14 +3,18 @@ package com.tikal.tallerWeb.control.imp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.tikal.tallerWeb.control.ControlAuto;
 import com.tikal.tallerWeb.data.access.AutoDAO;
 
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData;
 
+@Controller
+@RequestMapping(value={"/auto"})
 public class ControlAutoImp implements ControlAuto {
 
 	@Autowired
@@ -27,7 +31,9 @@ public class ControlAutoImp implements ControlAuto {
 	@RequestMapping(value={"/getAutos"},method= RequestMethod.GET)
 	public List<ServicioIndexAutoData> getAutos(javax.servlet.http.HttpServletRequest request,
 			javax.servlet.http.HttpServletResponse response) {
-		this.autoDAO.getIndiceAutos();
+		
+		Gson g = new Gson();
+		String json= g.toJson(this.autoDAO.getIndiceAutos());
 		return null;
 	}
 
@@ -35,7 +41,9 @@ public class ControlAutoImp implements ControlAuto {
 	public void buscarAuto(javax.servlet.http.HttpServletRequest request,
 			javax.servlet.http.HttpServletResponse response, String numeroSerie, List<ServicioIndexAutoData> cmd) {
 		this.autoDAO.buscar(numeroSerie, cmd);
-		//Cambiar a String		
+		//Cambiar a String
+		Gson g = new Gson();
+		String json= g.toJson(this.autoDAO.buscar(numeroSerie, cmd));
 	}
 
 

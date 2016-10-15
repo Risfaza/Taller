@@ -16,22 +16,16 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
-import java.net.URI;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.control.MensajesControl;
 import com.tikal.tallerWeb.data.access.ClienteDAO;
-import com.tikal.tallerWeb.modelo.pagination.PaginaCliente;
-import com.tikal.tallerWeb.rest.util.AsyncRestCall;
 import com.tikal.tallerWeb.rest.util.Callback;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
 
@@ -49,63 +43,68 @@ public class ClienteDAOImp implements ClienteDAO {
     private MensajesControl mensajesControl;
     @Override
     public void guardar(Cliente dato) {
-//        if (dato.getId() == null) {
+        if (dato.getId() == null) {
 //            URI resource = factory.getTemplate().postForLocation(factory.getRootUlr() + "/clientes", dato);
 //            String[] uri = StringUtils.split(resource.toString(), '/');
 //            String id = uri[uri.length - 1];
 //            dato.setId(Long.valueOf(id));
-//        } else {
+        	dato.setId(Long.valueOf(ObjectifyService.ofy().load().type(Cliente.class).list().size()));
+        	
+        } else {
 //            Map<String, Object> map = new HashMap<>();
 //            map.put("id", dato.getId());
 //            factory.getTemplate().postForLocation(factory.getRootUlr() + "/clientes/{id}", dato, map);
-//        }
+        	
+        }
+        ObjectifyService.ofy().save().entity(dato);
     }
 
     @Override
     public List<Cliente> consultaTodos() {
 //        PaginaCliente r = factory.getTemplate().getForObject(factory.getRootUlr() + "/clientes", PaginaCliente.class);
 //        return r.getItems();
-    	return null;
+    	return ObjectifyService.ofy().load().type(Cliente.class).list();
     }
 
     @Override
     public void buscar(final String name, final Callback<List<Cliente>> cmd) {
-        Thread task = new AsyncRestCall<List<Cliente>>() {
-            @Override
-            public List<Cliente> executeCall() {
-                try {
-                    String url;
-                    if (StringUtils.isEmpty(name)) {
-                        return new LinkedList<>();
-                    } else {
-//                        url = factory.getRootUlr() + "/clientes?filtroNombre={nombre}";
-                    }
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("nombre", name);
-//                    PaginaCliente r = factory.getTemplate().getForObject(url, PaginaCliente.class, map);
-//                    return r.getItems();
-                    return null;
-                } catch(ResourceAccessException e) {
-                    mensajesControl.reportaError("Error de comunicacion con el servidor");
-                    return new LinkedList<>();
-                }
-            }
-
-            @Override
-            public Callback getCallBack() {
-                return cmd;
-            }
-        };
-        task.start();
+//        Thread task = new AsyncRestCall<List<Cliente>>() {
+//            @Override
+//            public List<Cliente> executeCall() {
+//                try {
+//                    String url;
+//                    if (StringUtils.isEmpty(name)) {
+//                        return new LinkedList<>();
+//                    } else {
+////                        url = factory.getRootUlr() + "/clientes?filtroNombre={nombre}";
+//                    }
+//                    Map<String, Object> map = new HashMap<>();
+//                    map.put("nombre", name);
+////                    PaginaCliente r = factory.getTemplate().getForObject(url, PaginaCliente.class, map);
+////                    return r.getItems();
+//                    return null;
+//                } catch(ResourceAccessException e) {
+//                    mensajesControl.reportaError("Error de comunicacion con el servidor");
+//                    return new LinkedList<>();
+//                }
+//            }
+//
+//            @Override
+//            public Callback getCallBack() {
+//                return cmd;
+//            }
+//        };
+//        task.start();
+    	ObjectifyService.ofy().load().type(Cliente.class).filter("nombre",name).list();
     }
     
     @Override
     public Cliente cargar(Long id) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("id", id);
 //        Cliente r = factory.getTemplate().getForObject(factory.getRootUlr() + "/clientes/{id}", Cliente.class, map);
 //        return r;
-        return null;
+    	return ObjectifyService.ofy().load().type(Cliente.class).filter("id",id).list().get(0);
     }
 
 //    @Override

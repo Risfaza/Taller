@@ -20,6 +20,7 @@ public class MechanicalWebController {
 	static {
         ObjectifyService.register(Person.class);
     }
+	
 	@RequestMapping(value = { "/prueba" }, method = RequestMethod.GET)
 	public void prueba(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.getWriter().println("llega");
