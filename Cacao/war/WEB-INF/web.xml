@@ -14,8 +14,7 @@
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/cacao/greet</url-pattern>
-  </servlet-mapping>
- 
+  </servlet-mapping> 
   
   <servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
