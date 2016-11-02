@@ -30,4 +30,5 @@ public enum TipoDeduccion {
 	AUSENCIA,
 	CUOTAS_OBRERO_PATRONALES
 	
+	
 }
