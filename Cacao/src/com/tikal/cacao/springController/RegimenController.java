@@ -45,6 +45,7 @@ public class RegimenController {
 	 * @throws IOException
 	 */
 	
+	
 	@RequestMapping(value={"/add"},method= RequestMethod.POST,produces="application/json",consumes="application/json")
 	public void addRegimen(HttpServletResponse response,HttpServletRequest request,@RequestBody String json) throws IOException{
 		Regimen r= (Regimen) JsonConvertidor.fromJson(json, Empresa.class);
