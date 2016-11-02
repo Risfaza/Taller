@@ -46,5 +46,4 @@ public class Percepcion {
 		this.cantidad = cantidad;
 	}
 	
-	
 }

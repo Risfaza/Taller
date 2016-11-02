@@ -29,4 +29,5 @@ public enum TipoDeduccion {
 	CUOTAS_SINDICALES,
 	AUSENCIA,
 	CUOTAS_OBRERO_PATRONALES
+	
 }
