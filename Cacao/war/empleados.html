@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tikal</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilos.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular-local-storage.min.js"></script>
+	<script src="controller.js"></script>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-togle="collapse" data-target="#navegacion-fm">
+						<span class="sr-only">Desplegar /Ocultar Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="index.html" class="navbar-brand">Tikal</a>
+				</div>
+				<!--Inicia Menu-->
+				<div class="collapse navbar-collapse" id="navegacion-fm">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="login.html">Inicio</a></li>						
+						<li><a href="contacto.html">Contacto</a></li>
+						<li><a href="ayuda.html">Ayuda</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!--Aqui va-->
+	<section class="jumbotron">
+		<div class="container"></div>
+		<h2>Registra Empleados</h2>
+		<p>TikalCacao</p>
+	</section>
+	<div class="container">
+		<form ng-model="empresa.regimen">
+			<h4>Datos Generales</h4>
+			<div class="col-md-6">Clave del Trabajador: <input class="form-control" type="text"><br></div>
+			<div class="col-md-6">Numero de Seguridad Social: <input class="form-control" type="text"><br></div>
+			<div class="col-md-6">Apellido Paterno: <input class="form-control" type="text"><br></div>
+			<div class="col-md-6">Apellido Materno: <input class="form-control" type="text"><br></div>
+			<div class="col-md-8">Nombres: <input class="form-control"  type="text"><br></div>
+			<div class="col-md-6">CURP: <input class="form-control" type="text"><br></div>
+			<div class="col-md-6">RFC: <input class="form-control" type="text"><br></div>
+			<div class="col-md-12">Fecha de Nacimiento: <input class="form-control" type="datetime-local"><br></div>
+			<div class="col-md-4"><h4>Direccion</h4></div>
+			<div class="col-md-12">Estado: <select class="form-control" ng-model="">
+				<option ng-model="">AguasCalientes</option>
+				<option ng-model="">Baja California</option>
+				<option ng-model="">Baja California Sur</option>
+				<option ng-model="">Campeche</option>
+				<option ng-model="">Coahuila</option>
+				<option ng-model="">Colima</option>
+				<option ng-model="">Chiapas</option>
+				<option ng-model="">Chihuahua</option>
+				<option ng-model="">Ciudad de México</option>
+				<option ng-model="">Duarango</option>
+				<option ng-model="">Guanajuato</option>
+				<option ng-model="">Guerrero</option>
+				<option ng-model="">Hidalgo</option>
+				<option ng-model="">Jalisco</option>
+				<option ng-model="">México</option>
+				<option ng-model="">Michoacán</option>
+				<option ng-model="">Morelos</option>
+				<option ng-model="">Nayarit</option>
+				<option ng-model="">Nuevo León</option>
+				<option ng-model="">Oaxaca</option>
+				<option ng-model="">Puebla</option>
+				<option ng-model="">Querétaro</option>
+				<option ng-model="">Quintana Roo</option>
+				<option ng-model="">San Luis Potosí</option>
+				<option ng-model="">Sinaloa</option>
+				<option ng-model="">Sonora</option>
+				<option ng-model="">Tabasco</option>
+				<option ng-model="">Tamaulipas</option>
+				<option ng-model="">Tlaxcala</option>
+				<option ng-model="">Veracruz</option>
+				<option ng-model="">Yucatan</option>
+				<option ng-model="">Zacatecas</option>
+			</select><br></div>
+			<div class="col-md-6">Localidad: <input class="form-control" type="text" ng-model=""><br></div>
+			<div class="col-md-6">CP: <input class="form-control" type="text" ng-model=""><br></div>
+			<div class="col-md-6">Colonia: <input class="form-control" type="text" ng-model=""><br></div>
+			<div class="col-md-6">Calle: <input class="form-control" type="text" ng-model=""><br></div>
+			<div class="col-md-6">Numero: <input class="form-control" type="text" ng-model=""><br></div>
+			<div class="col-md-6">Numer Interior: <input class="form-control" type="text" ng-model=""><br></div>
+		</form>
+	</div>
+	<div class="container col-md-offset-1">
+		<button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
+		<button ng-click="clean()" class="btn btn-primary">Limpiar</button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="ToDoList">
+<head>
+	<meta charset="UTF-8">
+	<title>Tikal</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilos.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular-local-storage.min.js"></script>
+	<script src="controller.js"></script>
+
+</head>
+<body ng-controller="ToDoController">
+	<header>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-togle="collapse" data-target="#navegacion-fm">
+						<span class="sr-only">Desplegar /Ocultar Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="index.html" class="navbar-brand">Tikal</a>
+				</div>
+				<!--Inicia Menu-->
+				<div class="collapse navbar-collapse" id="navegacion-fm">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="login.html">Inicio</a></li>						
+						<li><a href="contacto.html">Contacto</a></li>
+						<li><a href="ayuda.html">Ayuda</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!--Aqui va-->
+	<section class="jumbotron">
+		<div class="container"></div>
+		<h2>Registra Informacion de la Empresa</h2>
+		<p>TikalCacao</p>
+	</section>
+	
+	<div class="container">
+		<form ng-submit="addEmp()">
+			<h4>Datos Generales</h4>
+			<div class="col-md-6">Nombre de la Empresa: <input class="form-control" type="text" ng-model="newEmp.nombre"><br></div>
+			<div class="col-md-6">Razón Social: <input class="form-control" type="text" ng-model="newEmp.razonsocial"><br></div>
+			<div class="col-md-6">RFC: <input class="form-control" type="text" ng-model="newEmp.rfc"><br></div>
+			<div class="col-md-6">Regimen Fiscal: <select class="form-control" ng-model="newEmp.regimen">
+			<option ng-model="newEmp.regimen">Asimilados a Salarios</option>
+			<option ng-model="newEmp.regimen">Sueldos y Salarios</option>
+		</select><br></div>
+		<h4>Dirección</h4>
+		<div class="col-md-12">Estado: <select class="form-control" ng-model="newEmp.estado">
+		<option ng-model="newEmp.estado">AguasCalientes</option>
+		<option ng-model="newEmp.estado">Baja California</option>
+		<option ng-model="newEmp.estado">Baja California Sur</option>
+		<option ng-model="newEmp.estado">Campeche</option>
+		<option ng-model="newEmp.estado">Coahuila</option>
+		<option ng-model="newEmp.estado">Colima</option>
+		<option ng-model="newEmp.estado">Chiapas</option>
+		<option ng-model="newEmp.estado">Chihuahua</option>
+		<option ng-model="newEmp.estado">Ciudad de México</option>
+		<option ng-model="newEmp.estado">Duarango</option>
+		<option ng-model="newEmp.estado">Guanajuato</option>
+		<option ng-model="newEmp.estado">Guerrero</option>
+		<option ng-model="newEmp.estado">Hidalgo</option>
+		<option ng-model="newEmp.estado">Jalisco</option>
+		<option ng-model="newEmp.estado">México</option>
+		<option ng-model="newEmp.estado">Michoacán</option>
+		<option ng-model="newEmp.estado">Morelos</option>
+		<option ng-model="newEmp.estado">Nayarit</option>
+		<option ng-model="newEmp.estado">Nuevo León</option>
+		<option ng-model="newEmp.estado">Oaxaca</option>
+		<option ng-model="newEmp.estado">Puebla</option>
+		<option ng-model="newEmp.estado">Querétaro</option>
+		<option ng-model="newEmp.estado">Quintana Roo</option>
+		<option ng-model="newEmp.estado">San Luis Potosí</option>
+		<option ng-model="newEmp.estado">Sinaloa</option>
+		<option ng-model="newEmp.estado">Sonora</option>
+		<option ng-model="newEmp.estado">Tabasco</option>
+		<option ng-model="newEmp.estado">Tamaulipas</option>
+		<option ng-model="newEmp.estado">Tlaxcala</option>
+		<option ng-model="newEmp.estado">Veracruz</option>
+		<option ng-model="newEmp.estado">Yucatan</option>
+		<option ng-model="newEmp.estado">Zacatecas</option>
+	</select><br></div> 
+	<div class="col-md-12">Localidad: <input class="form-control" type="text" ng-model="newEmp.localidad"><br></div>
+	<dic class="col-md-6">CP:<input class="form-control" type="text" ng-model="newEmp.cp"><br></dic>
+	<div class="col-md-6">Colonia: <input class="form-control" type="text" ng-model="newEmp.colonia"><br></div>
+	<div class="col-md-6">Calle: <input class="form-control" type="text" ng-model="newEmp.calle"><br></div>
+	<div class="col-md-4">Numero: <input class="form-control" type="text" ng-model="newEmp.numero"><br></div>
+	<div class="col-md-4">Numero Interior: <input class="form-control" type="text" ng-model="newEmp.numeroint"><br>
+
+	Fecha de Creación: <input class="form-control" type="datetime-local" ng-model="newEmp.fecha"><br>
+	<button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
+	<button ng-click="clean()" class="btn btn-primary">Limpiar</button>
+</form>
+<h3>Empresas Registradas</h3>
+<ul>
+	<li ng-repeat="empresa in todo">		
+		{{empresa.nombre}}<br> {{empresa.razonsocial}}<br> {{empresa.rfc}}<br>  {{empresa.regimen}}<br> {{empresa.estado}}<br> {{empresa.localidad}}<br> {{empresa.cp}}<br> {{empresa.colonia}}<br> {{empresa.calle}}<br> {{empresa.numero}}<br> {{empresa.numeroint}}<br> {{empresa.fecha | date: 'short'}}<br> - <a href="#" ng-click="removeEmp(empresa)" style="color:red;">X</a><br>
+		<div class="miga-de-pan">
+			<ol class="breadcrumb">
+				<li><a href="esquemas.html">Ir a Registrar Esquemas</a></li>
+			</ol>
+		</div>
+	</li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="ToDoList">
+<head>
+	<meta charset="UTF-8">
+	<title>Tikal</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilos.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular-local-storage.min.js"></script>
+	<script src="controller.js"></script>
+
+</head>
+<body ng-controller="ToDoController">
+	<header>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-togle="collapse" data-target="#navegacion-fm">
+						<span class="sr-only">Desplegar /Ocultar Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="index.html" class="navbar-brand">Tikal</a>
+				</div>
+				<!--Inicia Menu-->
+				<div class="collapse navbar-collapse" id="navegacion-fm">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="login.html">Inicio</a></li>						
+						<li><a href="contacto.html">Contacto</a></li>
+						<li><a href="ayuda.html">Ayuda</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!--Aqui va-->
+	<section class="jumbotron">
+		<div class="container"></div>
+		<h2>Registra Regímenes de la Empresa</h2>
+		<p>TikalCacao</p>
+	</section>	
+	<div class="container">
+		<form ng-model="empresa.regimen">
+			<div class="col-md-6">
+				<h3>Percepciones</h3>
+				Horas Extras:<select class="form-control">
+				<option>Dobles</option>
+				<option>Triples</option>
+			</select><br>
+			<input type="checkbox">Prima Dominical<br>
+			<input type="checkbox">Comisiones<br>
+			<input type="checkbox">Bono<br>
+			<input type="checkbox">Descanso trabajado<br>
+			<input type="checkbox">Ayuda de Transporte<br>
+			<input type="checkbox">Despensa<br>
+			<input type="checkbox">Festivo Trabajado<br>
+			<input type="checkbox">Prima Vacacional<br>
+			<input type="checkbox">Premio Puntualidad y Asistencia<br>
+			<input type="checkbox">Fondos de Ahorro por Empresa<br>
+			<input type="checkbox">Festivo Trabajado<br>
+		</div>	
+		<div class="col-md-6">
+			<h3>Deducciones</h3>
+			<input type="checkbox">Pension Alimenticia<br>
+			<input type="checkbox">Credito Fonacot<br>
+			<input type="checkbox">Anticipo de Nomina<br>
+			<input type="checkbox">Descuento de Uniformes<br>
+			<input type="checkbox">Prestamo Persona<br>
+			<input type="checkbox">IMMS<br>
+			<input type="checkbox">ISR<br>
+			<input type="checkbox">Caja de Ahorro<br>
+			<input type="checkbox">Ayuda del Comedor<br>
+			<input type="checkbox">Prestamos<br>
+			<input type="checkbox">Descuento por pago indebido<br>
+		</div>			
+	</form>		
+</div>
+<div class="container col-md-offset-1">
+	<br><button class="btn btn-primary" value="Guardar">Guardar</button>
+	<button class="btn btn-primary">Limpiar</button>	
+	<div class="miga-de-pan">
+		<ol class="breadcrumb">
+			<li><a href="empresas.html">Ir a Registrar Empresa</a></li>
+			<li><a href="empleados.html">Ir a RegistrarEmpleados</a></li>
+		</ol>
+	</div>
+</div>
+</body>
+</html>

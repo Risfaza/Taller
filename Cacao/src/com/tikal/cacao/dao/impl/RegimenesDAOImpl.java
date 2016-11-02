@@ -1,0 +1,63 @@
+/**
+ * 
+ */
+package com.tikal.cacao.dao.impl;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.List;
+
+import com.tikal.cacao.dao.RegimenesDAO;
+import com.tikal.cacao.model.Empresa;
+import com.tikal.cacao.model.Regimen;
+
+/**
+ * @author Tikal
+ *
+ */
+public class RegimenesDAOImpl implements RegimenesDAO {
+
+	/* (non-Javadoc)
+	 * @see com.tikal.cacao.dao.RegimenesDAO#crear(com.tikal.cacao.model.Regimen)
+	 */
+	@Override
+	public void crear(Regimen regimen) {
+		ofy().save().entity(regimen).now();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tikal.cacao.dao.RegimenesDAO#actualizar(com.tikal.cacao.model.Regimen)
+	 */
+	@Override
+	public void actualizar(Regimen regimen) {
+		ofy().save().entity(regimen).now();
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tikal.cacao.dao.RegimenesDAO#consultar(long)
+	 */
+	@Override
+	public Regimen consultar(long id) {
+		return ofy().load().type(Regimen.class).id(id).now();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tikal.cacao.dao.RegimenesDAO#eliminar(com.tikal.cacao.model.Regimen)
+	 */
+	@Override
+	public void eliminar(Regimen regimen) {
+		ofy().delete().entity(regimen).now();
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tikal.cacao.dao.RegimenesDAO#consultaPorEmpresa(com.tikal.cacao.model.Empresa)
+	 */
+	@Override
+	public List<Regimen> consultaPorEmpresa(Empresa empresa) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
