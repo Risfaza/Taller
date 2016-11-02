@@ -8,6 +8,7 @@ package com.tikal.cacao.model;
  *
  */
 public class Percepcion {
+	
 	/**
 	 * 
 	 */

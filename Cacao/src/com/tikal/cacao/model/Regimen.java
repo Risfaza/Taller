@@ -56,8 +56,6 @@ public class Regimen {
 		this.id = id;
 	}
 	
-	
-
 	/**
 	 * @return the nombre
 	 */
