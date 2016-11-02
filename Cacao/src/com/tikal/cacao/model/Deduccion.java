@@ -47,4 +47,5 @@ public class Deduccion {
 		this.descuento = descuento;
 	}
 	
+	
 }

@@ -112,4 +112,5 @@ public class Regimen {
 		this.idEmpleados = idEmpleados;
 	}
 	
+	
 }
