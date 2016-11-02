@@ -47,12 +47,12 @@
 				<h3>Percepciones</h3>
 				<label>Clave</label>
 				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in list percecpciones" value="{{percepciones.clave}}"></option>
+					<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 					{{percepciones.clave}}</option>
 				</select>
 				<label>Descripcion</label>
 				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in list percecpciones" value="{{percepciones.clave}}"></option>
+					<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 					{{percepciones.descripcion}}</option>
 				</select>
 			</div>
@@ -60,13 +60,13 @@
 				<h3>Deducciones</h3>
 				<label>Clave</label>
 				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in list percecpciones" value="{{percepciones.clave}}"></option>
-					{{percepciones.clave}}</option>
+					<option ng-repeat="percepcion in listpercecpciones" value="{{percepcion.clave}}">
+					{{percepcion.clave}}</option>
 				</select>
 				<label>Descripcion</label>
 				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in list percecpciones" value="{{percepciones.clave}}"></option>
-					{{percepciones.descripcion}}</option>
+					<option ng-repeat="percepcion in listpercecpciones" value="{{percepcion.clave}}">
+					{{percepcion.descripcion}}</option>
 				</select>
 			</div>				
 		</form>		

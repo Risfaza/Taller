@@ -1,5 +1,5 @@
-angular.module("ToDoList",["LocalStorageModule",])/*Libreria LocalStorage Module*/
-.service('ToDoService',function(localStorageService){/*Servicio e inyeccion de servicio de localStorage*/
+var app=angular.module("ToDoList",["LocalStorageModule",])/*Libreria LocalStorage Module*/
+app.service('ToDoService',function(localStorageService){/*Servicio e inyeccion de servicio de localStorage*/
 	
 	this.key="angular-todolist";/*String o clave representa lista*/
 	if(localStorageService.get(this.key)){/*Si hay cosas en la lista las muestra*/
@@ -32,7 +32,7 @@ angular.module("ToDoList",["LocalStorageModule",])/*Libreria LocalStorage Module
 		return this.getAll();
 	}
 })
-.controller("ToDoController",function($scope,ToDoService){	
+app.controller("ToDoController",function($scope,ToDoService){	
 	$scope.todo =ToDoService.getAll();
 	$scope.newEmp = {};
 	$scope.addEmp=function(){
@@ -46,3 +46,28 @@ angular.module("ToDoList",["LocalStorageModule",])/*Libreria LocalStorage Module
 		ToDoService.clean();
 	}
 });
+app.controller("SeguroController",['$scope','$log','$http',function($scope,$log,$http){	
+	$scope.listpercecpciones=
+     [
+      {
+        "clave": "001",
+        "descripcion": "Sueldos, Salarios Rayas y Jornales",        
+      },
+      {
+        "clave": "002",
+        "descripcion": "Gratificación Anual",        
+      },
+      {
+        "clave": "003",
+        "descripcion": "Participación de los trabajadores en las Utilidades PTU",        
+      },
+      {
+        "clave": "004",
+        "descripcion": "Fondo de Ahorro",        
+      },
+      {
+        "clave": "005",
+        "descripcion": "Caja de Ahorro",        
+      },
+    ]
+}]);
