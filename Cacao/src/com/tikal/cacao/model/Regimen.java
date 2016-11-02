@@ -20,17 +20,26 @@ public class Regimen {
 	 */
 	@Id
 	private long id; // key
+	
+	/**
+	 * 
+	 */
+	private String nombre;
 
 	/**
 	 * 
 	 */
-	private List<Percepciones> percepciones;
+	private List<Percepcion> percepciones;
 	
 	/**
 	 * 
 	 */
-	private List<Deducciones> deducciones;
+	private List<Deduccion> deducciones;
 	
+	/**
+	 * 
+	 */
+	private List<Long> idEmpleados;
 	
 
 	/**
@@ -46,34 +55,66 @@ public class Regimen {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	/**
 	 * @return the percepciones
 	 */
-	public List<Percepciones> getPercepciones() {
+	public List<Percepcion> getPercepciones() {
 		return percepciones;
 	}
 
 	/**
 	 * @param percepciones the percepciones to set
 	 */
-	public void setPercepciones(List<Percepciones> percepciones) {
+	public void setPercepciones(List<Percepcion> percepciones) {
 		this.percepciones = percepciones;
 	}
 
 	/**
 	 * @return the deducciones
 	 */
-	public List<Deducciones> getDeducciones() {
+	public List<Deduccion> getDeducciones() {
 		return deducciones;
 	}
 
 	/**
 	 * @param deducciones the deducciones to set
 	 */
-	public void setDeducciones(List<Deducciones> deducciones) {
+	public void setDeducciones(List<Deduccion> deducciones) {
 		this.deducciones = deducciones;
 	}
+
+	/**
+	 * @return the idEmpleados
+	 */
+	public List<Long> getIdEmpleados() {
+		return idEmpleados;
+	}
+
+	/**
+	 * @param idEmpleados the idEmpleados to set
+	 */
+	public void setIdEmpleados(List<Long> idEmpleados) {
+		this.idEmpleados = idEmpleados;
+	}
+	
+	
 	
 	
 }
