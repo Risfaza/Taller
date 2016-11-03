@@ -5,6 +5,8 @@ package com.tikal.cacao.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import org.springframework.stereotype.Repository;
+
 import com.tikal.cacao.dao.UsuariosDAO;
 import com.tikal.cacao.model.Usuario;
 
@@ -12,6 +14,7 @@ import com.tikal.cacao.model.Usuario;
  * @author Tikal
  *
  */
+@Repository
 public class UsuariosDAOImpl implements UsuariosDAO {
 
 	/* (non-Javadoc)

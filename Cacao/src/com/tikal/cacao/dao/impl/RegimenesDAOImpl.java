@@ -7,6 +7,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.tikal.cacao.dao.RegimenesDAO;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
@@ -15,6 +17,7 @@ import com.tikal.cacao.model.Regimen;
  * @author Tikal
  *
  */
+@Repository
 public class RegimenesDAOImpl implements RegimenesDAO {
 
 	public RegimenesDAOImpl() {

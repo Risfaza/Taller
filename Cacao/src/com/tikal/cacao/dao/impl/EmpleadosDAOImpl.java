@@ -7,6 +7,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.tikal.cacao.dao.EmpleadosDAO;
 import com.tikal.cacao.model.Empleado;
 import com.tikal.cacao.model.Empresa;
@@ -16,6 +18,7 @@ import com.tikal.cacao.model.Regimen;
  * @author Tikal
  *
  */
+@Repository
 public class EmpleadosDAOImpl implements EmpleadosDAO {
 
 	/* (non-Javadoc)
