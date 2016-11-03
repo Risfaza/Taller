@@ -24,7 +24,7 @@
 	<bean class="com.tikal.cacao.springController.PruebaController"></bean>
 	
 	<!-- Register Bean for Objectify's Entities -->
-	<bean class="com.tikal.cacao.util.EntityRegister.java" scope="singleton"></bean>
+	<bean class="com.tikal.cacao.util.EntityRegister" scope="singleton"></bean>
 
 	<mvc:annotation-driven />
 
