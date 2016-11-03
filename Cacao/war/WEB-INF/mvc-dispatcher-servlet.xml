@@ -11,6 +11,7 @@
 
 	<!-- <context:component-scan base-package="com.tikal.cacao.springController" 
 		/> -->
+		
 <!-- Beans DAOs GAE storage implementation -->
 	<bean id="empresasdao" class="com.tikal.cacao.dao.impl.EmpresasDAOImpl"></bean>
 	<bean id="regimenesdao" class="com.tikal.cacao.dao.impl.RegimenesDAOImpl"></bean>
