@@ -8,10 +8,10 @@
 	<link rel="stylesheet" href="css/estilos.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 	<script src="angular-local-storage.min.js"></script>
-	<script src="controller.js"></script>
+	<script src="esquemascontroller.js"></script>
 
 </head>
-<body ng-controller="SeguroController">
+<body ng-controller="EsquemasController">
 	<header>
 		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 			<div class="container">
@@ -42,38 +42,77 @@
 		<p>TikalCacao</p>
 	</section>	
 	<div class="container">
-		<form>
-			<div class="col-md-6">
-				<h3>Percepciones</h3>
-				<label>Clave</label>
-				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
+		<form class="form-inline" ng-submit="addEsq()">
+			<div class="form-group">
+				<h3>Percepciones</h3>				
+				Clave<select ng-model="inputPerc.clave">
+				<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 					{{percepciones.clave}}</option>
-				</select>
-				<label>Descripcion</label>
-				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
+				</select>				
+				Descripcion<select ng-model="inputPerc.clave">
+				<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 					{{percepciones.descripcion}}</option>
 				</select>
+				Cantidad: <input type="text" ng-model="inputPerc.cantidad">
 			</div>
-			<div class="col-md-6">
-				<h3>Deducciones</h3>
-				<label>Clave</label>
-				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepcion in listpercecpciones" value="{{percepcion.clave}}">
+{{inputPerc}}
+			<div class="form-group">
+				<h3>Deducciones</h3>				
+				Clave<select ng-model="regimen.deducciones[0].tipo">
+				<option ng-repeat="percepcion in listdeducciones" value="{{deducciones.clave}}">
 					{{percepcion.clave}}</option>
-				</select>
-				<label>Descripcion</label>
-				<select ng-model="regimen.percepciones[0].tipo">
-					<option ng-repeat="percepcion in listpercecpciones" value="{{percepcion.clave}}">
+				</select>					
+				Descripcion<select ng-model="regimen.deducciones[0].tipo">
+				<option ng-repeat="percepcion in listdeducciones" value="{{deducciones.clave}}">
 					{{percepcion.descripcion}}</option>
 				</select>
+				Porcentaje <input type="text">
 			</div>				
-		</form>		
+		</form>				
 	</div>
+	{{regimen}}
 	<div class="container col-md-offset-1">
-		<br><button class="btn btn-primary" value="Guardar">Guardar</button>
-		<button class="btn btn-primary">Limpiar</button>	
+		<br><button ng-click="addEsq()" class="btn btn-primary" value="Guardar">Guardar</button>
+		<button ng-click="clean" class="btn btn-primary">Limpiar</button>			
+		<div class="">
+			<h2>Percepciones</h2>			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Clave</th>
+						<th>Descripcion</th>
+						<th>Cantidad</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="percept in regimen.percepciones">
+						<td>{{percept.clave}}</td>
+						<td>{{percept.descripcion}}</td>
+						<td>{{percept.cantidad}}</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<h2>Deducciones</h2>			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Clave</th>
+						<th>Descripcion</th>
+						<th>Pocentaje</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="percept in regimen.percepciones">
+						<td>{{percept.clave}}</td>
+						<td>{{percept.descripcion}}</td>
+						<td>{{percept.cantidad}}</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+
 		<div class="miga-de-pan">
 			<ol class="breadcrumb">
 				<li><a href="empresas.html">Ir a Registrar Empresa</a></li>
