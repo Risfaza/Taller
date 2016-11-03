@@ -99,6 +99,5 @@ public class PruebaController {
 	    pw.println(empresaGuardada.getRegimenes().get(0).getPercepciones().get(1).getTipo());
 	    pw.println(empresaGuardada.getRegimenes().get(0).getDeducciones().get(0).getTipo());
 	    pw.println(empresaGuardada.getRegimenes().get(0).getDeducciones().get(1).getTipo());
-		
 	}
 }
