@@ -54,26 +54,28 @@
 					{{percepciones.descripcion}}</option>
 				</select>
 				Cantidad: <input type="text" ng-model="inputPerc.cantidad">
+				<br><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>
+				<button ng-click="clean" class="btn btn-primary">Limpiar</button>						
 			</div>
-{{inputPerc}}
+			{{esq}}
 			<div class="form-group">
 				<h3>Deducciones</h3>				
-				Clave<select ng-model="regimen.deducciones[0].tipo">
-				<option ng-repeat="percepcion in listdeducciones" value="{{deducciones.clave}}">
-					{{percepcion.clave}}</option>
+				Clave<select ng-model="inputDeduc.clave">
+				<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
+					{{ded.clave}}</option>
 				</select>					
-				Descripcion<select ng-model="regimen.deducciones[0].tipo">
-				<option ng-repeat="percepcion in listdeducciones" value="{{deducciones.clave}}">
-					{{percepcion.descripcion}}</option>
+				Descripcion<select ng-model="inputDeduc.clave">
+				<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
+					{{ded.descripcion}}</option>
 				</select>
-				Porcentaje <input type="text">
+				Porcentaje <input type="text" ng-model="inputDeduc.porcentaje">
+				<br><button ng-click="addDed()" class="btn btn-primary" value="Guardar">Agregar</button>
+				<button ng-click="clean" class="btn btn-primary">Limpiar</button>
 			</div>				
 		</form>				
 	</div>
-	{{regimen}}
 	<div class="container col-md-offset-1">
-		<br><button ng-click="addEsq()" class="btn btn-primary" value="Guardar">Guardar</button>
-		<button ng-click="clean" class="btn btn-primary">Limpiar</button>			
+
 		<div class="">
 			<h2>Percepciones</h2>			
 			<table class="table">
@@ -103,10 +105,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="percept in regimen.percepciones">
-						<td>{{percept.clave}}</td>
-						<td>{{percept.descripcion}}</td>
-						<td>{{percept.cantidad}}</td>
+					<tr ng-repeat="deduc in regimen.deducciones">
+						<td>{{deduc.clave}}</td>
+						<td>{{deduc.descripcion}}</td>
+						<td>{{deduc.porcentaje}}</td>
 					</tr>
 					
 				</tbody>
