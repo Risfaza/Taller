@@ -19,7 +19,7 @@
 
 <!-- Spring Controllers -->
 	<bean class="com.tikal.cacao.springController.EmpresasController"></bean>
-	<bean class="com.tikal.cacao.springController.EmpresasController"></bean>
+	<bean class="com.tikal.cacao.springController.EmpleadosController"></bean>
 	<bean class="com.tikal.cacao.springController.RegimenController"></bean>
 	<bean class="com.tikal.cacao.springController.PruebaController"></bean>
 
