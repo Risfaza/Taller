@@ -17,16 +17,26 @@ import com.tikal.cacao.model.Regimen;
  */
 public class RegimenesDAOImpl implements RegimenesDAO {
 
-	/* (non-Javadoc)
-	 * @see com.tikal.cacao.dao.RegimenesDAO#crear(com.tikal.cacao.model.Regimen)
+	public RegimenesDAOImpl() {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tikal.cacao.dao.RegimenesDAO#crear(com.tikal.cacao.model.Regimen)
 	 */
 	@Override
 	public void crear(Regimen regimen) {
 		ofy().save().entity(regimen).now();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tikal.cacao.dao.RegimenesDAO#actualizar(com.tikal.cacao.model.Regimen)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tikal.cacao.dao.RegimenesDAO#actualizar(com.tikal.cacao.model.
+	 * Regimen)
 	 */
 	@Override
 	public void actualizar(Regimen regimen) {
@@ -34,7 +44,9 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.tikal.cacao.dao.RegimenesDAO#consultar(long)
 	 */
 	@Override
@@ -42,8 +54,11 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 		return ofy().load().type(Regimen.class).id(id).now();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tikal.cacao.dao.RegimenesDAO#eliminar(com.tikal.cacao.model.Regimen)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tikal.cacao.dao.RegimenesDAO#eliminar(com.tikal.cacao.model.Regimen)
 	 */
 	@Override
 	public void eliminar(Regimen regimen) {
@@ -51,8 +66,12 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tikal.cacao.dao.RegimenesDAO#consultaPorEmpresa(com.tikal.cacao.model.Empresa)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tikal.cacao.dao.RegimenesDAO#consultaPorEmpresa(com.tikal.cacao.model
+	 * .Empresa)
 	 */
 	@Override
 	public List<Regimen> consultaPorEmpresa(Empresa empresa) {

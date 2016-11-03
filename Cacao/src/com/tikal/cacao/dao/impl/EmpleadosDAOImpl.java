@@ -24,7 +24,6 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
 	@Override
 	public void crear(Empleado empleado) {
 		ofy().save().entities(empleado);
-
 	}
 
 	/* (non-Javadoc)
