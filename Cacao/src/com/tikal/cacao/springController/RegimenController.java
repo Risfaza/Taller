@@ -33,7 +33,7 @@ public class RegimenController {
 	EmpresasDAO empresasdao;
 	
 	@Autowired
-	@Qualifier("regdao")
+	@Qualifier("regimenesdao")
 	RegimenesDAO regimenesdao;
 	
 	/**

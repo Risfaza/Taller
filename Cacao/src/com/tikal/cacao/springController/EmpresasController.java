@@ -23,7 +23,7 @@ import com.tikal.cacao.util.JsonConvertidor;
 public class EmpresasController {
 
 	@Autowired
-	@Qualifier("emprdao")
+	@Qualifier("empresasdao")
 	EmpresasDAO empresasdao;
 	
 	@RequestMapping(value={"/add"},method= RequestMethod.POST,produces="application/json",consumes="application/json")

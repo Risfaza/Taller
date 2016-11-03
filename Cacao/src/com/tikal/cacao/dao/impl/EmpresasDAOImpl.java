@@ -17,6 +17,10 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	/* (non-Javadoc)
 	 * @see com.tikal.cacao.dao.EmpresasDAO#crear(com.tikal.cacao.model.Empresa)
 	 */
+	public EmpresasDAOImpl(){
+		
+	}
+	
 	@Override
 	public void crear(Empresa e) {
 		ofy().save().entity(e);
