@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="ToDoList">
+
+<body ng-controller="ToDoController">
+	<!--Aqui va-->
+	<section class="jumbotron">
+		<div class="container"></div>
+		<h2>Registra Informacion de la Empresa</h2>
+		<p>TikalCacao</p>
+	</section>
+	
+	<div class="container">
+		<form ng-submit="addEmp()">
+			<h4>Datos Generales</h4>
+			<div class="col-md-6">Nombre de la Empresa: <input class="form-control" type="text" ng-model="newEmp.nombre"><br></div>
+			<div class="col-md-6">Razón Social: <input class="form-control" type="text" ng-model="newEmp.razonSocial"><br></div>
+			<div class="col-md-6">RFC: <input class="form-control" type="text" ng-model="newEmp.rfc"><br></div>
+			<div class="col-md-6">Regimen Fiscal: <select class="form-control" ng-model="newEmp.regimen">
+				<option ng-model="newEmp.regimen">Asimilados a Salarios</option>
+				<option ng-model="newEmp.regimen">Sueldos y Salarios</option>
+			</select><br></div>
+			<h4>Dirección</h4>
+			<div class="col-md-12">Estado: <select class="form-control" ng-model="newEmp.direccion.estado">
+				<option ng-model="newEmp.direccion.estado">AguasCalientes</option>
+				<option ng-model="newEmp.direccion.estado">Baja California</option>
+				<option ng-model="newEmp.direccion.estado">Baja California Sur</option>
+				<option ng-model="newEmp.direccion.estado">Campeche</option>
+				<option ng-model="newEmp.direcicon.estado">Coahuila</option>
+				<option ng-model="newEmp.direcicon.estado">Colima</option>
+				<option ng-model="newEmp.direcicon.estado">Chiapas</option>
+				<option ng-model="newEmp.direcicon.estado">Chihuahua</option>
+				<option ng-model="newEmp.direcicon.estado">Ciudad de México</option>
+				<option ng-model="newEmp.direcicon.estado">Duarango</option>
+				<option ng-model="newEmp.direcicon.estado">Guanajuato</option>
+				<option ng-model="newEmp.direcicon.estado">Guerrero</option>
+				<option ng-model="newEmp.direcicon.estado">Hidalgo</option>
+				<option ng-model="newEmp.direcicon.estado">Jalisco</option>
+				<option ng-model="newEmp.direcicon.estado">México</option>
+				<option ng-model="newEmp.direcicon.estado">Michoacán</option>
+				<option ng-model="newEmp.direcicon.estado">Morelos</option>
+				<option ng-model="newEmp.direcicon.estado">Nayarit</option>
+				<option ng-model="newEmp.direcicon.estado">Nuevo León</option>
+				<option ng-model="newEmp.direcicon.estado">Oaxaca</option>
+				<option ng-model="newEmp.direcicon.estado">Puebla</option>
+				<option ng-model="newEmp.direcicon.estado">Querétaro</option>
+				<option ng-model="newEmp.direcicon.estado">Quintana Roo</option>
+				<option ng-model="newEmp.direcicon.estado">San Luis Potosí</option>
+				<option ng-model="newEmp.direcicon.estado">Sinaloa</option>
+				<option ng-model="newEmp.direcicon.estado">Sonora</option>
+				<option ng-model="newEmp.direcicon.estado">Tabasco</option>
+				<option ng-model="newEmp.direcicon.estado">Tamaulipas</option>
+				<option ng-model="newEmp.direcicon.estado">Tlaxcala</option>
+				<option ng-model="newEmp.direcicon.estado">Veracruz</option>
+				<option ng-model="newEmp.direcicon.estado">Yucatan</option>
+				<option ng-model="newEmp.direcicon.estado">Zacatecas</option>
+			</select><br></div> 
+			<div class="col-md-12">Localidad: <input class="form-control" type="text" ng-model="newEmp.direccion.localidad"><br></div>
+			<dic class="col-md-6">CP:<input class="form-control" type="text" ng-model="newEmp.cp"><br></dic>
+			<div class="col-md-6">Colonia: <input class="form-control" type="text" ng-model="newEmp.direccion.colonia"><br></div>
+			<div class="col-md-6">Calle: <input class="form-control" type="text" ng-model="newEmp.direccion.calle"><br></div>
+			<div class="col-md-4">Numero: <input class="form-control" type="text" ng-model="newEmp.direccion.numero"><br></div>
+			<div class="col-md-4">Numero Interior: <input class="form-control" type="text" ng-model="newEmp.direccion.numeroint"><br>
+
+				Fecha de Creación: <input class="form-control" type="datetime-local" ng-model="newEmp.fecha"><br>
+				<button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
+				<button ng-click="clean()" class="btn btn-primary">Limpiar</button>
+			</form>
+			<h3>Empresas Registradas</h3>
+			<ul>
+				<li ng-repeat="empresa in todo">		
+					{{empresa.nombre}}<br> {{empresa.razonSocial}}<br> {{empresa.rfc}}<br>  {{empresa.regimen}}<br> {{empresa.direccion.estado}}<br> {{empresa.direccion.localidad}}<br> {{empresa.direccion.cp}}<br> {{empresa.direccion.colonia}}<br> {{empresa.direccion.calle}}<br> {{empresa.numero}}<br> {{empresa.numeroint}}<br> {{empresa.fecha | date: 'short'}}<br> - <a href="#" ng-click="removeEmp(empresa)" style="color:red;">X</a><br>
+					<div class="miga-de-pan">
+						<ol class="breadcrumb">
+							<li><a href="esquemas.html">Ir a Registrar Esquemas</a></li>
+						</ol>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+	</html>
