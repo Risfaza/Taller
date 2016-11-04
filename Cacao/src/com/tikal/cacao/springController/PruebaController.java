@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.cacao.dao.EmpresasDAO;
+import com.tikal.cacao.dao.RegimenesDAO;
 import com.tikal.cacao.dao.impl.EmpresasDAOImpl;
+import com.tikal.cacao.dao.impl.RegimenesDAOImpl;
 import com.tikal.cacao.model.Deduccion;
 import com.tikal.cacao.model.Direccion;
 import com.tikal.cacao.model.Empresa;
@@ -85,12 +87,16 @@ public class PruebaController {
 		reg1.setDeducciones(deducciones);
 		
 		List<Regimen> regimenes = new ArrayList<Regimen>();
+		regimenes.add(reg1);
 		
 		empresa.setRegimenes(regimenes);
 		
 		EmpresasDAO dao = new EmpresasDAOImpl();
 		dao.crear(empresa);
 		Empresa empresaGuardada = dao.consultar("TIKL150201ABC");
+		
+		RegimenesDAO regdao = new RegimenesDAOImpl();
+		Regimen r = regdao.consultar(1);
 		
 		PrintWriter pw = re.getWriter();
 	    pw.println(empresaGuardada.getRFC());
@@ -99,5 +105,8 @@ public class PruebaController {
 	    pw.println(empresaGuardada.getRegimenes().get(0).getPercepciones().get(1).getTipo());
 	    pw.println(empresaGuardada.getRegimenes().get(0).getDeducciones().get(0).getTipo());
 	    pw.println(empresaGuardada.getRegimenes().get(0).getDeducciones().get(1).getTipo());
+	    
+	    pw.println(r.getId());
+	    pw.println(r.getNombre());
 	}
 }
