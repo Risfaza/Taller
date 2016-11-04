@@ -29,7 +29,7 @@ import com.tikal.cacao.util.JsonConvertidor;
 public class RegimenController {
 	
 	@Autowired
-	@Qualifier("emprdao")
+	@Qualifier("empresasdao")
 	EmpresasDAO empresasdao;
 	
 	@Autowired
