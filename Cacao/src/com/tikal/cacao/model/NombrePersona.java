@@ -23,6 +23,23 @@ public class NombrePersona {
 	 * 
 	 */
 	private String apellidoMaterno;
+	
+	/**
+	 * 
+	 */
+	public NombrePersona() {}
+	
+	/**
+	 * 
+	 * @param nombre
+	 * @param apPaterno
+	 * @param apMaterno
+	 */
+	public NombrePersona(String nombre, String apPaterno, String apMaterno) {
+		this.nombresDePila = nombre;
+		this.apellidoPaterno = apPaterno;
+		this.apellidoMaterno = apMaterno;
+	}
 
 	/**
 	 * @return the nombresDePila
