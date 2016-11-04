@@ -44,6 +44,7 @@
 	<div class="container">
 		<form class="form-inline" ng-submit="addEsq()">
 			<div class="form-group">
+				Nombre del Regimen <input type="text">
 				<h3>Percepciones</h3>				
 				Clave<select ng-model="inputPerc.clave">
 				<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
@@ -54,8 +55,7 @@
 					{{percepciones.descripcion}}</option>
 				</select>
 				Cantidad: <input type="text" ng-model="inputPerc.cantidad">
-				<br><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>
-				<button ng-click="clean" class="btn btn-primary">Limpiar</button>						
+				<br><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>			
 			</div>
 			{{esq}}
 			<div class="form-group">
@@ -70,7 +70,6 @@
 				</select>
 				Porcentaje <input type="text" ng-model="inputDeduc.porcentaje">
 				<br><button ng-click="addDed()" class="btn btn-primary" value="Guardar">Agregar</button>
-				<button ng-click="clean" class="btn btn-primary">Limpiar</button>
 			</div>				
 		</form>				
 	</div>
