@@ -5,8 +5,11 @@ package com.tikal.cacao.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import com.googlecode.objectify.Key;
 import com.tikal.cacao.dao.EmpresasDAO;
 import com.tikal.cacao.model.Empresa;
 
@@ -54,6 +57,11 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	public void eliminar(Empresa e) {
 		ofy().delete().entity(e);
 
+	}
+
+	@Override
+	public List<Empresa> consultarTodos() {
+		return ofy().load().type(Empresa.class).list();
 	}
 
 }

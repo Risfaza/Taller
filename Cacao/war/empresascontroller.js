@@ -33,7 +33,7 @@
 //	}
 //})
 
-app.controller("EmpresasController",function($scope,EmpresasService){	
+app.controller("EmpresasController",function($scope,EmpresasService){
 	$scope.todo =EmpresasService.getAll();
 	$scope.newEmp = {};
 	$scope.addEmp=function(){

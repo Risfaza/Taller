@@ -3,6 +3,8 @@
  */
 package com.tikal.cacao.dao;
 
+import java.util.List;
+
 import com.tikal.cacao.model.Empresa;
 
 /**
@@ -33,5 +35,7 @@ public interface EmpresasDAO {
 	 * @param e
 	 */
 	public void eliminar(Empresa e);
+	
+	public List<Empresa> consultarTodos();
 
 }
