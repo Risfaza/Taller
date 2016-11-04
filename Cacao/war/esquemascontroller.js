@@ -79,7 +79,7 @@ app.controller("EsquemasController",function($scope,ToDoService){
 		this.updaLocalStorage();	
 		return this.getAll();
 	}
-		this.getAll=function(){/*Muestra todos los Elementos*/
+	this.getAll=function(){/*Muestra todos los Elementos*/
 		return this.esquemas;
 	};
 });

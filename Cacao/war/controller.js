@@ -1,73 +1,120 @@
 var app=angular.module("ToDoList",["LocalStorageModule",])/*Libreria LocalStorage Module*/
 app.service('ToDoService',function(localStorageService){/*Servicio e inyeccion de servicio de localStorage*/
+
+	this.getAll=function(){/*Muestra todos los Elementos*/
+		return this.esquemas;
+	};
 	
-	this.key="angular-todolist";/*String o clave representa lista*/
-	if(localStorageService.get(this.key)){/*Si hay cosas en la lista las muestra*/
-		this.empresas=localStorageService.get(this.key);
+})
+
+app.controller("EsquemasController",function($scope,ToDoService){	
+	$scope.listpercecpciones=
+	[
+	{
+		"clave": "001",
+		"descripcion": "Sueldos, Salarios Rayas y Jornales",        
+	},
+	{
+		"clave": "002",
+		"descripcion": "Gratificación Anual",        
+	},
+	{
+		"clave": "003",
+		"descripcion": "Participación de los trabajadores en las Utilidades PTU",        
+	},
+	{
+		"clave": "004",
+		"descripcion": "Fondo de Ahorro",        
+	},
+	{
+		"clave": "005",
+		"descripcion": "Caja de Ahorro",        
+	},
+	]
+	$scope.listdeducciones=[
+	{
+		"clave": "001",
+		"descripcion": "Deducccion1 fdsf fdf fds",
+	},
+	{
+		"clave": "002",
+		"descripcion": "Deducccion2",
+	},
+	]
+	$scope.regimen={
+		nombre:"",
+		percepciones:[],
+		deducciones:[]
+	};
+	$scope.todo =ToDoService.getAll();
+	$scope.newEsq = {};
+	$scope.newDed ={};
+	$scope.listaEsq=[];
+	$scope.addPer=function(){
+		//ToDoService.add($scope.newEsq);
+		var esq=$scope.inputPerc;
+		$scope.regimen.percepciones.push(esq);
+		$scope.inputPerc ={};		
 	}
-	else{
-		this.empresas=[];/*Si no inicializa como lista vacia*/
+	$scope.addDed=function(){
+		var ded=$scope.inputDeduc;
+		$scope.regimen.deducciones.push(ded);
+		$scope.inputDeduc ={};	
 	}
 
-	this.add = function(newEmp){/*Agrega elementos a arreglo Empresa*/
-		this.empresas.push(newEmp);
-		this.updaLocalStorage();
-	};
-	this.updaLocalStorage = function(){/*Actualiza Storage*/
-		localStorageService.set(this.key, this.empresas);
-	};
-	this.clean=function(){/*Limpia o Elimina todos los elementos*/
-		this.empresas=[];
-		this.updaLocalStorage();	
-		return this.getAll();
-	};
+	$scope.removeEmp = function(item){
+		//$scope.todo = ToDoService.removeItem(item);
+		$scope.listaEsq.removeItem(item);		
+	}
 	this.getAll=function(){/*Muestra todos los Elementos*/
-		return this.empresas;
-	};
+		return this.esquemas;
+	}
+	$scope.clean =function(){
+		ToDoService.clean();
+	}
 	this.removeItem=function(item){/*Elimina elemento por elemeto*/
-		this.empresas = this.empresas.filter(function(activity){
+		this.esquemas = this.esquemas.filter(function(activity){
 			return activity !=item;
 		});
 		this.updaLocalStorage();	
 		return this.getAll();
 	}
-})
-app.controller("ToDoController",function($scope,ToDoService){	
-	$scope.todo =ToDoService.getAll();
-	$scope.newEmp = {};
-	$scope.addEmp=function(){
-		ToDoService.add($scope.newEmp);
-		$scope.newEmp ={};			
-	}
-	$scope.removeEmp = function(item){
-		$scope.todo = ToDoService.removeItem(item);			
-	}
-	$scope.clean =function(){
-		ToDoService.clean();
-	}
+	this.getAll=function(){/*Muestra todos los Elementos*/
+		return this.esquemas;
+	};
 });
 app.controller("SeguroController",['$scope','$log','$http',function($scope,$log,$http){	
 	$scope.listpercecpciones=
-     [
-      {
-        "clave": "001",
-        "descripcion": "Sueldos, Salarios Rayas y Jornales",        
-      },
-      {
-        "clave": "002",
-        "descripcion": "Gratificación Anual",        
-      },
-      {
-        "clave": "003",
-        "descripcion": "Participación de los trabajadores en las Utilidades PTU",        
-      },
-      {
-        "clave": "004",
-        "descripcion": "Fondo de Ahorro",        
-      },
-      {
-        "clave": "005",
-        "descripcion": "Caja de Ahorro",        
-      },
-    ]
+	[
+	{
+		"clave": "001",
+		"descripcion": "Sueldos, Salarios Rayas y Jornales",        
+	},
+	{
+		"clave": "002",
+		"descripcion": "Gratificación Anual",        
+	},
+	{
+		"clave": "003",
+		"descripcion": "Participación de los trabajadores en las Utilidades PTU",        
+	},
+	{
+		"clave": "004",
+		"descripcion": "Fondo de Ahorro",        
+	},
+	{
+		"clave": "005",
+		"descripcion": "Caja de Ahorro",        
+	},
+	]
+	$scope.listdeducciones=[
+	{
+		"clave": "001",
+		"descripcion": "Deducccion1",
+	},
+	{
+		"clave": "002",
+		"descripcion": "Deducccion2",
+	},
+	]
 }]);
