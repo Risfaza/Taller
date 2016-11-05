@@ -43,6 +43,31 @@ public class Direccion {
 	 * 
 	 */
 	private Estado estado;
+	
+	/**
+	 * 
+	 */
+	public Direccion() {};
+
+	/**
+	 * @param calle
+	 * @param numExterior
+	 * @param numInterior
+	 * @param codigoPostal
+	 * @param colonia
+	 * @param localidad
+	 * @param estado
+	 */
+	public Direccion(String calle, int numExterior, int numInterior, String codigoPostal, String colonia,
+			String localidad, Estado estado) {
+		this.calle = calle;
+		this.numExterior = numExterior;
+		this.numInterior = numInterior;
+		this.codigoPostal = codigoPostal;
+		this.colonia = colonia;
+		this.localidad = localidad;
+		this.estado = estado;
+	}
 
 	/**
 	 * @return the calle

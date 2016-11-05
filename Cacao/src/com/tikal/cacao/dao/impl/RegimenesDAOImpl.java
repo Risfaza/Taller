@@ -5,10 +5,12 @@ package com.tikal.cacao.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.googlecode.objectify.Ref;
 import com.tikal.cacao.dao.RegimenesDAO;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
@@ -78,8 +80,13 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 	 */
 	@Override
 	public List<Regimen> consultaPorEmpresa(Empresa empresa) {
-		// TODO Auto-generated method stub
-		return null;
+		Regimen regimenRecuperado;
+		List<Regimen> listaDeReg = new ArrayList<Regimen>();
+		for (Ref<Regimen> elem : empresa.getRegimenes()) {
+			regimenRecuperado = elem.get();
+			listaDeReg.add(regimenRecuperado);
+		}
+		return listaDeReg;
 	}
 
 }

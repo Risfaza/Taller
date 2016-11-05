@@ -17,7 +17,7 @@ public class Empleado {
 	 * 
 	 */
 	@Id
-	private long numEmpleado; // key
+	private Long numEmpleado; // key
 	
 	/**
 	 * 
@@ -52,14 +52,14 @@ public class Empleado {
 	/**
 	 * @return the numEmpleado
 	 */
-	public long getNumEmpleado() {
+	public Long getNumEmpleado() {
 		return numEmpleado;
 	}
 
 	/**
 	 * @param numEmpleado the numEmpleado to set
 	 */
-	public void setNumEmpleado(long numEmpleado) {
+	public void setNumEmpleado(Long numEmpleado) {
 		this.numEmpleado = numEmpleado;
 	}
 

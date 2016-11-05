@@ -5,8 +5,10 @@ package com.tikal.cacao.model;
 
 import java.util.List;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * @author Tikal
@@ -38,7 +40,7 @@ public class Empresa {
 	/**
 	 * 
 	 */
-	private List<Regimen> regimenes;
+	@Load private List<Ref<Regimen>> regimenes;
 
 	/**
 	 * @return the rFC
@@ -99,14 +101,14 @@ public class Empresa {
 	/**
 	 * @return the regimenes
 	 */
-	public List<Regimen> getRegimenes() {
+	public List<Ref<Regimen>> getRegimenes() {
 		return regimenes;
 	}
 
 	/**
 	 * @param regimenes the regimenes to set
 	 */
-	public void setRegimenes(List<Regimen> regimenes) {
+	public void setRegimenes(List<Ref<Regimen>> regimenes) {
 		this.regimenes = regimenes;
 	}
 	

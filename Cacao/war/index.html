@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>IndexTikal</title>
+	<!--Bootstrap-->
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilos.css">
+	<!--angular-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+	<!--Controladores de páginas-->
+	<script src="/esquemas/js/controllers/controller.js"></script>
+	<script src="/esquemas/js/controllers/empresascontroller.js"></script>
+	<script src="/esquemas/js/controllers/esquemascontroller.js"></script>
+	<script src="/esquemas/js/controllers/empleadoscontroller.js"></script>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-togle="collapse" data-target="#navegacion-fm">
+						<span class="sr-only">Desplegar /Ocultar Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="index.html" class="navbar-brand">Tikal</a>
+				</div>
+				<!--Inicia Menu-->
+				<div class="collapse navbar-collapse" id="navegacion-fm">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#/empresas">Empresas</a></li>						
+						<li><a href="#/esquemas">Esquemas</a></li>
+						<li><a href="#/empleados">Empleados</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div ng-view></div>
+</body>
+</html>
