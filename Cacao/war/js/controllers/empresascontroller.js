@@ -11,14 +11,15 @@ app.service('empresasService',function(){/*Servicio e inyeccion de servicio de l
 	this.removeItem=function(item){/*Elimina elemento por elemeto*/
 	}
 })
-app.controller("empresasController",function($scope,emperesasService){	
+app.controller("empresasController",function($scope){	
 
-	$scope.addEmp=function(){
-			
+	$scope.addEmp=function(){		
 	}
+
 	$scope.removeEmp = function(item){		
 	}
 
 	$scope.clean =function(){
 	}
+
 });
