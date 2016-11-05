@@ -61,12 +61,10 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 
 	}
 
-<<<<<<< HEAD
 	@Override
 	public List<Empresa> consultarTodos() {
 		return ofy().load().type(Empresa.class).list();
 	}
-=======
 	/* (non-Javadoc)
 	 * @see com.tikal.cacao.dao.EmpresasDAO#aplicarUnRegimen(com.tikal.cacao.model.Regimen, com.tikal.cacao.model.Empresa)
 	 */
@@ -85,6 +83,5 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	
 	
 	
->>>>>>> branch 'master' of https://github.com/isrVigueras/cacao.git
 
 }
