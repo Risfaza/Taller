@@ -57,8 +57,8 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	 */
 	@Override
 	public void eliminar(Empresa e) {
-		ofy().delete().entity(e);
-
+		e.setActivo(false);
+		actualizar(e);
 	}
 
 	@Override
