@@ -24,7 +24,7 @@ app.controller("empresasController", [
 				$http.post("/empresas/add", $scope.newEmp).then(
 						function(response) {
 							alert("Empresa Guardada");
-							console.log(response.data);
+							$location.path("/empresas/list");
 						}, function(response) {
 							alert("Something went wrong!");
 							console.log(response);
@@ -38,3 +38,36 @@ app.controller("empresasController", [
 			}
 
 		} ]);
+
+app.controller("empresasEditController", [
+                              		'$scope',
+                              		'$http',
+                              		'$location','$routeParams',
+                              		'empresasService',
+                              		function($scope, $http, $location,$routeParams, empresasSevice) {
+                              			console.log($routeParams.rfc);
+                              			$http.get("empresas/find/"+$routeParams.rfc).then(function(response){
+                              				$scope.newEmp=response.data;
+                              			},function(response){
+                              				alert("something went wrong");
+                              				console.log(response);
+                              			});
+                              			
+                              			$scope.addEmp = function() {
+                              				$http.post("/empresas/add", $scope.newEmp).then(
+                              						function(response) {
+                              							alert("Empresa Guardada");
+                              							$location.path("/empresas/list");
+                              						}, function(response) {
+                              							alert("Something went wrong!");
+                              							console.log(response);
+                              						});
+                              			}
+
+                              			$scope.removeEmp = function(item) {
+                              			}
+
+                              			$scope.clean = function() {
+                              			}
+
+                              		} ]);

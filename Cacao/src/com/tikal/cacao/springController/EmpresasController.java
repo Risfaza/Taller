@@ -44,7 +44,7 @@ public class EmpresasController {
 	}
 
 	@RequestMapping(value = { "/find/{rfc}" }, method = RequestMethod.GET, produces = "application/json")
-	public void findEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+	public void findEmpresa(HttpServletResponse response, HttpServletRequest request,
 			@PathVariable String rfc) throws IOException {
 		// Empresa e= (Empresa) JsonConvertidor.fromJson(json, Empresa.class);
 		// empresasdao.crear(e);
