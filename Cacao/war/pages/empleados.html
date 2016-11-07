@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html ng-app="app">
 
-<body ng-controller="empleadosController">
 	<!--Aqui va-->
 	<section class="jumbotron">
 		<div class="container"></div>
@@ -11,16 +8,15 @@
 	<div class="container">
 		<form>
 			<h4>Datos Generales</h4>
-			<div class="col-md-6">Clave del Trabajador: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Numero de Seguridad Social: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Apellido Paterno: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Apellido Materno: <input class="form-control" type="text"><br></div>
-			<div class="col-md-8">Nombres: <input class="form-control"  type="text"><br></div>
-			<div class="col-md-6">CURP: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">RFC: <input class="form-control" type="text"><br></div>
-			<div class="col-md-12">Fecha de Nacimiento: <input class="form-control" type="datetime-local"><br></div>
+			<div class="col-md-6">Numero de Seguridad Social: <input class="form-control" ng-model="newEmp.numSeguroSocial" type="text"><br></div>
+			<div class="col-md-6">Apellido Paterno: <input class="form-control" ng-model="newEmp.nombre.apellidoPaterno" type="text"><br></div>
+			<div class="col-md-6">Apellido Materno: <input class="form-control" ng-model="newEmp.nombre.apellidoMaterno" type="text"><br></div>
+			<div class="col-md-8">Nombres: <input class="form-control" ng-model="newEmp.nombre.nombresDePila"  type="text"><br></div>
+			<div class="col-md-6">CURP: <input class="form-control" ng-model="newEmp.curp" type="text"><br></div>
+			<div class="col-md-6">RFC: <input class="form-control" ng-model="newEmp.rfc" type="text"><br></div>
+<!-- 			<div class="col-md-12">Fecha de Nacimiento: <input class="form-control" type="datetime-local"><br></div> -->
 			<div class="col-md-4"><h4>Direccion</h4></div>
-			<div class="col-md-12">Estado: <select class="form-control">
+			<div class="col-md-12">Estado: <select class="form-control" ng-model="newEmp.direccion.estado">
 				<option>AguasCalientes</option>
 				<option>Baja California</option>
 				<option>Baja California Sur</option>
@@ -54,17 +50,15 @@
 				<option>Yucatan</option>
 				<option>Zacatecas</option>
 			</select><br></div>
-			<div class="col-md-6">Localidad: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">CP: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Colonia: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Calle: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Numero: <input class="form-control" type="text"><br></div>
-			<div class="col-md-6">Numer Interior: <input class="form-control" type="text"><br></div>
+			<div class="col-md-6">Localidad: <input class="form-control" type="text" ng-model="newEmp.direccion.localidad"><br></div>
+			<div class="col-md-6">CP: <input class="form-control" type="text" ng-model="newEmp.direccion.codigoPostal"><br></div>
+			<div class="col-md-6">Colonia: <input class="form-control" type="text" ng-model="newEmp.direccion.colonia"><br></div>
+			<div class="col-md-6">Calle: <input class="form-control" type="text" ng-model="newEmp.direccion.calle"><br></div>
+			<div class="col-md-6">N&uacute;mero: <input class="form-control" type="text" ng-model="newEmp.direccion.numeroExterior"><br></div>
+			<div class="col-md-6">N&uacute;mero Interior: <input class="form-control" type="text" ng-model="newEmp.direccion.numeroInterior"><br></div>
 		</form>
 	</div>
 	<div class="container col-md-offset-1">
-		<button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
-		<button ng-click="clean()" class="btn btn-primary">Limpiar</button>
+		<button value="Guardar" class="btn btn-primary" ng-click="addEmp()" >Guardar</button>
+		<button type="reset" class="btn btn-primary">Limpiar</button>
 	</div>
-</body>
-</html>

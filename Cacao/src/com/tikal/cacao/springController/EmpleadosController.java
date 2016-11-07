@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.access.el.SpringBeanELResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ public class EmpleadosController {
 	@Qualifier("employeedao")
 	EmpleadosDAO employeedao;
 
+	
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public void add(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
