@@ -8,23 +8,22 @@
 	<div class="container">
 		<form class="form-inline" ng-submit="addEsq()">
 			<div class="form-group">
-				<div class="col-md-12">Nombre del Regimen <input type="text" class="form-control"></div>
-				<div class="col-md-12">Tipo de Regimen <select ng-model="regimen.tipo" class="form-control">
+				Nombre del Regimen <div class="col-md-12"><input type="text" class="form-control"></div><br>
+				Tipo de Regimen <div class="col-md-12"><select ng-model="regimen.tipo" class="form-control">
 				<option ng-repeat="percepciones in listtipos">{{percepciones.descripcion}}</option>
 			</select></div>
 			<h3>Percepciones</h3>				
-			Clave<select ng-model="inputPerc.clave">
+			Clave<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
 			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 				{{percepciones.clave}}</option>
-			</select><br>			
-			Descripcion<select ng-model="inputPerc.clave">
+			</select></div><br>			
+			Descripcion<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
 			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 				{{percepciones.descripcion}}</option>
-			</select><br>
-			Cantidad: <input type="text" ng-model="inputPerc.cantidad">
-			<br><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>			
+			</select></div><br>
+			Cantidad: <div class="col-md-12"><input type="text" ng-model="inputPerc.cantidad" class="form-control"></div>
+			<button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>			
 		</div>
-		{{esq}}
 		<div class="form-group">
 			<h3>Deducciones</h3>				
 			Clave<select ng-model="inputDeduc.clave">
