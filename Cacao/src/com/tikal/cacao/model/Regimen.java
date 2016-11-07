@@ -46,6 +46,11 @@ public class Regimen {
 	 */
 	private boolean activo = true;
 	
+	/**
+	 * 
+	 */
+	private RegimenContratacion tipoRegimen;
+	
 
 	/**
 	 * @return the id
@@ -118,17 +123,31 @@ public class Regimen {
 	}
 
 	/**
-	 * @return the estaActivo
+	 * @return the activo
 	 */
 	public boolean isActivo() {
 		return activo;
 	}
 
 	/**
-	 * @param estaActivo the estaActivo to set
+	 * @param activo the activo to set
 	 */
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	/**
+	 * @return the tipoRegimen
+	 */
+	public RegimenContratacion getTipoRegimen() {
+		return tipoRegimen;
+	}
+
+	/**
+	 * @param tipoRegimen the tipoRegimen to set
+	 */
+	public void setTipoRegimen(RegimenContratacion tipoRegimen) {
+		this.tipoRegimen = tipoRegimen;
 	}
 	
 	
