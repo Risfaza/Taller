@@ -41,6 +41,11 @@ public class Regimen {
 	 */
 	private List<Long> idEmpleados;
 	
+	/**
+	 * 
+	 */
+	private boolean activo = true;
+	
 
 	/**
 	 * @return the id
@@ -111,6 +116,21 @@ public class Regimen {
 	public void setIdEmpleados(List<Long> idEmpleados) {
 		this.idEmpleados = idEmpleados;
 	}
+
+	/**
+	 * @return the estaActivo
+	 */
+	public boolean isActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param estaActivo the estaActivo to set
+	 */
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+	
 	
 	
 }

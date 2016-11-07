@@ -48,6 +48,11 @@ public class Empleado {
 	 * 
 	 */
 	private String numSeguroSocial;
+	
+	/**
+	 * 
+	 */
+	private boolean activo = true;
 
 	/**
 	 * @return the numEmpleado
@@ -145,6 +150,20 @@ public class Empleado {
 	 */
 	public void setNumSeguroSocial(String numSeguroSocial) {
 		this.numSeguroSocial = numSeguroSocial;
+	}
+
+	/**
+	 * @return the estaActivo
+	 */
+	public boolean isActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param estaActivo the estaActivo to set
+	 */
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 	
 	

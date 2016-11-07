@@ -51,7 +51,8 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
 	 */
 	@Override
 	public void eliminar(Empleado empleado) {
-		ofy().delete().entity(empleado);
+		empleado.setActivo(false);
+		actualizar(empleado);
 
 	}
 
