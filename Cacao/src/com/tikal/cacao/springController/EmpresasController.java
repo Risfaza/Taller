@@ -1,4 +1,3 @@
-
 package com.tikal.cacao.springController;
 
 import java.io.IOException;
@@ -29,9 +28,6 @@ public class EmpresasController {
 	 @Qualifier(value="empresasdao")
 	EmpresasDAO empresasdao;
 
-//	public EmpresasController() {
-//		empresasdao = new EmpresasDAOImpl();
-//	}
 
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -46,8 +42,6 @@ public class EmpresasController {
 	@RequestMapping(value = { "/find/{rfc}" }, method = RequestMethod.GET, produces = "application/json")
 	public void findEmpresa(HttpServletResponse response, HttpServletRequest request,
 			@PathVariable String rfc) throws IOException {
-		// Empresa e= (Empresa) JsonConvertidor.fromJson(json, Empresa.class);
-		// empresasdao.crear(e);
 		response.getWriter().println(JsonConvertidor.toJson(empresasdao.consultar(rfc)));
 	}
 
@@ -69,9 +63,6 @@ public class EmpresasController {
 
 	@RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
 	public void findAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		// Empresa e= (Empresa) JsonConvertidor.fromJson(json, Empresa.class);
-		// empresasdao.crear(e);
-//		response.getWriter().println("afsñifdjas");
 		List<Empresa> lista = empresasdao.consultarTodos();
 		if (lista == null) {
 			lista = new ArrayList<Empresa>();

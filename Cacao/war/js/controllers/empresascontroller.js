@@ -1,7 +1,4 @@
-app.service('empresasService', function() {/*
-											 * Servicio e inyeccion de servicio
-											 * de localStorage
-											 */
+app.service('empresasService', function() {
 	this.add = function(newEmp) {/* Agrega elementos a arreglo Empresa */
 	};
 	this.updaLocalStorage = function() {/* Actualiza Storage */
@@ -14,12 +11,23 @@ app.service('empresasService', function() {/*
 	}
 })
 app.controller("empresasController", [
-		'$scope',
-		'$http',
-		'$location',
-		'empresasService',
-		function($scope, $http, $location, empresasSevice) {
+	'$scope',
+	'$http',
+	'$location',
+	'empresasService',
+	function($scope, $http, $location, empresasSevice) {
+		$scope.addEmp = function() {
+			$http.post("/empresas/add", $scope.newEmp).then(
+				function(response) {
+					alert("Empresa Guardada");
+					console.log(response.data);
+				}, function(response) {
+					alert("Something went wrong!");
+					console.log(response);
+				});
+		}
 
+<<<<<<< HEAD
 			$scope.addEmp = function() {
 				$http.post("/empresas/add", $scope.newEmp).then(
 						function(response) {
@@ -30,10 +38,15 @@ app.controller("empresasController", [
 							console.log(response);
 						});
 			}
+=======
+		$scope.removeEmp = function(item) {
+		}
+>>>>>>> branch 'master' of https://github.com/isrVigueras/cacao.git
 
-			$scope.removeEmp = function(item) {
-			}
+		$scope.clean = function() {
+		}
 
+<<<<<<< HEAD
 			$scope.clean = function() {
 			}
 
@@ -71,3 +84,7 @@ app.controller("empresasEditController", [
                               			}
 
                               		} ]);
+=======
+	} 
+	]);
+>>>>>>> branch 'master' of https://github.com/isrVigueras/cacao.git
