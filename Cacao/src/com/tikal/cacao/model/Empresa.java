@@ -37,10 +37,16 @@ public class Empresa {
 	 */
 	private Direccion direccion;
 	
+	
 	/**
 	 * 
 	 */
 	@Load private List<Ref<Regimen>> regimenes;
+	
+	/**
+	 * 
+	 */
+	private boolean activo = true;
 
 	/**
 	 * @return the rFC
@@ -110,6 +116,20 @@ public class Empresa {
 	 */
 	public void setRegimenes(List<Ref<Regimen>> regimenes) {
 		this.regimenes = regimenes;
+	}
+
+	/**
+	 * @return the estaActivo
+	 */
+	public boolean isActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param estaActivo the estaActivo to set
+	 */
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 	
 	

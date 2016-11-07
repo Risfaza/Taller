@@ -67,8 +67,8 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 	 */
 	@Override
 	public void eliminar(Regimen regimen) {
-		ofy().delete().entity(regimen).now();
-
+		regimen.setActivo(false);
+		actualizar(regimen);
 	}
 
 	/*

@@ -41,6 +41,16 @@ public class Regimen {
 	 */
 	private List<Long> idEmpleados;
 	
+	/**
+	 * 
+	 */
+	private boolean activo = true;
+	
+	/**
+	 * 
+	 */
+	private RegimenContratacion tipoRegimen;
+	
 
 	/**
 	 * @return the id
@@ -111,6 +121,35 @@ public class Regimen {
 	public void setIdEmpleados(List<Long> idEmpleados) {
 		this.idEmpleados = idEmpleados;
 	}
+
+	/**
+	 * @return the activo
+	 */
+	public boolean isActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param activo the activo to set
+	 */
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	/**
+	 * @return the tipoRegimen
+	 */
+	public RegimenContratacion getTipoRegimen() {
+		return tipoRegimen;
+	}
+
+	/**
+	 * @param tipoRegimen the tipoRegimen to set
+	 */
+	public void setTipoRegimen(RegimenContratacion tipoRegimen) {
+		this.tipoRegimen = tipoRegimen;
+	}
+	
 	
 	
 }
