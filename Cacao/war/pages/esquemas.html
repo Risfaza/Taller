@@ -15,26 +15,28 @@
 			<h3>Percepciones</h3>				
 			Clave<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
 			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
+	
 				{{percepciones.clave}}</option>
 			</select></div><br>			
 			Descripcion<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
 			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
 				{{percepciones.descripcion}}</option>
 			</select></div><br>
-			Cantidad: <div class="col-md-12"><input type="text" ng-model="inputPerc.cantidad" class="form-control"></div>
-			<button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>			
+			Cantidad: <div class="col-md-12"><input type="text" ng-model="inputPerc.cantidad" class="form-control"></div><br>			
+		</div>
+		<div><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>
 		</div>
 		<div class="form-group">
 			<h3>Deducciones</h3>				
-			Clave<select ng-model="inputDeduc.clave">
+			Clave <div class="col-md-12"><select ng-model="inputDeduc.clave" class="form-control">
 			<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
 				{{ded.clave}}</option>
-			</select>					
-			Descripcion<select ng-model="inputDeduc.clave">
+			</select></div><br>				
+			Descripcion <div class="col-md-12"><select ng-model="inputDeduc.clave" class="form-control">
 			<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
 				{{ded.descripcion}}</option>
-			</select>
-			Porcentaje <input type="text" ng-model="inputDeduc.porcentaje">
+			</select></div><br>
+			Porcentaje <div class="col-md-12"><input type="text" ng-model="inputDeduc.porcentaje" class="form-control"></div> 
 			<br><button ng-click="addDed()" class="btn btn-primary" value="Guardar">Agregar</button>
 		</div>				
 	</form>				
