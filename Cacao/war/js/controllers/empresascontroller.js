@@ -1,5 +1,6 @@
-app.service('empresasService', function() {
+app.service('empresasService',['$http','$q', function($http,$q) {
 	this.add = function(newEmp) {/* Agrega elementos a arreglo Empresa */
+		
 	};
 	this.updaLocalStorage = function() {/* Actualiza Storage */
 	};
@@ -9,7 +10,7 @@ app.service('empresasService', function() {
 	};
 	this.removeItem = function(item) {/* Elimina elemento por elemeto */
 	}
-})
+}]);
 app.controller("empresasController", [
 		'$scope',
 		'$http',
