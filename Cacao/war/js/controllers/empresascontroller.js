@@ -20,17 +20,6 @@ app.controller("empresasController", [
 				$http.post("/empresas/add", $scope.newEmp).then(
 						function(response) {
 							alert("Empresa Guardada");
-							console.log(response.data);
-						}, function(response) {
-							alert("Something went wrong!");
-							console.log(response);
-						});
-			}
-
-			$scope.addEmp = function() {
-				$http.post("/empresas/add", $scope.newEmp).then(
-						function(response) {
-							alert("Empresa Guardada");
 							$location.path("/empresas/list");
 						}, function(response) {
 							alert("Something went wrong!");
