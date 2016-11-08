@@ -65,7 +65,8 @@ app.controller("empresasEditController", [
 						});
 			}
 
-			$scope.removeEmp = function(item) {
+			$scope.ver = function(item) {
+				$location.path("/empresas/details/"+item.RFC);
 			}
 
 			$scope.clean = function() {

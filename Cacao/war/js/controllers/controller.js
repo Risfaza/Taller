@@ -30,6 +30,11 @@ app.config(['$routeProvider',function($routeProvider) {
 	  templateUrl: "pages/empresas.html",
 	  controller: "empresasEditController"
 	});
+ 
+ $routeProvider.when('/empresas/details/:rfc', {
+	  templateUrl: "pages/empresasDetails.html",
+	  controller: "empresasDetailsController"
+	});
  $routeProvider.otherwise({
   redirectTo: 'index.html'
 });   
