@@ -1,0 +1,51 @@
+<!--Aqui va-->
+<section class="jumbotron">
+	<div class="container"></div>
+	<h2>Registra Informacion de la Empresa</h2>
+	<p>TikalCacao</p>
+</section>
+
+<div class="container">
+	<div class="row">
+		<h4>Datos Generales</h4>
+		<div class="col-md-6">Nombre de la Empresa: {{empresa.nombre}}</div>
+		<div class="col-md-6">Raz&oacute;n Social:
+			{{empresa.razonSocial}}</div>
+		<div class="col-md-6">RFC: {{empresa.RFC}}</div>
+	</div>
+	<div class="row">
+		<h4>Direcci&oacute;n</h4>
+		<div class="col-md-12">Estado: {{empresa.direccion.estado}}</div>
+		<div class="col-md-12">Localidad:
+			{{empresa.direccion.localidad}}</div>
+		<div class="col-md-6">
+			CP:{{empresa.direccion.cp}} <br>
+		</div>
+		<div class="col-md-6">Colonia: {{empresa.direccion.colonia}}</div>
+		<div class="col-md-6">Calle: {{empresa.direccion.calle}}</div>
+		<div class="col-md-4">Numero: {{empresa.direccion.numero}}</div>
+		<div class="col-md-4">
+			Numero Interior: {{empresa.direccion.numeroint}}
+		</div>
+	</div>
+	<div class="row">
+		<button class="btn btn-primary" ng-click="addEsquema()">Agregar Esquema</button>
+	</div>
+	<h3>Empresas Registradas</h3>
+	<ul>
+		<li ng-repeat="empresa in todo">{{empresa.nombre}}<br>
+			{{empresa.razonSocial}}<br> {{empresa.rfc}}<br>
+			{{empresa.regimen}}<br> {{empresa.direccion.estado}}<br>
+			{{empresa.direccion.localidad}}<br> {{empresa.direccion.cp}}<br>
+			{{empresa.direccion.colonia}}<br> {{empresa.direccion.calle}}<br>
+			{{empresa.numero}}<br> {{empresa.numeroint}}<br>
+			{{empresa.fecha | date: 'short'}}<br> - <a href="#"
+			ng-click="removeEmp(empresa)" style="color: red;">X</a><br>
+			<div class="miga-de-pan">
+				<ol class="breadcrumb">
+					<li><a href="esquemas.html">Ir a Registrar Esquemas</a></li>
+				</ol>
+			</div>
+		</li>
+	</ul>
+</div>

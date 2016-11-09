@@ -6,7 +6,7 @@ app.config(['$routeProvider',function($routeProvider) {
   controller: "empresasController"
 });
 
- $routeProvider.when('/esquemas', {
+ $routeProvider.when('/esquemas/agregar/:rfc', {
   templateUrl: "pages/esquemas.html",
   controller: "esquemasController"
 });
@@ -25,12 +25,17 @@ app.config(['$routeProvider',function($routeProvider) {
   templateUrl: "pages/empresasList.html",
   controller: "empresasListController"
 });
-$routeProvider.when('/cfdi', {
-  templateUrl: "pages/cfdi.html",
-  controller: "cfdiController"
-});
 
-$routeProvider.otherwise({
+ $routeProvider.when('/empresas/edit/:rfc', {
+	  templateUrl: "pages/empresas.html",
+	  controller: "empresasEditController"
+	});
+ 
+ $routeProvider.when('/empresas/details/:rfc', {
+	  templateUrl: "pages/empresasDetails.html",
+	  controller: "empresasDetailsController"
+	});
+ $routeProvider.otherwise({
   redirectTo: 'index.html'
 });   
 
