@@ -25,12 +25,12 @@ app.config(['$routeProvider',function($routeProvider) {
   templateUrl: "pages/empresasList.html",
   controller: "empresasListController"
 });
+$routeProvider.when('/cfdi', {
+  templateUrl: "pages/cfdi.html",
+  controller: "cfdiController"
+});
 
- $routeProvider.when('/empresas/edit/:rfc', {
-	  templateUrl: "pages/empresas.html",
-	  controller: "empresasEditController"
-	});
- $routeProvider.otherwise({
+$routeProvider.otherwise({
   redirectTo: 'index.html'
 });   
 
