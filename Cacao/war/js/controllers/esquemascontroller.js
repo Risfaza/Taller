@@ -7,15 +7,32 @@ app.service('esquemasService', [ '$http', '$q', function($http, $q) {
 		});
 		return d.promise;
 	}
-	
-	this.saveEmpresa= function(empr){
+
+	this.get= function(id){
 		var d = $q.defer();
-		$http.post("/esquemas/add",empr).then(function(response) {
+		$http.get("/esquemas/find/" + id).then(function(response) {
 			d.resolve(response.data);
 		}, function(response) {
 		});
 		return d.promise;
 	}
+	
+	this.saveEmpresa = function(empr) {
+		var d = $q.defer();
+		$http.post("/esquemas/add", empr).then(function(response) {
+			d.resolve(response.data);
+		}, function(response) {
+		});
+		return d.promise;
+	}
+} ]);
+app.controller("esquemasDetailsController", [ '$scope', '$routeParams', '$location',
+'esquemasService', function($scope, $routeParams, $location, esquemasService) {
+	esquemasService.get($routeParams.id).then(function(data){
+		$scope.regimen=data;
+		console.log(data);
+	})
+	
 } ]);
 
 app
@@ -23,10 +40,12 @@ app
 				"esquemasController",
 				[
 						'$scope',
-						'$routeParams','$location',
-						
+						'$routeParams',
+						'$location',
+
 						'esquemasService',
-						function($scope,$routeParams,$location, esquemasService) {
+						function($scope, $routeParams, $location,
+								esquemasService) {
 							$scope.listpercecpciones = [
 									{
 										"clave" : "001",
@@ -310,12 +329,12 @@ app
 								nombre : "",
 								percepciones : [],
 								deducciones : [],
-								tipos : []
 							};
 
-							esquemasService.getEmpresa($routeParams.rfc).then(function(data){
-								$scope.empresa=data[0];
-							});
+							esquemasService.getEmpresa($routeParams.rfc).then(
+									function(data) {
+										$scope.empresa = data[0];
+									});
 							$scope.newEsq = {};
 							$scope.newDed = {};
 							$scope.listaEsq = [];
@@ -343,21 +362,23 @@ app
 							}
 
 							$scope.save = function(empr) {
-								if(!empr.regimenes){
-									empr.regimenes=[]
+								if (!empr.regimenes) {
+									empr.regimenes = []
 								}
-								var send={empresa:empr.RFC,
-										regimen:$scope.regimen
+								var send = {
+									empresa : empr.RFC,
+									regimen : $scope.regimen,
+									tipo : $scope.regimen.tipoRegimen
 								}
-										
-								
+
 								empr.regimenes.push($scope.regimen);
 								console.log($scope.empresa);
-								esquemasService.saveEmpresa(send).then(function(data){
-									console.log(data);
-									alert("Guardado con éxito");
-									$location.path("/empresas/list")
-								})
+								esquemasService.saveEmpresa(send).then(
+										function(data) {
+											console.log(data);
+											alert("Guardado con éxito");
+											$location.path("/empresas/list")
+										})
 
 							};
 						} ]);

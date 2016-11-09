@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.cacao.dao.EmpresasDAO;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
+import com.tikal.cacao.springController.viewObjects.EmpresaVO;
 import com.tikal.cacao.util.JsonConvertidor;
 
 @Controller
@@ -45,7 +46,7 @@ public class EmpresasController {
 		Empresa e=empresasdao.consultar(rfc);
 		List<Regimen> lista= e.getRegimenes();
 		Object[] res= new Object[2];
-		res[0]=e;
+		res[0]=new EmpresaVO(e);
 		res[1]=lista;
 		response.getWriter().println(JsonConvertidor.toJson(res));
 	}
