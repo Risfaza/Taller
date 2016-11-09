@@ -1,8 +1,13 @@
-app.service('empresasService',['$http','$q', function($http,$q) {
+app.service('empresasService', [ '$http', '$q', function($http, $q) {
 	this.add = function(newEmp) {/* Agrega elementos a arreglo Empresa */
-		
+
 	};
-	this.updaLocalStorage = function() {/* Actualiza Storage */
+	this.find = function(rfc) {
+		var d= $q.defer();
+		$http.get("/empresas/find/"+rfc).then(function(response){
+				d.resolve(response.data);
+		},function(response){});
+		return d.promise;
 	};
 	this.clean = function() {/* Limpia o Elimina todos los elementos */
 	};
@@ -10,7 +15,7 @@ app.service('empresasService',['$http','$q', function($http,$q) {
 	};
 	this.removeItem = function(item) {/* Elimina elemento por elemeto */
 	}
-}]);
+} ]);
 app.controller("empresasController", [
 		'$scope',
 		'$http',
@@ -44,7 +49,7 @@ app.controller("empresasEditController", [
 		'$location',
 		'$routeParams',
 		'empresasService',
-		function($scope, $http, $location, $routeParams, empresasSevice) {
+		function($scope, $http, $location, $routeParams, empresasService) {
 			console.log($routeParams.rfc);
 			$http.get("empresas/find/" + $routeParams.rfc).then(
 					function(response) {
@@ -66,10 +71,22 @@ app.controller("empresasEditController", [
 			}
 
 			$scope.ver = function(item) {
-				$location.path("/empresas/details/"+item.RFC);
+				$location.path("/empresas/details/" + item.RFC);
 			}
 
 			$scope.clean = function() {
 			}
 
+		} ]);
+
+app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
+		'$routeParams', 'empresasService',
+		function($scope, $http, $location, $routeParams, empresasService) {
+			empresasService.find($routeParams.rfc).then(function(data){
+				$scope.empresa=data;
+			});
+			
+			$scope.agregarEsquema=function(){
+				$location.path("/esquemas/agregar/"+$scope.empresa.RFC);
+			}
 		} ]);

@@ -6,7 +6,7 @@ app.config(['$routeProvider',function($routeProvider) {
   controller: "empresasController"
 });
 
- $routeProvider.when('/esquemas', {
+ $routeProvider.when('/esquemas/agregar/:rfc', {
   templateUrl: "pages/esquemas.html",
   controller: "esquemasController"
 });
