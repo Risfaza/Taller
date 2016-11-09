@@ -5,5 +5,6 @@
 // Generado el: 2016.11.09 a las 05:26:25 PM CST 
 //
 
+
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.sat.gob.mx/cfd/3", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.tikal.cacao.sat.cfd;
