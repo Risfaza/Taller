@@ -81,12 +81,8 @@ public class RegimenesDAOImpl implements RegimenesDAO {
 	@Override
 	public List<Regimen> consultaPorEmpresa(Empresa empresa) {
 		Regimen regimenRecuperado;
-		List<Regimen> listaDeReg = new ArrayList<Regimen>();
-		for (Ref<Regimen> elem : empresa.getRegimenes()) {
-			regimenRecuperado = elem.get();
-			listaDeReg.add(regimenRecuperado);
-		}
-		return listaDeReg;
+	
+		return empresa.getRegimenes();
 	}
 
 }

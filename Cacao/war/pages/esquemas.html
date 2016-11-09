@@ -8,8 +8,8 @@
 	<div class="container">
 		<form class="form-inline" ng-submit="addEsq()">
 			<div class="form-group">
-				Nombre del Regimen <div class="col-md-12"><input type="text" class="form-control"></div><br>
-				Tipo de Regimen <div class="col-md-12"><select ng-model="regimen.tipo" class="form-control">
+				Nombre del Regimen <div class="col-md-12"><input type="text" class="form-control" ng-model="regimen.nombre"></div><br>
+				Tipo de Regimen <div class="col-md-12"><select ng-model="regimen.tipoRegimen" class="form-control">
 				<option ng-repeat="percepciones in listtipos">{{percepciones.descripcion}}</option>
 			</select></div>
 			<h3>Percepciones</h3>				
@@ -78,7 +78,7 @@
 				</tr>					
 			</tbody>
 		</table>
-		<button class="btn btn-primary">Guardar</button>
+		<button class="btn btn-primary" ng-click="save(empresa)">Guardar</button>
 	</div>
 
 	<div class="miga-de-pan">

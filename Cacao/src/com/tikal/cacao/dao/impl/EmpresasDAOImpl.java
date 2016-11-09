@@ -70,7 +70,10 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	 */
 	@Override
 	public void aplicarUnRegimen(Regimen r, Empresa e) {
-		e.getRegimenes().add(Ref.create(r));
+		if(r.getId()==null){
+			ofy().save().entities(r).now();
+		}
+		e.addRegimen(Ref.create(r));
 		actualizar(e);
         // asumiendo que el Regimen r ya esta guardado en el DataStore aqui termina el cuerpo del método
 		
@@ -78,7 +81,11 @@ public class EmpresasDAOImpl implements EmpresasDAO {
 	}
 
 	
-	
+	public void addRegimen(String rfc,Regimen r){
+		Empresa e=ofy().load().type(Empresa.class).filter("RFC",rfc).list().get(0);
+		e.addRegimen(Ref.create(r));
+		this.actualizar(e);
+	}
 
 	
 	

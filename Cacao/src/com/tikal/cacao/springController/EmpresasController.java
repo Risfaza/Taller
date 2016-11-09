@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.cacao.dao.EmpresasDAO;
-import com.tikal.cacao.dao.impl.EmpresasDAOImpl;
 import com.tikal.cacao.model.Empresa;
+import com.tikal.cacao.model.Regimen;
 import com.tikal.cacao.util.JsonConvertidor;
 
 @Controller
@@ -42,11 +42,16 @@ public class EmpresasController {
 	@RequestMapping(value = { "/find/{rfc}" }, method = RequestMethod.GET, produces = "application/json")
 	public void findEmpresa(HttpServletResponse response, HttpServletRequest request,
 			@PathVariable String rfc) throws IOException {
-		response.getWriter().println(JsonConvertidor.toJson(empresasdao.consultar(rfc)));
+		Empresa e=empresasdao.consultar(rfc);
+		List<Regimen> lista= e.getRegimenes();
+		Object[] res= new Object[2];
+		res[0]=e;
+		res[1]=lista;
+		response.getWriter().println(JsonConvertidor.toJson(res));
 	}
 
 	@RequestMapping(value = {
-			"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+			"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public void updateEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 			throws IOException {
 		Empresa e = (Empresa) JsonConvertidor.fromJson(json, Empresa.class);

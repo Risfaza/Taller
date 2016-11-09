@@ -29,23 +29,23 @@
 		</div>
 	</div>
 	<div class="row">
+	<h3>Reg&iacute;menes</h3>
+		<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<td>Nombre</td>
+				<td>Tipo</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="reg in regimenes">
+				<td>{{reg.nombre}}</td>
+				<td>{{reg.tipo}}</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="row">
 		<button class="btn btn-primary" ng-click="addEsquema()">Agregar Esquema</button>
 	</div>
-	<h3>Empresas Registradas</h3>
-	<ul>
-		<li ng-repeat="empresa in todo">{{empresa.nombre}}<br>
-			{{empresa.razonSocial}}<br> {{empresa.rfc}}<br>
-			{{empresa.regimen}}<br> {{empresa.direccion.estado}}<br>
-			{{empresa.direccion.localidad}}<br> {{empresa.direccion.cp}}<br>
-			{{empresa.direccion.colonia}}<br> {{empresa.direccion.calle}}<br>
-			{{empresa.numero}}<br> {{empresa.numeroint}}<br>
-			{{empresa.fecha | date: 'short'}}<br> - <a href="#"
-			ng-click="removeEmp(empresa)" style="color: red;">X</a><br>
-			<div class="miga-de-pan">
-				<ol class="breadcrumb">
-					<li><a href="esquemas.html">Ir a Registrar Esquemas</a></li>
-				</ol>
-			</div>
-		</li>
-	</ul>
 </div>

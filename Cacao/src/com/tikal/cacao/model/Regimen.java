@@ -146,8 +146,8 @@ public class Regimen {
 	/**
 	 * @param tipoRegimen the tipoRegimen to set
 	 */
-	public void setTipoRegimen(RegimenContratacion tipoRegimen) {
-		this.tipoRegimen = tipoRegimen;
+	public void setTipoRegimen(String tipoRegimen) {
+		this.tipoRegimen = RegimenContratacion.valueOf(tipoRegimen);
 	}
 	
 	

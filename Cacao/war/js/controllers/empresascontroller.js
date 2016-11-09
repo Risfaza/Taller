@@ -83,10 +83,12 @@ app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
 		'$routeParams', 'empresasService',
 		function($scope, $http, $location, $routeParams, empresasService) {
 			empresasService.find($routeParams.rfc).then(function(data){
-				$scope.empresa=data;
+				$scope.empresa=data[0];
+				$scope.regimenes=data[1];
+				console.log($scope.regimenes);
 			});
 			
-			$scope.agregarEsquema=function(){
+			$scope.addEsquema=function(){
 				$location.path("/esquemas/agregar/"+$scope.empresa.RFC);
 			}
 		} ]);
