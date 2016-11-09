@@ -91,4 +91,8 @@ app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
 			$scope.addEsquema=function(){
 				$location.path("/esquemas/agregar/"+$scope.empresa.RFC);
 			}
+			$scope.verRegimen=function(id){
+				$location.path("/esquemas/details/"+id);
+			}
+			
 		} ]);

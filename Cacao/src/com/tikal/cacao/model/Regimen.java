@@ -139,15 +139,18 @@ public class Regimen {
 	/**
 	 * @return the tipoRegimen
 	 */
-	public RegimenContratacion getTipoRegimen() {
-		return tipoRegimen;
+	public String getTipoRegimen() {
+		if(this.tipoRegimen==null){
+			return "";
+		}
+		return tipoRegimen.toString();
 	}
 
 	/**
 	 * @param tipoRegimen the tipoRegimen to set
 	 */
 	public void setTipoRegimen(String tipoRegimen) {
-		this.tipoRegimen = RegimenContratacion.valueOf(tipoRegimen);
+		this.tipoRegimen =RegimenContratacion.valueOf(tipoRegimen.toUpperCase().replaceAll(" ","_"));
 	}
 	
 	

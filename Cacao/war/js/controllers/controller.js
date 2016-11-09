@@ -39,6 +39,11 @@ app.config(['$routeProvider',function($routeProvider) {
    templateUrl: "pages/empresasDetails.html",
    controller: "empresasDetailsController"
  });
+ 
+ $routeProvider.when('/esquemas/details/:id', {
+	   templateUrl: "pages/esquemasDetails.html",
+	   controller: "esquemasDetailsController"
+	 });
 
  $routeProvider.otherwise({
   redirectTo: 'index.html'

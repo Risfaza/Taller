@@ -1,0 +1,59 @@
+
+<!--Aqui va-->
+<section class="jumbotron">
+	<div class="container"></div>
+	<h4>R&eacute;gimen</h4>
+	<p>TikalCacao</p>
+</section>
+
+<div class="container">
+<div class="row">
+	<div class="col-md-6">
+	<b>Nombre del Regimen</b>: {{regimen.nombre}} 
+	</div>
+	<div class="col-md-6"><b>Tipo
+	de Regimen:</b> {{regimen.tipo}}</div>
+</div>
+</div>
+
+<div class="container col-md-offset-1">
+	<div class="row">
+
+		<h4>Percepciones</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Clave</th>
+					<th>Descripcion</th>
+					<th>Cantidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="percept in regimen.percepciones">
+					<td>{{percept.clave}}</td>
+					<td>{{percept.descripcion}}</td>
+					<td>{{percept.cantidad}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<h4>Deducciones</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Clave</th>
+					<th>Descripcion</th>
+					<th>Pocentaje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="deduc in regimen.deducciones">
+					<td>{{deduc.clave}}</td>
+					<td>{{deduc.descripcion}}</td>
+					<td>{{deduc.porcentaje}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
