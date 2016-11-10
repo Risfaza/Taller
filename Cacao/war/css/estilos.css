@@ -33,6 +33,9 @@
 .img{
 	height: 10%;
 }
+.segundo{
+	margin-top: 80px;
+}
 .post .thumb img{
 	width: 100%;
 
@@ -43,9 +46,4 @@
 		margin-bottom: 20px;
 		margin-right: 0;
 	}
-}
-
-.mostrar{
-	display:block;
-	padding-right: 17px;
 }
