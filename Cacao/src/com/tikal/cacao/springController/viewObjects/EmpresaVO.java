@@ -9,7 +9,7 @@ import com.tikal.cacao.model.Regimen;
 public class EmpresaVO extends Empresa{
 
 	private List<RegimenVO> regimenesVO;
-	
+		
 	public EmpresaVO(){
 		regimenesVO = new ArrayList<RegimenVO>();
 	}

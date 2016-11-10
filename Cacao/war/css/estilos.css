@@ -35,3 +35,8 @@
 		margin-right: 0;
 	}
 }
+
+.mostrar{
+	display:block;
+	padding-right: 17px;
+}
