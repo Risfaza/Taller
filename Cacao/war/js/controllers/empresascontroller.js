@@ -95,4 +95,8 @@ app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
 				$location.path("/esquemas/details/"+id);
 			}
 			
+			$scope.editarRegimen=function(id){
+				$location.path("/esquemas/edit/"+id);
+			}
+			
 		} ]);

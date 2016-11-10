@@ -44,6 +44,11 @@ app.config(['$routeProvider',function($routeProvider) {
 	   templateUrl: "pages/esquemasDetails.html",
 	   controller: "esquemasDetailsController"
 	 });
+ 
+ $routeProvider.when('/esquemas/edit/:id', {
+	   templateUrl: "pages/esquemasEdit.html",
+	   controller: "esquemasEditController"
+	 });
 
  $routeProvider.otherwise({
   redirectTo: 'index.html'
