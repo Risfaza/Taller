@@ -24,6 +24,15 @@
 	margin-right:10px;
 	width:40%;
 }
+.table{
+	height: 10%
+	padding 20px;
+	font-size: xx-small;
+	font-weight: bold;
+}
+.img{
+	height: 10%;
+}
 .post .thumb img{
 	width: 100%;
 
