@@ -22,21 +22,24 @@ public class Percepcion {
 	/**
 	 * @return the tipo
 	 */
-	public TipoPercepcion getTipo() {
-		return tipo;
+	public String getTipo() {
+		if(tipo==null){
+			return "";
+		}
+		return tipo.toString();
 	}
 
 	/**
 	 * @param tipo the tipo to set
 	 */
-	public void setTipo(TipoPercepcion tipo) {
-		this.tipo = tipo;
+	public void setTipo(String tipo) {
+		this.tipo = TipoPercepcion.valueOf(tipo.toUpperCase().replaceAll(" ", "_"));
 	}
 
 	/**
 	 * @return the cantidad
 	 */
-	public double getCantidad() {
+	public double getCantidad() {	
 		return cantidad;
 	}
 

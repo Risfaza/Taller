@@ -25,6 +25,15 @@ app.service('esquemasService', [ '$http', '$q', function($http, $q) {
 		});
 		return d.promise;
 	}
+	
+	this.save = function(empr) {
+		var d = $q.defer();
+		$http.post("/esquemas/update", empr).then(function(response) {
+			d.resolve(response.data);
+		}, function(response) {
+		});
+		return d.promise;
+	}
 } ]);
 app.controller("esquemasDetailsController", [ '$scope', '$routeParams', '$location',
 'esquemasService', function($scope, $routeParams, $location, esquemasService) {
@@ -365,34 +374,33 @@ app
 
 							esquemasService.get($routeParams.id).then(function(data){
 								$scope.regimen=data;
-								console.log(data);
-							});
-							
-							$scope.showModal=function(id){
-								var element = document.getElementById(id);
-								element.classList.add("modal-open");
-								element.classList.add("in");
-//								element.classList.add("mostrar");
-								element.style.display="block";
-//								element.style.padding-right="17px";
-							}
-							
-							$scope.hidePer=function(){
+								if(!$scope.regimen.percepciones){
+									$scope.regimen.percepciones = [];
+								}
 								
+								if(!$scope.regimen.deducciones){
+									$scope.regimen.deducciones = [];
+								}
+							});
+							$scope.showFormPer=false;
+							$scope.showPer=function(){
+								$scope.showFormPer=true;
 							}
-							$scope.save = function(empr) {
-								if (!empr.regimenes) {
-									empr.regimenes = []
-								}
-								var send = {
-									empresa : empr.RFC,
-									regimen : $scope.regimen,
-									tipo : $scope.regimen.tipoRegimen
-								}
+							$scope.showDed=function(){
+								$scope.showFormPer=false;
+							}
+							
+							$scope.save = function(reg) {
+//								if (!empr.regimenes) {
+//									empr.regimenes = []
+//								}
+//								var send = {
+//									empresa : empr.RFC,
+//									regimen : $scope.regimen,
+//									tipo : $scope.regimen.tipoRegimen
+//								}
 
-								empr.regimenes.push($scope.regimen);
-								console.log($scope.empresa);
-								esquemasService.saveEmpresa(send).then(
+								esquemasService.save(reg).then(
 										function(data) {
 											console.log(data);
 											alert("Guardado con éxito");
@@ -726,11 +734,6 @@ app
 						}
 						$scope.regimen.deducciones.push(ded);
 						$scope.inputDeduc = {};
-					}
-					$scope.showFormPer=false;
-					$scope.showPer=function(){
-						alert("entra");
-						$scope.showFormPer=true;
 					}
 					
 					$scope.save = function(empr) {

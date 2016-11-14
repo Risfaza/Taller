@@ -8,12 +8,12 @@ package com.tikal.cacao.model;
  *
  */
 public class Deduccion {
-	
+
 	/**
 	 * 
 	 */
 	private TipoDeduccion tipo;
-	
+
 	/**
 	 * 
 	 */
@@ -22,15 +22,20 @@ public class Deduccion {
 	/**
 	 * @return the tipo
 	 */
-	public TipoDeduccion getTipo() {
-		return tipo;
+	public String getTipo() {
+		if (tipo == null) {
+			return "";
+		}
+		
+		return tipo.toString();
 	}
 
 	/**
-	 * @param tipo the tipo to set
+	 * @param tipo
+	 *            the tipo to set
 	 */
-	public void setTipo(TipoDeduccion tipo) {
-		this.tipo = tipo;
+	public void setTipo(String tipo) {
+		this.tipo = TipoDeduccion.valueOf(tipo.toUpperCase().replaceAll(" ", "_"));
 	}
 
 	/**
@@ -41,11 +46,11 @@ public class Deduccion {
 	}
 
 	/**
-	 * @param descuento the descuento to set
+	 * @param descuento
+	 *            the descuento to set
 	 */
 	public void setDescuento(double descuento) {
 		this.descuento = descuento;
 	}
-	
-	
+
 }

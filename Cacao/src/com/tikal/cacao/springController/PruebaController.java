@@ -99,7 +99,7 @@ public class PruebaController {
 		
 		empresa.setRegimenes(regimenes);
 		
-		empresa.getRegimenes().add(Ref.create(reg1));  // cómo generar esta 'Ref (llave) en tiempo de ejecución'
+//		empresa.getRegimenes().add(Ref.create(reg1));  // cómo generar esta 'Ref (llave) en tiempo de ejecución'
 		
 		EmpresasDAO dao = new EmpresasDAOImpl();
 		dao.crear(empresa);
@@ -109,18 +109,18 @@ public class PruebaController {
 		regdao.crear(reg1);
 		Regimen r = regdao.consultar(1);
 		
-		Regimen regFetched = empresaGuardada.getRegimenes().get(0).get();
+//		Regimen regFetched = empresaGuardada.getRegimenes().get(0).get();
 		
-		PrintWriter pw = re.getWriter();
-	    pw.println(empresaGuardada.getRFC());
-	    pw.println(regFetched.getNombre());
-	    pw.println(regFetched.getPercepciones().get(0).getTipo());
-	    pw.println(regFetched.getPercepciones().get(1).getTipo());
-	    pw.println(regFetched.getDeducciones().get(0).getTipo());
-	    pw.println(regFetched.getDeducciones().get(1).getTipo());
-	    
-	    pw.println(r.getId());
-	    pw.println(r.getNombre());
+//		PrintWriter pw = re.getWriter();
+//	    pw.println(empresaGuardada.getRFC());
+//	    pw.println(regFetched.getNombre());
+//	    pw.println(regFetched.getPercepciones().get(0).getTipo());
+//	    pw.println(regFetched.getPercepciones().get(1).getTipo());
+//	    pw.println(regFetched.getDeducciones().get(0).getTipo());
+//	    pw.println(regFetched.getDeducciones().get(1).getTipo());
+////	    
+//	    pw.println(r.getId());
+//	    pw.println(r.getNombre());
 	}
 	
 	/*@RequestMapping(value={"/pruebaEmpleados"}, method = RequestMethod.GET)

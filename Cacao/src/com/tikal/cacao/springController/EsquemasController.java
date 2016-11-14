@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.cacao.dao.EmpresasDAO;
 import com.tikal.cacao.dao.RegimenesDAO;
+import com.tikal.cacao.model.Regimen;
 import com.tikal.cacao.springController.viewObjects.RegimenEmpresa;
 import com.tikal.cacao.springController.viewObjects.RegimenVO;
 import com.tikal.cacao.util.JsonConvertidor;
@@ -38,12 +39,22 @@ public class EsquemasController {
 		empresasdao.aplicarUnRegimen(e.getRegimen(), empresasdao.consultar(e.getEmpresa()));
 	}
 
+	@RequestMapping(value = {
+			"/update" }, method = RequestMethod.POST, consumes = "application/json")
+	public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+			throws IOException {
+		RegimenVO es= (RegimenVO) JsonConvertidor.fromJson(json, RegimenVO.class);
+		Regimen r= es.getReg();
+		regimenesdao.actualizar(r);
+	}
+
 	@RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
 	public void find(HttpServletResponse response, HttpServletRequest request, @PathVariable String id)
 			throws IOException {
 		// Empresa e= (Empresa) JsonConvertidor.fromJson(json, Empresa.class);
 		// empresasdao.crear(e);
-		response.getWriter().println(JsonConvertidor.toJson(new RegimenVO(regimenesdao.consultar(Long.parseLong(id)))));
+		RegimenVO r= new RegimenVO(regimenesdao.consultar(Long.parseLong(id)));
+		response.getWriter().println(JsonConvertidor.toJson(r));
 	}
 
 }
