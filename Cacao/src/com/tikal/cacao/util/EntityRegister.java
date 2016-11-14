@@ -10,6 +10,7 @@ import com.tikal.cacao.model.Empleado;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
 import com.tikal.cacao.model.Usuario;
+import com.tikal.cacao.tarifas.TarifaISRMensual;
 
 /**
  * @author Tikal
@@ -26,6 +27,8 @@ public class EntityRegister {
 		ObjectifyService.register(Empresa.class);
 		ObjectifyService.register(Regimen.class);
 		ObjectifyService.register(Usuario.class);
+		ObjectifyService.register(TarifaISRMensual.class);
+		
 	}
 
 }
