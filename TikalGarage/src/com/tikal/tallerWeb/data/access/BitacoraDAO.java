@@ -18,6 +18,8 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
+import com.tikal.tallerWeb.modelo.entity.EventoEntity;
+
 import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
 
 /**
@@ -27,4 +29,5 @@ public interface BitacoraDAO {
 
     List<Evento> cargar(Long idServicio);
     List<Evento> guardar(Long idServicio, List<Evento> datos);
+    public void agregar(Long idServicio,EventoEntity evento);
 }

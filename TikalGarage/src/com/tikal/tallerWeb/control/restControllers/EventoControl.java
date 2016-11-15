@@ -23,7 +23,7 @@ public class EventoControl {
 	@RequestMapping(value={"/add"}, method= RequestMethod.POST, consumes="application/json")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestBody String json){
 		EventoEntity e= (EventoEntity)JsonConvertidor.fromJson(json, EventoEntity.class);
-				
+		bitacora.agregar(e.getId(), e);
 	}
 	
 }

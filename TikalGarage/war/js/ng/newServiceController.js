@@ -64,11 +64,17 @@ app
 								$scope.caracteristicaAuto = "";
 							}
 							$scope.evento={};
+							$scope.eventos=[];
 							$scope.fecha=function(){
 								var f= new Date();
 //								$scope.evento.fecha= f.getDay()+"-"+f.getMonth()+"-"+f.getFullYear()+"T"+f.getHours()+":"+f.getMinutes();
 							}
 							
+							$scope.addEvento=function(){
+								var e= $scope.evento;
+								$scope.eventos.push(e);
+								$scope.evento={};
+							}
 							$scope.findCliente = function() {
 								// implementar servicio de búsqueda
 							}
