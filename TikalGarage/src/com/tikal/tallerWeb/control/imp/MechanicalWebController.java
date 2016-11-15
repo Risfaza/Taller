@@ -9,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.modelo.servicio.Person;
+import com.tikal.tallerWeb.util.JsonConvertidor;
 
 @Controller
 @RequestMapping("/prueba")
@@ -57,8 +57,7 @@ public class MechanicalWebController {
 //		List<Entity> customers = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
 //		ObjectifyService.ofy().load().type(Person.class).list();
 
-		Gson g = new Gson();
-		String b = g.toJson(ObjectifyService.ofy().load().type(Person.class).list());
+		String b = JsonConvertidor.toJson(ObjectifyService.ofy().load().type(Person.class).list());
 
 		response.getWriter().print(b);
 

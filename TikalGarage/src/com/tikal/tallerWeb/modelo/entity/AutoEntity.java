@@ -11,6 +11,17 @@ public class AutoEntity extends Auto{
 
 	public AutoEntity(){}
 	
+	public AutoEntity(Auto a){
+		this.setColor(a.getColor());
+		this.setEquipamiento(a.getEquipamiento());
+		this.setMarca(a.getMarca());
+		this.setModelo(a.getModelo());
+		this.setNumeroSerie(a.getNumeroSerie());
+		this.setPlacas(a.getPlacas());
+		this.setTipo(a.getTipo());
+		this.setVersion(a.getVersion());
+		
+	}
 	public Long getId() {
 		return id;
 	}

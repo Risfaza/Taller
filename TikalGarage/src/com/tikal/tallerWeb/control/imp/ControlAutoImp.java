@@ -7,33 +7,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.tikal.tallerWeb.control.ControlAuto;
 import com.tikal.tallerWeb.data.access.AutoDAO;
+import com.tikal.tallerWeb.util.JsonConvertidor;
 
+import technology.tikal.taller.automotriz.model.auto.Auto;
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData;
+import technology.tikal.taller.automotriz.model.servicio.Servicio;
+import technology.tikal.taller.automotriz.model.servicio.auto.DatosAuto;
 
 @Controller
-@RequestMapping(value={"/auto"})
+@RequestMapping(value = { "/auto" })
 public class ControlAutoImp implements ControlAuto {
 
 	@Autowired
 	AutoDAO autoDAO;
 
 	@Override
-	@RequestMapping(value={"/loadAuto"},method= RequestMethod.GET)	
+	@RequestMapping(value = { "/loadAuto" }, method = RequestMethod.GET)
 	public void loadAuto(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response,
 			ServicioIndexAutoData origen) {
 		this.autoDAO.cargar(origen.getNumeroSerie());
 	}
 
 	@Override
-	@RequestMapping(value={"/getAutos"},method= RequestMethod.GET)
+	@RequestMapping(value = { "/getAutos" }, method = RequestMethod.GET)
 	public List<ServicioIndexAutoData> getAutos(javax.servlet.http.HttpServletRequest request,
 			javax.servlet.http.HttpServletResponse response) {
+//		Auto a = new Auto().getEquipamiento().;
+		DatosAuto da = new DatosAuto();
+		Servicio s = new Servicio();
 		
-		Gson g = new Gson();
-		String json= g.toJson(this.autoDAO.getIndiceAutos());
+		String json = JsonConvertidor.toJson(this.autoDAO.getIndiceAutos());
 		return null;
 	}
 
@@ -41,10 +46,9 @@ public class ControlAutoImp implements ControlAuto {
 	public void buscarAuto(javax.servlet.http.HttpServletRequest request,
 			javax.servlet.http.HttpServletResponse response, String numeroSerie, List<ServicioIndexAutoData> cmd) {
 		this.autoDAO.buscar(numeroSerie, cmd);
-		//Cambiar a String
-		Gson g = new Gson();
-		String json= g.toJson(this.autoDAO.buscar(numeroSerie, cmd));
-	}
+//		technology.tikal.taller.automotriz.model.auto.Equipamiento e =a.getEquipamiento();
+		String json = JsonConvertidor.toJson(this.autoDAO.buscar(numeroSerie, cmd));
 
+	}
 
 }

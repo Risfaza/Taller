@@ -17,33 +17,23 @@
 package com.tikal.tallerWeb.data.access.rest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.googlecode.objectify.ObjectifyService;
-import com.tikal.tallerWeb.DataStoreClass;
+import com.tikal.tallerWeb.data.access.AutoDAO;
 
 import technology.tikal.taller.automotriz.model.auto.Auto;
-import technology.tikal.taller.automotriz.model.auto.Equipamiento;
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData;
 
 /**
  * @author Nekorp
  */
 @Service
-public class AutoDAOImp // implements AutoDAO
+public class AutoDAOImp  implements AutoDAO
 {
 
 	// @Autowired

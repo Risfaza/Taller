@@ -10,7 +10,17 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+    <!-- Registro de Entities -->
+    <bean class="com.tikal.tallerWeb.ObjectifyRegisterTikalWeb"></bean>
+    
+    <!-- beans daos -->
+    <bean class="com.tikal.tallerWeb.data.access.rest.AutoDAOImp"></bean>
+    <bean class="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"></bean>
+    <bean class="com.tikal.tallerWeb.data.access.rest.ClienteDAOImp"></bean>
+    <bean class="com.tikal.tallerWeb.data.access.rest.BitacoraDAOImp"></bean>
+    
 	<context:component-scan base-package="com.tikal.tallerWeb.control.imp" />
+	<context:component-scan base-package="com.tikal.tallerWeb.control.restControllers" />
 	<mvc:annotation-driven />
 
 	

@@ -8,12 +8,21 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
 @Entity
 public class EventoEntity extends Evento{
 	
-	@Id public Long id;
 	
-	public EventoEntity(){}
+	@Id private Long idEvento;
+	
+	
+	public EventoEntity(){
+	}
 
-	public Long getId() {
-		return id;
+
+	
+	public Long getIdEvento() {
+		return idEvento;
+	}
+
+	public void setIdEvento(Long idServicio) {
+		this.idEvento = idServicio;
 	}
 
 }

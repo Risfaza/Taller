@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
+import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 
 import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
-import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 
 /**
  * @author Nekorp
@@ -61,4 +61,8 @@ public class BitacoraDAOImp implements BitacoraDAO {
 //        return Arrays.asList(r);
     }
 
+    public void agregar(Long idServicio,EventoEntity evento){
+    	evento.setId(idServicio);
+    	ObjectifyService.ofy().save().entities(evento).now();
+    }
 }

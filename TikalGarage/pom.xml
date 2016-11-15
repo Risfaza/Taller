@@ -5,7 +5,7 @@
 	<groupId>org.nekorp.workflow</groupId>
 	<artifactId>workflow-desktop-app</artifactId>
 	<version>0.15.2</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>workflow-desktop-app</name>
 	<url>http://maven.apache.org</url>
