@@ -5,6 +5,11 @@
 		<p>TikalCacao</p>
 	</section>
 	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a href="#/empresas/details/:rfc">Regresar a Detalles de Empresas</a></li>
+			</ol>
+		</div>
 		<form>
 			<h4>Datos Generales</h4>
 			<div class="col-md-6">Numero de Seguridad Social: <input class="form-control" ng-model="newEmp.numSeguroSocial" type="text"><br></div>
@@ -56,7 +61,7 @@
 			<div class="col-md-6">N&uacute;mero: <input class="form-control" type="text" ng-model="newEmp.direccion.numeroExterior"><br></div>
 			<div class="col-md-6">N&uacute;mero Interior: <input class="form-control" type="text" ng-model="newEmp.direccion.numeroInterior"><br></div>
 		</form>
-	</div>
+	</div ng-view>
 	<div class="container col-md-offset-1">
 		<button value="Guardar" class="btn btn-primary" ng-click="addEmp()" >Guardar</button>
 		<button type="reset" class="btn btn-primary">Limpiar</button>
