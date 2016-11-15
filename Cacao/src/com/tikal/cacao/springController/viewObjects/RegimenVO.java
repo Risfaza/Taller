@@ -26,5 +26,17 @@ public class RegimenVO extends Regimen {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	
+	public Regimen getReg(){
+		Regimen r= new Regimen();
+		r.setActivo(this.isActivo());
+		r.setDeducciones(this.getDeducciones());
+		r.setId(this.getId());
+		r.setIdEmpleados(this.getIdEmpleados());
+		r.setNombre(this.getNombre());
+		r.setPercepciones(this.getPercepciones());
+		r.setTipoRegimen(this.tipo);
+		return r;
+	}
 
 }
