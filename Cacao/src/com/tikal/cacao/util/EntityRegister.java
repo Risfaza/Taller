@@ -10,7 +10,12 @@ import com.tikal.cacao.model.Empleado;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
 import com.tikal.cacao.model.Usuario;
-import com.tikal.cacao.tarifas.TarifaISRMensual;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaDecenal;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaMensual;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaQuincenal;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaSemanal;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaSubsidio;
+import com.tikal.cacao.tarifas.subsidioEmpleo.TarifaTrabajoRealizado;
 
 /**
  * @author Tikal
@@ -27,8 +32,12 @@ public class EntityRegister {
 		ObjectifyService.register(Empresa.class);
 		ObjectifyService.register(Regimen.class);
 		ObjectifyService.register(Usuario.class);
-		ObjectifyService.register(TarifaISRMensual.class);
-		
+		ObjectifyService.register(TarifaSubsidio.class);
+		ObjectifyService.register(TarifaTrabajoRealizado.class);
+		ObjectifyService.register(TarifaSemanal.class);
+		ObjectifyService.register(TarifaDecenal.class);
+		ObjectifyService.register(TarifaQuincenal.class);
+		ObjectifyService.register(TarifaMensual.class);
 	}
 
 }

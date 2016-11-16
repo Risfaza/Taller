@@ -54,8 +54,13 @@ app.config(['$routeProvider',function($routeProvider) {
 	$routeProvider.when('/esquemas/edit/:id', {
 		templateUrl: "pages/esquemasEdit.html",
 		controller: "esquemasEditController"
-	});
+	});	
 
+	$routeProvider.when('/empleados/list/:rfc', {
+		templateUrl: "pages/empleados.html",
+		controller: "empleadosDetailsController"
+	});
+	
 	$routeProvider.otherwise({
 		redirectTo: 'index.html'
 	});   

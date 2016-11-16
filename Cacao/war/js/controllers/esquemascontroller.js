@@ -40,8 +40,8 @@ app.controller("esquemasDetailsController", [ '$scope', '$routeParams', '$locati
 	esquemasService.get($routeParams.id).then(function(data){
 		$scope.regimen=data;
 		console.log(data);
+		
 	})
-	
 } ]);
 
 
