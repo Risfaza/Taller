@@ -22,3 +22,11 @@ app.controller("empleadosController", [ '$scope', '$http', 'empleadosService',fu
 	}
 } 
 ]);
+app.controller("empleadosDetailsController", [ '$scope', '$http', '$location',
+		'$routeParams', 'empleadosService',
+		function($scope, $http, $location, $routeParams, empresasService) {
+			
+			$scope.regresaEmpresa=function(){
+				$location.path("/empresas/details/"+$routeParams.rfc);
+			}
+} ]);

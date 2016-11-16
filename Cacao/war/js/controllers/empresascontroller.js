@@ -93,10 +93,11 @@ app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
 			}
 			$scope.verRegimen=function(id){
 				$location.path("/esquemas/details/"+id);
-			}
-			
+			}			
 			$scope.editarRegimen=function(id){
 				$location.path("/esquemas/edit/"+id);
-			}
-			
+			}				
+			$scope.irEmpleados=function(){
+				$location.path("/empleados/list/"+$scope.empresa.RFC);
+			}		
 		} ]);
