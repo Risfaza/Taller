@@ -6,8 +6,6 @@ package com.tikal.cacao.dao;
 import java.util.List;
 
 import com.tikal.cacao.model.Empleado;
-import com.tikal.cacao.model.Empresa;
-import com.tikal.cacao.model.Regimen;
 
 /**
  * @author Tikal
@@ -42,16 +40,18 @@ public interface EmpleadosDAO {
 	
 	/**
 	 * 
-	 * @param e
-	 * @return
+	 * @param rfc the RFC of the Empresa
+	 * @return a list of employees working in the Empresa
+	 *         whose <tt>rfc</tt> is the specified
 	 */
-	public List<Empleado> consultaPorEmpresa(Empresa e);
+	public List<Empleado> consultaPorEmpresa(String rfc);
 	
 	/**
 	 * 
-	 * @param r
-	 * @return
+	 * @param id the id of the <code>Regimen</code> 
+	 * @return a list of employees with they payment ruled by the 
+	 *         Regimen with the specified <tt>id</tt>
 	 */
-	public List<Empleado> consultaPorRegimen(Regimen r);
+	public List<Empleado> consultaPorRegimen(Long id);
 
 }

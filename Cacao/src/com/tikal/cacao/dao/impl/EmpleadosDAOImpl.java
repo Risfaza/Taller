@@ -57,13 +57,13 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
 	}
 
 	@Override
-	public List<Empleado> consultaPorEmpresa(Empresa e) {
+	public List<Empleado> consultaPorEmpresa(String rfc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Empleado> consultaPorRegimen(Regimen r) {
+	public List<Empleado> consultaPorRegimen(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
