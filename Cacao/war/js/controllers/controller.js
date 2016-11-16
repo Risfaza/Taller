@@ -55,7 +55,7 @@ app.config(['$routeProvider',function($routeProvider) {
 		templateUrl: "pages/esquemasEdit.html",
 		controller: "esquemasEditController"
 	});	
-
+	
 	$routeProvider.when('/empleados/list/:rfc', {
 		templateUrl: "pages/empleados.html",
 		controller: "empleadosDetailsController"
