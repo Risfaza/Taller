@@ -11,6 +11,7 @@ app.controller('empresasListController',['$scope','$location','$http','empresasS
 	}
 	
 	$scope.ver=function(rfc){
+		console.log(rfc);
 		$location.path("/empresas/details/"+rfc.RFC);
 	};
 	$scope.editar=function(rfc){

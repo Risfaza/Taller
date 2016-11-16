@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.access.el.SpringBeanELResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.cacao.dao.EmpleadosDAO;
 import com.tikal.cacao.model.Empleado;
+import com.tikal.cacao.springController.viewObjects.EmpleadoVO;
 import com.tikal.cacao.util.JsonConvertidor;
 
 @Controller
@@ -26,14 +26,14 @@ public class EmpleadosController {
 	@Qualifier("employeedao")
 	EmpleadosDAO employeedao;
 
-	
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public void add(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 			throws IOException {
-		Empleado r = (Empleado) JsonConvertidor.fromJson(json, Empleado.class);
-		employeedao.crear(r);
-		response.getWriter().println(JsonConvertidor.toJson(r));
+		EmpleadoVO evo = (EmpleadoVO) JsonConvertidor.fromJson(json, EmpleadoVO.class);
+		Empleado e= evo.getEmpleado();
+		employeedao.crear(e);
+		response.getWriter().println(JsonConvertidor.toJson(e));
 	}
 
 	/**
@@ -65,7 +65,8 @@ public class EmpleadosController {
 			"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 			throws IOException {
-		Empleado e = (Empleado) JsonConvertidor.fromJson(json, Empleado.class);
+		EmpleadoVO evo = (EmpleadoVO) JsonConvertidor.fromJson(json, EmpleadoVO.class);
+		Empleado e= evo.getEmpleado();
 		employeedao.actualizar(e);
 		response.getWriter().println(JsonConvertidor.toJson(e));
 	}

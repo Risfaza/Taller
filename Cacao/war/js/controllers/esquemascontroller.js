@@ -745,9 +745,9 @@ app
 							regimen : $scope.regimen,
 							tipo : $scope.regimen.tipoRegimen
 						}
-
+						
 						empr.regimenes.push($scope.regimen);
-						console.log($scope.empresa);
+						console.log(send); 
 						esquemasService.saveEmpresa(send).then(
 								function(data) {
 									console.log(data);
