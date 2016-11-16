@@ -78,11 +78,11 @@ public class PruebaController {
 		List<Percepcion> percepciones = new ArrayList<Percepcion>();
 		
 		Percepcion percepcion1 = new Percepcion();
-		percepcion1.setTipo(TipoPercepcion.SUELDOS_SALARIOS_RAYAS_JORNALES);
+		//percepcion1.setTipo(TipoPercepcion.SUELDOS_SALARIOS_RAYAS_JORNALES);
 		percepcion1.setCantidad(10000);
 		
 		Percepcion percepcion2 = new Percepcion();
-		percepcion2.setTipo(TipoPercepcion.COMISIONES);
+		//percepcion2.setTipo(TipoPercepcion.COMISIONES);
 		percepcion2.setCantidad(5000);
 		
 		percepciones.add(percepcion1);
@@ -93,11 +93,11 @@ public class PruebaController {
 		List<Deduccion> deducciones = new ArrayList<Deduccion>();
 		
 		Deduccion deduccion1 = new Deduccion();
-		deduccion1.setTipo(TipoDeduccion.ISR);
+		//deduccion1.setTipo(TipoDeduccion.ISR);
 		deduccion1.setDescuento(0.3);
 		
 		Deduccion deduccion2 = new Deduccion();
-		deduccion2.setTipo(TipoDeduccion.OTROS);
+		//deduccion2.setTipo(TipoDeduccion.OTROS);
 		deduccion2.setDescuento(0.01);
 		
 		deducciones.add(deduccion1);
@@ -138,7 +138,7 @@ public class PruebaController {
 	}
 	
 	
-	@RequestMapping(value={"/pruebaEmpleadosEmpresas"}, method = RequestMethod.GET)
+	/*@RequestMapping(value={"/pruebaEmpleadosEmpresas"}, method = RequestMethod.GET)
 	public void pruebaEmpleadosEmpresas(HttpServletResponse re) throws IOException {
 		EmpresasDAO empresasDAO = new EmpresasDAOImpl(); 
 		RegimenesDAO regimenesDAO = new RegimenesDAOImpl();
@@ -237,7 +237,7 @@ public class PruebaController {
 		
 		
 		
-	}
+	}*/
 	
 	@RequestMapping(value={"/pruebaGuardarTarifa/{nombreTarifa}"},method= RequestMethod.GET)
 	public void pruebaGuardarTarifa(HttpServletResponse re, @PathVariable String nombreTarifa) {
@@ -279,7 +279,7 @@ public class PruebaController {
 		pw.println(JsonConvertidor.toJson(tarifa));
 	}
 	
-	private Empresa[] crearEmpresas() {
+	/*private Empresa[] crearEmpresas() {
 		Direccion dir1 = new Direccion("Calle 1", 10, 0, "50000", "Colonia 1", "Localidad 1", Estado.AGUASCALIENTES);
 		Direccion dir2 = new Direccion("Calle 2", 20, 2, "1000", "Colonia 2", "Localidad 2", Estado.BAJA_CALIFORNIA);
 		
@@ -317,7 +317,7 @@ public class PruebaController {
 		
 		
 		return new Empleado[] {empleado1, empleado2, empleado3, empleado4, empleado5};
-	}
+	}*/
 	
 	private List<Long> crearListaDeIDsDeEmpleados(Long... ids) {
 		List<Long> lista = new ArrayList<Long>();

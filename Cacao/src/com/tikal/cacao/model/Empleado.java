@@ -22,6 +22,11 @@ public class Empleado {
 	/**
 	 * 
 	 */
+	private String RFC;
+	
+	/**
+	 * 
+	 */
 	private NombrePersona nombre;
 	
 	/**
@@ -53,6 +58,7 @@ public class Empleado {
 	 * 
 	 */
 	private boolean activo = true;
+	
 
 	/**
 	 * @return the numEmpleado
@@ -66,6 +72,22 @@ public class Empleado {
 	 */
 	public void setNumEmpleado(Long numEmpleado) {
 		this.numEmpleado = numEmpleado;
+	}
+
+	
+	
+	/**
+	 * @return the rFC
+	 */
+	public String getRFC() {
+		return RFC;
+	}
+
+	/**
+	 * @param rFC the rFC to set
+	 */
+	public void setRFC(String rFC) {
+		RFC = rFC;
 	}
 
 	/**
