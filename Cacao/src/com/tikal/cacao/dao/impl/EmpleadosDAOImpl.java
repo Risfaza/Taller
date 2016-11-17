@@ -5,11 +5,17 @@ package com.tikal.cacao.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.tikal.cacao.dao.EmpleadosDAO;
+import com.tikal.cacao.dao.EmpresasDAO;
+import com.tikal.cacao.dao.RegimenesDAO;
 import com.tikal.cacao.model.Empleado;
 import com.tikal.cacao.model.Empresa;
 import com.tikal.cacao.model.Regimen;
@@ -20,6 +26,14 @@ import com.tikal.cacao.model.Regimen;
  */
 @Repository
 public class EmpleadosDAOImpl implements EmpleadosDAO {
+	
+	@Autowired
+	@Qualifier("regimenesdao")
+	private RegimenesDAO regDAO;
+	
+	@Autowired
+	@Qualifier(value="empresasdao")
+	private EmpresasDAO empresasDAO;
 
 	/* (non-Javadoc)
 	 * @see com.tikal.cacao.dao.EmpleadosDAO#crear(com.tikal.cacao.model.Empleado)
@@ -58,14 +72,20 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
 
 	@Override
 	public List<Empleado> consultaPorEmpresa(String rfc) {
-		// TODO Auto-generated method stub
-		return null;
+		Empresa empresa = empresasDAO.consultar(rfc);
+		List<Regimen> regimenes = empresa.getRegimenes();
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		for (Regimen regimen : regimenes) {
+			empleados.addAll(consultaPorRegimen(regimen.getId()));
+		}
+		return empleados;
 	}
 
 	@Override
 	public List<Empleado> consultaPorRegimen(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Regimen regimen = regDAO.consultar(id);
+		Collection<Empleado> colecionEmpl = ofy().load().type(Empleado.class).ids(regimen.getIdEmpleados()).values();   
+		return new ArrayList<Empleado>(colecionEmpl);
 	}
 
 }

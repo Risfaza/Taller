@@ -3,6 +3,7 @@
  */
 package com.tikal.cacao.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
@@ -50,6 +51,10 @@ public class Regimen {
 	 * 
 	 */
 	private RegimenContratacion tipoRegimen;
+	
+	public Regimen(){
+		this.idEmpleados= new ArrayList<Long>();
+	}
 	
 
 	/**
