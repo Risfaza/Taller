@@ -56,9 +56,14 @@ app.config(['$routeProvider',function($routeProvider) {
 		controller: "esquemasEditController"
 	});	
 	
-	$routeProvider.when('/empleados/list/:rfc', {
+	$routeProvider.when('/empleados/list/:id', {
 		templateUrl: "pages/empleadosList.html",
-		controller: "empleadosDetailsController"
+		controller: "empleadosListController"
+	});
+	
+	$routeProvider.when('/empleados/add/:id', {
+		templateUrl: "pages/empleados.html",
+		controller: "empleadosController"
 	});
 	
 	$routeProvider.otherwise({
