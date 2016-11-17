@@ -12,7 +12,7 @@ app.config(['$routeProvider',function($routeProvider) {
 	});
 
 	$routeProvider.when('/empleados', {
-		templateUrl: "pages/empleados.html",
+		templateUrl: "pages/empleadosList.html",
 		controller: "empleadosController"
 	});
 
@@ -57,7 +57,7 @@ app.config(['$routeProvider',function($routeProvider) {
 	});	
 	
 	$routeProvider.when('/empleados/list/:rfc', {
-		templateUrl: "pages/empleados.html",
+		templateUrl: "pages/empleadosList.html",
 		controller: "empleadosDetailsController"
 	});
 	
