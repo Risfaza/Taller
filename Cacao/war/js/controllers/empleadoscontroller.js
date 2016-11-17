@@ -35,10 +35,10 @@ app.controller("empleadosDetailsController", [ '$scope', '$http', '$location',
 		} ]);
 
 app.controller("empleadosListController", [ '$scope', '$http', '$location',
-		'$routeParams', 'empleadosService',
-		function($scope, $http, $location, $routeParams, empresasService) {
+		'$routeParams', 'empleadosService', '$rootScope',
+		function($scope, $http, $location, $routeParams, empresasService, $rootScope) {
 
 			$scope.regresaEmpresa = function() {
-				$location.path("/empresas/details/" + $routeParams.rfc);
+				$location.path("/empresas/details/"+$rootScope.rfc);
 			}
 		} ]);

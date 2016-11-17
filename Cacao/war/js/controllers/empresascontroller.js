@@ -80,10 +80,11 @@ app.controller("empresasEditController", [
 		} ]);
 
 app.controller("empresasDetailsController", [ '$scope', '$http', '$location',
-		'$routeParams', 'empresasService',
-		function($scope, $http, $location, $routeParams, empresasService) {
+		'$routeParams', 'empresasService','$rootScope',
+		function($scope, $http, $location, $routeParams, empresasService, $rootScope) {
 			empresasService.find($routeParams.rfc).then(function(data){
 				$scope.empresa=data[0];
+				$rootScope.rfc=$scope.empresa.RFC;
 				$scope.regimenes=data[1];
 				console.log($scope.regimenes);
 			});

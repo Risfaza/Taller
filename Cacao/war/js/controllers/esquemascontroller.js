@@ -36,15 +36,17 @@ app.service('esquemasService', [ '$http', '$q', function($http, $q) {
 	}
 } ]);
 app.controller("esquemasDetailsController", [ '$scope', '$routeParams', '$location',
-'esquemasService', function($scope, $routeParams, $location, esquemasService) {
+'esquemasService',"$rootScope", function($scope, $routeParams, $location, esquemasService, $rootScope) {
 	esquemasService.get($routeParams.id).then(function(data){
 		$scope.regimen=data;
 		console.log(data);
 		
 		$scope.regresaEmpresa=function(){
-			$location.path("/empresas/details/"+$routeParams.rfc);
+			$location.path("/empresas/details/"+$rootScope.rfc);
 		}
-		
+		$scope.irEmpleados=function(){
+			$location.path("/empleados/list/"+$routeParams.id);
+		}
 	})
 } ]);
 
