@@ -1,0 +1,3 @@
+# Module cacao
+# RPC service class, partial path of RPC policy file
+com.tikal.cacao.client.GreetingService, 75FF971BF737C2945E09112E0CD1780F.gwt.rpc

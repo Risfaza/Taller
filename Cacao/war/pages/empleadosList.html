@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row">
+		<div>
+			<ol class="breadcrumb">
+				<li><button class="btn btn-small btn-link" ng-click="regresaEmpresa()">Regresar a Empresa</button></li>
+			</ol>
+		</div>
+		<div class="col-md-12">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>No. Empleado</td>
+						<td>Nombre</td>
+						<td>RFC</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="empleado in empleados">
+						<td>{{empleado.nombre}}</td>
+						<td><button class="btn btn-small btn-primary"
+								ng-click="ver(empleado)">
+								<i class="glyphicon glyphicon-eye-open"></i>
+							</button>
+							<button class="btn btn-small btn-primary"
+								ng-click="editar(empleado)">
+								<i class="glyphicon glyphicon-edit"></i>
+							</button>
+							<button class="btn btn-small btn-primary"
+								ng-click="eliminar(empleado.rfc)">
+								<i class="glyphicon glyphicon-remove"></i>
+							</button></td>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+	
+		<button class="btn btn-primary" ng-click="add()">
+			<i class="fa fa-plus"></i>Agregar Empleado
+		</button>
+	</div>
+</div>

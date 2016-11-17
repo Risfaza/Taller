@@ -1,0 +1,89 @@
+	<!--Aqui va-->
+	<section class="jumbotron">
+		<div class="container"></div>
+		<h2>Registra Regímenes de la Empresa</h2>
+		<p>TikalCacao</p>
+	</section>	
+
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><button class="btn btn-small btn-link" ng-click="regresaEmpresa()">Regresar a Detalles de Empresas</button></li>
+			</ol>
+		</div>
+		<form class="form-inline" ng-submit="addEsq()">
+			<div class="form-group">
+				Nombre del Regimen <div class="col-md-12"><input type="text" class="form-control"></div><br>
+				Tipo de Regimen <div class="col-md-12"><select ng-model="regimen.tipoRegimen" class="form-control">
+				<option ng-repeat="percepciones in listtipos">{{percepciones.descripcion}}</option>
+			</select></div>
+			<h3>Percepciones</h3>				
+			Clave<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
+			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
+	
+				{{percepciones.clave}}</option>
+			</select></div><br>			
+			Descripcion<div class="col-md-12"><select ng-model="inputPerc.clave" class="form-control">
+			<option ng-repeat="percepciones in listpercecpciones" value="{{percepciones.clave}}">
+				{{percepciones.descripcion}}</option>
+			</select></div><br>
+			Cantidad: <div class="col-md-12"><input type="text" ng-model="inputPerc.cantidad" class="form-control"></div><br>			
+		</div>
+		<div><button ng-click="addPer()" class="btn btn-primary" value="Guardar">Agregar</button>
+		</div>
+		<div class="form-group">
+			<h3>Deducciones</h3>				
+			Clave <div class="col-md-12"><select ng-model="inputDeduc.clave" class="form-control">
+			<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
+				{{ded.clave}}</option>
+			</select></div><br>				
+			Descripcion <div class="col-md-12"><select ng-model="inputDeduc.clave" class="form-control">
+			<option ng-repeat="ded in listdeducciones" value="{{ded.clave}}">
+				{{ded.descripcion}}</option>
+			</select></div><br>
+			Porcentaje <div class="col-md-12"><input type="text" ng-model="inputDeduc.porcentaje" class="form-control"></div> 
+			<br><button ng-click="addDed()" class="btn btn-primary" value="Guardar">Agregar</button>
+		</div>				
+	</form>				
+</div>
+
+<div class="container col-md-offset-1">
+	<div class="">
+		<h2>Percepciones</h2>			
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Clave</th>
+					<th>Descripcion</th>
+					<th>Cantidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="percept in regimen.percepciones">
+					<td>{{percept.clave}}</td>
+					<td>{{percept.descripcion}}</td>
+					<td>{{percept.cantidad}}</td>
+				</tr>					
+			</tbody>
+		</table>
+		<h2>Deducciones</h2>			
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Clave</th>
+					<th>Descripcion</th>
+					<th>Pocentaje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="deduc in regimen.deducciones">
+					<td>{{deduc.clave}}</td>
+					<td>{{deduc.descripcion}}</td>
+					<td>{{deduc.porcentaje}}</td>
+				</tr>					
+			</tbody>
+		</table>
+		<button class="btn btn-primary" ng-click="save(empresa)">Guardar</button>
+	</div>
+	</div ng-view>
+</div>

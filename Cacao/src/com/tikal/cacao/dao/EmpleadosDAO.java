@@ -1,0 +1,57 @@
+/**
+ * 
+ */
+package com.tikal.cacao.dao;
+
+import java.util.List;
+
+import com.tikal.cacao.model.Empleado;
+
+/**
+ * @author Tikal
+ *
+ */
+public interface EmpleadosDAO {
+	
+	/**
+	 * 
+	 * @param empleado
+	 */
+	public void crear(Empleado empleado);
+	
+	/**
+	 * 
+	 * @param empleado
+	 */
+	public void actualizar(Empleado empleado);
+	
+	/**
+	 * 
+	 * @param numEmpleado
+	 * @return
+	 */
+	public Empleado consultar(long numEmpleado);
+	
+	/**
+	 * 
+	 * @param empleado
+	 */
+	public void eliminar(Empleado empleado);
+	
+	/**
+	 * 
+	 * @param rfc the RFC of the Empresa
+	 * @return a list of employees working in the Empresa
+	 *         whose <tt>rfc</tt> is the specified
+	 */
+	public List<Empleado> consultaPorEmpresa(String rfc);
+	
+	/**
+	 * 
+	 * @param id the id of the <code>Regimen</code> 
+	 * @return a list of employees with they payment ruled by the 
+	 *         Regimen with the specified <tt>id</tt>
+	 */
+	public List<Empleado> consultaPorRegimen(Long id);
+
+}

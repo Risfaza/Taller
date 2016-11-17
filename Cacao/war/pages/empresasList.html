@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Nombre</td>
+						<td>Acciones</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="empresa in empresas">
+						<td>{{empresa.nombre}}</td>
+						<td><button class="btn btn-small btn-primary"
+								ng-click="ver(empresa)">
+								<i class="glyphicon glyphicon-eye-open"></i>
+							</button>
+							<button class="btn btn-small btn-primary"
+								ng-click="editar(empresa)">
+								<i class="glyphicon glyphicon-edit"></i>
+							</button>
+							<button class="btn btn-small btn-primary"
+								ng-click="eliminar(empresa.rfc)">
+								<i class="glyphicon glyphicon-remove"></i>
+							</button></td>					
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<button class="btn btn-primary" ng-click="add()">
+			<i class="fa fa-plus"></i>Agregar Empresa
+		</button>
+	</div>
+</div>

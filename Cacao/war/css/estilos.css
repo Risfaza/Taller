@@ -1,0 +1,53 @@
+/*--HEADER--*/
+.navbar {
+	margin-bottom: 0;
+}
+.jumbotron {
+	background:#428BCA;
+	color:#fff;
+	padding:20px 0;
+}
+/*--POST--*/
+.main{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.post{
+	padding-bottom:20px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #999;
+}
+.post .post-title a{
+	color:#333;
+}
+.post .thumb{
+	margin-right:10px;
+	width:40%;
+}
+.separador{
+	margin-bottom: 100px;
+	padding-bottom: 100px;
+}
+.tablacfdi{
+	height: 10%
+	padding 20px;
+	font-size: xx-small;
+	font-weight: bold;
+}
+.miga-de-pan{
+	margin-top: 0px;
+}
+.img{
+	height: 10%;
+}
+.post .thumb img{
+	width: 100%;
+
+/*--Media Querie--*/
+@media screen and (max-width: 768px){
+	.post .thumb {
+		width:100%;
+		margin-bottom: 20px;
+		margin-right: 0;
+	}
+}
