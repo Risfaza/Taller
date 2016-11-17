@@ -41,6 +41,10 @@ app.controller("esquemasDetailsController", [ '$scope', '$routeParams', '$locati
 		$scope.regimen=data;
 		console.log(data);
 		
+		$scope.regresaEmpresa=function(){
+			$location.path("/empresas/details/"+$routeParams.rfc);
+		}
+		
 	})
 } ]);
 
@@ -705,7 +709,9 @@ app
 						percepciones : [],
 						deducciones : [],
 					};
-
+					$scope.regresaEmpresa=function(){
+						$location.path("/empresas/details/"+$routeParams.rfc);
+					}
 					esquemasService.getEmpresa($routeParams.rfc).then(
 							function(data) {
 								$scope.empresa = data[0];
