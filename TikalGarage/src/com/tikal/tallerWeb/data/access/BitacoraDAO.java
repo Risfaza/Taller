@@ -27,7 +27,9 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
  */
 public interface BitacoraDAO {
 
-    List<Evento> cargar(Long idServicio);
-    List<Evento> guardar(Long idServicio, List<Evento> datos);
-    public void agregar(Long idServicio,EventoEntity evento);
+    List<EventoEntity> cargar(Long idServicio);
+    List<EventoEntity> guardar(Long idServicio, List<EventoEntity> datos);
+    
+    public EventoEntity agregar(Long idServicio,EventoEntity evento);
+    public EventoEntity cargarEvento(Long id);
 }

@@ -1,9 +1,16 @@
+app.service('eventoService',['$http','$q',function($http,$q){
+	this.addEvento=function(evento){
+		$http.post("",evento).then(function(response){},function(response){});
+	}
+}]);
+
 app
 		.controller(
 				"newServiceController",
 				[
-						"$scope",'$http',
-						function($scope,$http) {
+						"$scope",
+						'$http','$location','eventoService','$rootScope',
+						function($scope, $http,$location,eventoService,$rootScope) {
 							$scope.mensaje = "Texto cargado desde el controlador Pagina1Controller";
 							$scope.ids = [ "cliente", "auto", "bitacora",
 									"presupuesto", "damage", "cobranza" ];
@@ -20,8 +27,7 @@ app
 										ciudad : ""
 									},
 									contacto : "",
-									telefonoContacto:[]
-									
+									telefonoContacto : []
 
 								},
 								auto : {
@@ -29,9 +35,22 @@ app
 										equipoAdicional : []
 									}
 								},
-								eventos:[]
+								eventos : []
 							}
 
+							$scope.guardar = function() {
+								console.log($scope.servico);
+								$http.post('/servicio/add', $scope.servicio)
+										.then(function(response) {
+											alert("Servicio Guardado");
+											$rootScope.serviciosHoy.push(response.data);
+											$location.path("servicio/view/"+response.data.servicio.idServicio);
+											console.log(response);
+										}, function(response) {
+											console.log(response);
+											alert("Something went wrong");
+										})
+							}
 							$scope.showTab = function(id) {
 								$scope.ids.forEach(function(i) {
 									// console.log(i);
@@ -43,17 +62,6 @@ app
 								var myEl = angular.element("#" + id);
 								myEl.addClass('active in');
 							};
-							$scope.guardar = function() {
-								console.log($scope.servico);
-								$http.post('/servicio/add',$scope.servicio).then(function(response){
-									alert("Servicio Guardado");
-									console.log(response);
-								},function(response){
-									console.log(response); 
-									alert("Something went wrong");
-								})
-							}
-
 							$scope.addCaract = function() {
 								var caract = $scope.caracteristicaAuto;
 								if ($scope.servicio.auto.equipamiento.equipoAdicional
@@ -63,17 +71,10 @@ app
 								}
 								$scope.caracteristicaAuto = "";
 							}
-							$scope.evento={};
-							$scope.eventos=[];
-							$scope.fecha=function(){
-								var f= new Date();
-//								$scope.evento.fecha= f.getDay()+"-"+f.getMonth()+"-"+f.getFullYear()+"T"+f.getHours()+":"+f.getMinutes();
-							}
-							
-							$scope.addEvento=function(){
-								var e= $scope.evento;
-								$scope.eventos.push(e);
-								$scope.evento={};
+							$scope.fecha = function() {
+								var f = new Date();
+								// $scope.evento.fecha=
+								// f.getDay()+"-"+f.getMonth()+"-"+f.getFullYear()+"T"+f.getHours()+":"+f.getMinutes();
 							}
 							$scope.findCliente = function() {
 								// implementar servicio de búsqueda

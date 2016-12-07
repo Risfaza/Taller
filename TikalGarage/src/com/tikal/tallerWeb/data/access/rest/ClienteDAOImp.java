@@ -16,9 +16,7 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.control.MensajesControl;
 import com.tikal.tallerWeb.data.access.ClienteDAO;
+import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.rest.util.Callback;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
 
@@ -42,13 +41,13 @@ public class ClienteDAOImp implements ClienteDAO {
     @Autowired
     private MensajesControl mensajesControl;
     @Override
-    public void guardar(Cliente dato) {
+    public void guardar(ClienteEntity dato) {
         if (dato.getId() == null) {
 //            URI resource = factory.getTemplate().postForLocation(factory.getRootUlr() + "/clientes", dato);
 //            String[] uri = StringUtils.split(resource.toString(), '/');
 //            String id = uri[uri.length - 1];
 //            dato.setId(Long.valueOf(id));
-        	dato.setId(Long.valueOf(ObjectifyService.ofy().load().type(Cliente.class).list().size()));
+        	dato.setId(Long.valueOf(ObjectifyService.ofy().load().type(ClienteEntity.class).list().size()));
         	
         } else {
 //            Map<String, Object> map = new HashMap<>();
@@ -56,18 +55,18 @@ public class ClienteDAOImp implements ClienteDAO {
 //            factory.getTemplate().postForLocation(factory.getRootUlr() + "/clientes/{id}", dato, map);
         	
         }
-        ObjectifyService.ofy().save().entity(dato);
+        ObjectifyService.ofy().save().entity(dato).now();
     }
 
     @Override
-    public List<Cliente> consultaTodos() {
+    public List<ClienteEntity> consultaTodos() {
 //        PaginaCliente r = factory.getTemplate().getForObject(factory.getRootUlr() + "/clientes", PaginaCliente.class);
 //        return r.getItems();
-    	return ObjectifyService.ofy().load().type(Cliente.class).list();
+    	return ObjectifyService.ofy().load().type(ClienteEntity.class).list();
     }
 
     @Override
-    public void buscar(final String name, final Callback<List<Cliente>> cmd) {
+    public void buscar(final String name, final Callback<List<ClienteEntity>> cmd) {
 //        Thread task = new AsyncRestCall<List<Cliente>>() {
 //            @Override
 //            public List<Cliente> executeCall() {
@@ -95,17 +94,26 @@ public class ClienteDAOImp implements ClienteDAO {
 //            }
 //        };
 //        task.start();
-    	ObjectifyService.ofy().load().type(Cliente.class).filter("nombre",name).list();
+    	ObjectifyService.ofy().load().type(ClienteEntity.class).filter("nombre",name).list();
     }
     
     @Override
-    public Cliente cargar(Long id) {
+    public ClienteEntity cargar(Long id) {
 //        Map<String, Object> map = new HashMap<>();
 //        map.put("id", id);
 //        Cliente r = factory.getTemplate().getForObject(factory.getRootUlr() + "/clientes/{id}", Cliente.class, map);
 //        return r;
-    	return ObjectifyService.ofy().load().type(Cliente.class).filter("id",id).list().get(0);
+    	return ObjectifyService.ofy().load().type(ClienteEntity.class).id(id).now();
     }
+
+	@Override
+	public ClienteEntity buscarCliente(String nombre) {
+		List<ClienteEntity> lista=ObjectifyService.ofy().load().type(ClienteEntity.class).filter("nombre",nombre).list();
+		if(lista.size()>0){
+			return lista.get(0);
+		}
+		return null;
+	}
 
 //    @Override
 //    public Cliente buscarUnico(String name) {

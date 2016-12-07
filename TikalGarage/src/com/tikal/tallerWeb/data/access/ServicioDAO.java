@@ -20,21 +20,21 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.Callback;
 
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndex;
-import technology.tikal.taller.automotriz.model.servicio.Servicio;
 
 /**
  * @author Nekorp
  */
 public interface ServicioDAO {
 
-    void guardar(Servicio dato);
+    void guardar(ServicioEntity dato);
     
-    Servicio cargar(Long id);
+    ServicioEntity cargar(Long id);
     
-    List<Servicio> getByDate(DateTime fechaInicial, DateTime fechaFinal);
+    List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal);
     
     List<ServicioIndex> getIndiceServicios();
     
@@ -49,4 +49,6 @@ public interface ServicioDAO {
     List<ServicioIndex> getIndiceServiciosMismoAuto(String numeroSerie);
     
     List<ServicioIndex> getIndiceServiciosPorStatus(String status);
+    
+    List<ServicioIndex> getServiciosHoy();
 }

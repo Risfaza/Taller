@@ -35,34 +35,43 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evento;
 @Service
 public class BitacoraDAOImp implements BitacoraDAO {
 
-//    @Autowired
-//    @Qualifier("taller-RestTemplateFactory")
-//    private RestTemplateFactory factory;
-    
-//    @Override
-    public List<Evento> cargar(Long idServicio) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idServicio", idServicio);
-        Evento e= new Evento();
-        
-        return ObjectifyService.ofy().load().type(Evento.class).filter("id",idServicio).list();
-//        Evento[] r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{idServicio}/bitacora", Evento[].class, map);
-//        return Arrays.asList(r);
-//        return null;
-    }
+	// @Autowired
+	// @Qualifier("taller-RestTemplateFactory")
+	// private RestTemplateFactory factory;
 
-    @Override
-    public List<Evento> guardar(Long idServicio, List<Evento> datos) {
-    	   Map<String, Object> map = new HashMap<>();
-           map.put("idServicio", idServicio);
-           ObjectifyService.ofy().save().entities(datos);
-           return ObjectifyService.ofy().load().type(Evento.class).filter("id",idServicio).list();
-//        Evento[] r = factory.getTemplate().postForObject(factory.getRootUlr() + "/servicios/{idServicio}/bitacora", datos, Evento[].class, map);
-//        return Arrays.asList(r);
-    }
+	 @Override
+	public List<EventoEntity> cargar(Long idServicio) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("idServicio", idServicio);
+		Evento e = new Evento();
 
-    public void agregar(Long idServicio,EventoEntity evento){
-    	evento.setId(idServicio);
-    	ObjectifyService.ofy().save().entities(evento).now();
-    }
+		return ObjectifyService.ofy().load().type(EventoEntity.class).filter("id", idServicio).list();
+		// Evento[] r = factory.getTemplate().getForObject(factory.getRootUlr()
+		// + "/servicios/{idServicio}/bitacora", Evento[].class, map);
+		// return Arrays.asList(r);
+		// return null;
+	}
+
+	@Override
+	public List<EventoEntity> guardar(Long idServicio, List<EventoEntity> datos) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("idServicio", idServicio);
+		ObjectifyService.ofy().save().entities(datos);
+		return ObjectifyService.ofy().load().type(EventoEntity.class).filter("id", idServicio).list();
+		// Evento[] r = factory.getTemplate().postForObject(factory.getRootUlr()
+		// + "/servicios/{idServicio}/bitacora", datos, Evento[].class, map);
+		// return Arrays.asList(r);
+	}
+
+	public EventoEntity agregar(Long idServicio, EventoEntity evento) {
+		evento.setId(idServicio);
+		ObjectifyService.ofy().save().entities(evento).now();
+		return evento;
+	}
+
+	@Override
+	public EventoEntity cargarEvento(Long id) {
+
+		return ObjectifyService.ofy().load().type(EventoEntity.class).id(id).now();
+	}
 }

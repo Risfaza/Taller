@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.AutoDAO;
+import com.tikal.tallerWeb.modelo.entity.AutoEntity;
 
 import technology.tikal.taller.automotriz.model.auto.Auto;
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData;
@@ -40,7 +41,7 @@ public class AutoDAOImp  implements AutoDAO
 	// @Qualifier("taller-RestTemplateFactory")
 	// private RestTemplateFactory factory;
 	//
-	public void guardar(Auto dato) {
+	public void guardar(AutoEntity dato) {
 		// como no tengo idea si es nuevo o no primero se intenta como si ya
 		// existiera, si regresa 404 se crea.
 		ObjectifyService.ofy().save().entity(dato).now();
@@ -107,21 +108,21 @@ public class AutoDAOImp  implements AutoDAO
 //		// }
 	}
 
-	public Auto cargar(String numeroSerie) {
+	public AutoEntity cargar(String numeroSerie) {
 		if (StringUtils.isEmpty(numeroSerie)) {
-			return new Auto();
+			return null;
 		}
-		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).filter("numeroSerie",numeroSerie).list();
-		for(Auto auto:lista){
+		List<AutoEntity> lista=ObjectifyService.ofy().load().type(AutoEntity.class).filter("numeroSerie = ",numeroSerie).list();
+		for(AutoEntity auto:lista){
 			return auto;
 		}
-		return new Auto();
+		return null;
 	}
 
 	public List<ServicioIndexAutoData> getIndiceAutos(){
 		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
-		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).list();
-		for(Auto auto:lista){
+		List<AutoEntity> lista=ObjectifyService.ofy().load().type(AutoEntity.class).list();
+		for(AutoEntity auto:lista){
 			ServicioIndexAutoData sia= new ServicioIndexAutoData();
 			sia.setNumeroSerie(auto.getNumeroSerie());
 			sia.setPlacas(auto.getPlacas());
@@ -130,5 +131,11 @@ public class AutoDAOImp  implements AutoDAO
 		}
 		
 		return respuesta;
+	}
+
+	@Override
+	public AutoEntity cargar(long id) {
+		// TODO Auto-generated method stub
+		return ObjectifyService.ofy().load().type(AutoEntity.class).id(id).now();
 	}
 }

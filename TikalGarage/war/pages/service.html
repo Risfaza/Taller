@@ -8,6 +8,9 @@
 		<li class="active"><a data-toggle="tab"
 			ng-click="showTab('cliente')">Cliente</a></li>
 		<li><a data-toggle="tab" ng-click="showTab('auto')">Auto</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('bitacora')">Bit&aacute;cora</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('presupuesto')">Presupuesto</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('cobranza')">Cobranza</a></li>
 	</ul>
 
 	<div class="tab-content">
@@ -289,5 +292,239 @@
 
 			</form>
 		</div>
+		<div id="bitacora" class="tab-pane fade">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-bar-chart-o fa-fw"></i> Bitacora
+								<button class="btn btn-small btn-primary" data-toggle="modal"
+									data-target="#eventoModal"
+									ng-click="verModal('showModalEvento')">
+									<i class="fa fa-plus"></i>
+								</button>
+
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div id="morris-area-chart">
+								<div class="row" ng-repeat="ev in eventos">
+									<form class="form-inline">
+										<div class="row">
+											<div class="col-md-6">
+												<b>{{ev.tipo}}</b>
+											</div>
+											<div style="float: right !important">
+												<button class="btn btn-small btn-link">Evidencias</button>
+												<button class="btn btn-small btn-link">Borrar</button>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label for="fecha">Fecha</label> <input type="date"
+														class="form-control" id="fecha" ng-model="ev.fecha">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="resp">Responsable</label> <input type="text"
+														class="form-control" id="resp" ng-model="ev.responsable">
+												</div>
+											</div>
+											<div class="col-md-3">
+												Creado: <label>{{ev.fechaCreacion}}</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<textarea class="form-control" style="width: inherit;"
+													id="descripcion" rows="3" ng-model="ev.descripcion"></textarea>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12"></div>
+				<hr>
+			</div>
+		</div>
+		<div id="presupuesto" class="tab-pane fade">
+			<div class="row">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+						<li><a>Hojalater&iacute;a y Pintura</a></li>
+						<li><a>Mec&aacute;nica</a></li>
+						<li><a>Otros Gastos</a></li>
+						<li><button class="btn-link" data-toggle="modal"
+								data-target="#eventoModal" ng-click="verModal('showModalGrupo')">
+								Agregar grupo</button></li>
+					</ol>
+				</div>
+				<div class="col-md-12" ng-repeat="gru in gruposCosto">
+
+					<div class="row">
+						<div class="col-md-6">
+							<b>{{gru.nombre}}</b>
+
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-small btn-primary"
+								ng-click="addPresupuesto(gru)">
+								<i class="fa fa-plus"></i>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table class="letraChica table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Tipo</th>
+									<th>Concepto</th>
+									<th style="width: 10%">Cantidad</th>
+									<th>Precio Unitario</th>
+									<th></th>
+									<th>IVA</th>
+									<th>Precio Cliente</th>
+									<th>Utilidad</th>
+									<th>Subtotal</th>
+									<th></th>
+									<th>IVA</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="pres in gru.presupuestos">
+									<td><select ng-model="pres.tipo">
+											<option value="MO">Mano de Obra</option>
+											<option value="RE">Refacciones</option>
+											<option value="IN">Insumo</option>
+									</select></td>
+									<td><input type="text" ng-model="pres.concepto" /></td>
+									<td><input type="number" ng-model="pres.cantidad" min="0" /></td>
+									<td><input type="number" step="0.01"
+										ng-model="pres.precioUnitario.value" /></td>
+									<td><input type="checkbox" ng-model="iva1" /></td>
+									<td><label disabled ng-show="iva1"
+										>{{pres.precioUnitario*0.16}}</label></td>
+									<td><input type="number" step="0.01"
+										ng-model="pres.precioCliente.value" /></td>
+									<td><label>{{pres.precioCliente.value - pres.precioUnitario.value}}</label>
+										</td>
+									<td><label>{{pres.precioCliente.value*pres.cantidad}}</label></td>
+									<td><input type="checkbox" ng-model="iva2" /></td>
+									<td><label ng-show="iva2">{{pres.precioCliente.value*pres.cantidad*0.16}}</label>
+									<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-12"></div>
+
+			</div>
+			<div id="cobranza" class="tab-pane fade">
+				<input type="text" class="span3" style="margin: 0 auto;"
+					data-provide="typeahead" data-items="4" data-source="{{results}}">
+				<ul class="typeahead dropdown-menu"
+					style="top: 69px; left: 19px; display: none;">
+
+				</ul>
+			</div>
+		</div>
 	</div>
+
+	<div class="modal fade" id="eventoModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document" ng-show="modals[1].show">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Percepci&oacute;n</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						Tipo de Evento
+						<div class="col-md-12">
+							<select ng-model="evento.tipo" class="form-control">
+								<option>Entrada de Auto</option>
+								<option>Diagn&oacute;stico</option>
+								<option>Observaciones</option>
+								<option>Reclamaciones</option>
+								<option>Otro</option>
+								<option>Salida de Auto</option>
+								<option>Cancelaci&oacute;n</option>
+								<option>Termino de servicio</option>
+							</select>
+						</div>
+						<br>Fecha del evento
+						<div class="col-md-12">
+							<input class="form-control" type="datetime-local"
+								ng-model="evento.fecha"> <input class="form-control"
+								type="time-local" ng-model="evento.fecha">
+						</div>
+
+						<br> Responsable
+						<div class="col-md-12">
+							<input class="form-control" type="text"
+								ng-model="evento.responsable">
+						</div>
+						<br> Descripci&oacute;n:
+						<div class="col-md-12">
+							<textarea rows="3" ng-model="evento.descripcion"
+								class="form-control"></textarea>
+						</div>
+						<br> Archivos:
+						<div class="col-md-12">
+							<input id="b_pics" accept="image/*" type="file" class="file"
+								multiple="true" multiple-File-Model="b_pics" required />
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						ng-click="addEvento()">Agregar</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal-dialog" role="document" ng-show="modals[0].show">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modalGrupo"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nevo Grupo</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							Nombre <input type="text" ng-model="nombreGrupo" />
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						ng-click="addGrupo()">Agregar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>

@@ -16,7 +16,10 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +29,15 @@ import org.springframework.stereotype.Service;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
+import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.AsyncRestCall;
 import com.tikal.tallerWeb.rest.util.Callback;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
 
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndex;
-import technology.tikal.taller.automotriz.model.servicio.Servicio;
+import technology.tikal.taller.automotriz.model.servicio.metadata.ServicioMetadata;
+import technology.tikal.taller.automotriz.model.servicio.moneda.Moneda;
 
 /**
  * @author Nekorp
@@ -44,8 +50,14 @@ public class ServicioDAOImp implements ServicioDAO {
 //    private RestTemplateFactory factory;
 //    
     @Override
-    public void guardar(Servicio dato) {
-    	ObjectifyService.ofy().save().entity(dato);
+    public void guardar(ServicioEntity dato) {
+    	Date d= new Date();
+    	
+    	ServicioMetadata sm= new ServicioMetadata();
+    	sm.setFechaInicio(d);
+    	sm.setStatus("Diagnositco");
+    	dato.setMetadata(sm);
+    	ObjectifyService.ofy().save().entity(dato).now();
         if (dato.getId() == null) {
 //            URI resource = factory.getTemplate().postForLocation(factory.getRootUlr() + "/servicios", dato);
 //            String[] uri = StringUtils.split(resource.toString(), '/');
@@ -61,30 +73,13 @@ public class ServicioDAOImp implements ServicioDAO {
     }
 
     @Override
-    public Servicio cargar(Long id) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-//        Servicio r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{id}", Servicio.class, map);
-//        return r;
-        return ObjectifyService.ofy().load().type(Servicio.class).filter("id",id).list().get(0);
+    public ServicioEntity cargar(Long id) {
+        return ObjectifyService.ofy().load().type(ServicioEntity.class).id(id).now();
     }
 
     @Override
     public List<ServicioIndex> getIndiceServicios() {
-//        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio", PaginaServicioIndex.class);
     	return ObjectifyService.ofy().load().type(ServicioIndex.class).list();
-//        List<ServicioIndex> respuesta = new LinkedList<>();
-//        for (int i = r.size() - 1; i >= 0 ; i--) {
-//        	ServicioIndex s= new ServicioIndex();
-//        	s.setCobranza(r.get(i).getCobranza());
-//        	s.setDescripcion(r.get(i).getDescripcion());
-//        	
-//        	
-//        	respuesta.add(s);
-//        }
-//        return respuesta;
-    	
-//    	return null;
     }
     
     @Override
@@ -123,23 +118,53 @@ public class ServicioDAOImp implements ServicioDAO {
     public List<ServicioIndex> getIndiceServiciosPorStatus(String status) {
         Map<String, Object> map = new HashMap<>();
         map.put("status", status);
-        List<ServicioIndex> servicios= ObjectifyService.ofy().load().type(ServicioIndex.class).filter("status",status).list();
+        List<ServicioEntity> servicios= ObjectifyService.ofy().load().type(ServicioEntity.class).list();
+        List<ServicioIndex> ret= new ArrayList<ServicioIndex>();
+        for(ServicioEntity s:servicios){
+        	System.out.println(s.getMetadata().getStatus());
+        	if(s.getMetadata().getStatus().compareTo("Finalizado")!=0){
+        		ServicioIndex si= new ServicioIndex();
+        		si.setCobranza(s.getCobranza());
+        		si.setDescripcion(s.getDescripcion());
+        		si.setFechaInicio(s.getMetadata().getFechaInicio());
+        		si.setId(s.getIdServicio());
+        		si.setIdAuto(s.getIdAuto());
+        		si.setIdCliente(s.getIdCliente());
+        		si.setStatus(s.getMetadata().getStatus());
+        		List<PresupuestoEntity> presupuesto= ofy().load().type(PresupuestoEntity.class).filter("id",si.getId()).list();      		
+        		float total= 0;
+        		for(PresupuestoEntity pr:presupuesto){
+        			total+= Float.parseFloat(pr.getPrecioCliente().getValue())*pr.getCantidad();
+        		}
+        		si.setCostoTotal(new Moneda());
+        		si.getCostoTotal().setValue(total+"");
+        		ret.add(si);
+        	}
+        }
 //        PaginaServicioIndex r = factory.getTemplate().getForObject(factory.getRootUlr() + "/index/servicio?statusServicio={status}", PaginaServicioIndex.class, map);
 //        return r.getItems();
-        return servicios;
+        return ret;
     }
 
     @Override
-    public List<Servicio> getByDate(DateTime fechaInicial, DateTime fechaFinal) {
-        Map<String, Object> map = new HashMap<>();
+    public List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal) {
         
-        map.put("fechaInicial", fechaInicial);
-        map.put("fechaFinal", fechaFinal);
-        List<Servicio> servicios= ObjectifyService.ofy().load().type(Servicio.class).filter("fechaInicio >=",fechaInicial).filter("fechaInicio <=",fechaFinal).list();
-        
-//        PaginaServicio r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios?fechaInicial={fechaInicial}&fechaFinal={fechaFinal}", PaginaServicio.class, map);
-//        return r.getItems();
-        return servicios;
+        List<ServicioEntity> servicios= ObjectifyService.ofy().load().type(ServicioEntity.class).list();
+        List<ServicioEntity> res= new ArrayList<ServicioEntity>();
+        Date fi= fechaInicial.toDate();
+        Date ff= fechaFinal.toDate();
+        for(ServicioEntity servicio:servicios){
+        	if(servicio.getMetadata().getFechaInicio().getDate()>=fi.getDate()&&servicio.getMetadata().getFechaInicio().getMonth()>=fi.getMonth()&&servicio.getMetadata().getFechaInicio().getYear()>=fi.getYear()&&servicio.getMetadata().getFechaInicio().getDate()<=ff.getDate()&&servicio.getMetadata().getFechaInicio().getMonth()<=ff.getMonth()&&servicio.getMetadata().getFechaInicio().getYear()<=ff.getYear()){
+        		res.add(servicio);
+        	}
+        }
+        return res;
     }
+
+	@Override
+	public List<ServicioIndex> getServiciosHoy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -18,9 +18,8 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
-import com.tikal.tallerWeb.rest.util.Callback;
+import com.tikal.tallerWeb.modelo.entity.AutoEntity;
 
-import technology.tikal.taller.automotriz.model.auto.Auto;
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData;
 
 /**
@@ -28,11 +27,13 @@ import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAuto
  */
 public interface AutoDAO {
 
-    void guardar(Auto dato);
+    void guardar(AutoEntity dato);
     
     List<ServicioIndexAutoData> buscar(final String numeroSerie, final List<ServicioIndexAutoData> cmd);
     
-    Auto cargar(String numeroSerie);
+    AutoEntity cargar(String numeroSerie);
+    
+    AutoEntity cargar(long id);
     
    	List<ServicioIndexAutoData> getIndiceAutos();
     

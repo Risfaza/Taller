@@ -18,9 +18,8 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
+import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.rest.util.Callback;
-
-import technology.tikal.taller.automotriz.model.cliente.Cliente;
 
 /**
  * @author Nekorp
@@ -33,15 +32,15 @@ public interface ClienteDAO {
      * Si el cliente no tiene id al terminar de guardar se le asignara un id.
      * @param dato el cliente a guarda.
      */
-    void guardar(Cliente dato);
+    void guardar(ClienteEntity dato);
     /**
      * busca un cliente dado un nombre, este metodo es asyncrono.
      * @param name
      * @param cmd 
      */
-    void buscar(String name, Callback<List<Cliente>> cmd);
+    void buscar(String name, Callback<List<ClienteEntity>> cmd);
     
-    Cliente cargar(Long id);
+    ClienteEntity cargar(Long id);
     /**
      * carga un cliente dado un nombre, regresa null si no se encuentra
      * o se encuentra mas de uno
@@ -54,5 +53,6 @@ public interface ClienteDAO {
      * consulta todos los clientes, ignora por el momento temas de paginacion.
      * @return la lista de todos los clientes.
      */
-    List<Cliente> consultaTodos();
+    List<ClienteEntity> consultaTodos();
+    ClienteEntity buscarCliente(String nombre);
 }

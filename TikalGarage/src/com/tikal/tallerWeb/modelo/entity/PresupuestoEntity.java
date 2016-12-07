@@ -9,12 +9,13 @@ import technology.tikal.taller.automotriz.model.servicio.costo.RegistroCosto;
 @Entity
 public class PresupuestoEntity extends RegistroCosto {
 	
-	@Id public Long id;
+	@Id public Long idPresupuesto;
 	
-	public PresupuestoEntity(){}
+	public PresupuestoEntity(){
+	}
 
-	public Long getId() {
-		return id;
+	public Long getIdPresupuesto() {
+		return idPresupuesto;
 	}
 
 }

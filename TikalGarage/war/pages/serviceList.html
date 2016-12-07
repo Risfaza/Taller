@@ -1,0 +1,35 @@
+
+<div class="container-fluid">
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+				<th>Status</th>
+				<th>Nombre Cliente</th>
+				<th>Placas</th>
+				<th>Recepci&oacute;n</th>
+				<th>Servicio</th>
+				<th>Cobranza</th>
+				<th>D&iacute;as de adeudo</th>
+				<th>Saldo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ser in listaServicios">
+					<td>{{ser.status}}</td>
+					<td>{{ser.nombre}}</td>
+					<td>{{ser.placas}}</td>
+					<td>{{ser.recepcion}}</td>
+					<td>{{ser.descripcion}}</td>
+					<td>{{ser.cobranza}}</td>
+					<td>{{ser.adeudo}}</td>
+					<td>{{ser.saldo}}</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	</div>
+</div>
+
+</div>

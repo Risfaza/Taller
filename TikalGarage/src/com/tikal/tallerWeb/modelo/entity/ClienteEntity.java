@@ -9,12 +9,12 @@ import technology.tikal.taller.automotriz.model.cliente.Cliente;
 @Entity
 public class ClienteEntity extends Cliente {
 	
-	@Id public Long id;
+	@Id public Long idCliente;
 	
 	public ClienteEntity(){}
 
-	public Long getId() {
-		return id;
+	public Long getIdCliente() {
+		return idCliente;
 	}
 
 }
