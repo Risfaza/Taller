@@ -126,9 +126,10 @@ app
 							$scope.guardar = function() {
 								var send={
 										servicio:$scope.servicio,
-										presupuesto:$scope.gru
+										presupuesto:$scope.gruposCosto
 								}
-								$http.post('/servicio/add', $scope.servicio)
+//								console.log(send);
+								$http.post('/servicio/save', send)
 										.then(function(response) {
 											alert("Servicio Guardado");
 										}, function(response) {
@@ -167,14 +168,14 @@ app
 							}
 
 							$scope.addEvento = function() {
-//								var e = $scope.evento;
-//								$scope.eventos.push(e);
-//								$scope.evento = {
-//										evidencia:[]
-//								};
+// var e = $scope.evento;
+// $scope.eventos.push(e);
+// $scope.evento = {
+// evidencia:[]
+// };
 								$scope.evento.id=$routeParams.id;
 								eventoService.addEvento($scope.evento).then(function(data){
-									console.log(data);
+//									console.log(data);
 									$scope.images= fileService.getFile("b_pics");
 									$scope.indice=0;
 									$scope.sendImages(data.idEvento);
@@ -190,9 +191,11 @@ app
 								var nombregrupo= $scope.nombreGrupo;
 								$scope.nombreGrupo="";
 								$scope.servicio.servicio.gruposCosto.push(nombregrupo);
+								var tipo=$scope.filtro.tipo;
 								$scope.gruposCosto.push({
 									nombre:nombregrupo,
-									presupuestos:[]
+									presupuestos:[],
+									tipo:tipo
 								});
 								
 							}
@@ -204,6 +207,24 @@ app
 								if(!gru.presupuestos){
 									gru.presupuestos=[];
 								}
-								gru.presupuestos.push({});
+								var tipo=$scope.filtro.tipo;
+								gru.presupuestos.push({tipo:tipo,id:$routeParams.id,concepto:""});
 							}
+							$scope.filtro={tipo:"ME"};
+							$scope.showPresupuesto= function(ver){
+								$scope.filtro.tipo=ver;
+							}
+							
+							$scope.cotizaciones=function(e){
+								console.log(e);
+								if(e.subtipo){
+									if(e.subtipo=="RE" && e.concepto!=""){
+										alert("cotizaa");
+									}
+								}
+								
+							}
+							
 						} ]);
+
+

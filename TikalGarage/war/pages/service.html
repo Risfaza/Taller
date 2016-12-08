@@ -358,15 +358,15 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ol class="breadcrumb">
-						<li><a>Hojalater&iacute;a y Pintura</a></li>
-						<li><a>Mec&aacute;nica</a></li>
-						<li><a>Otros Gastos</a></li>
+						<li><button class="btn-link" ng-click="showPresupuesto('HP')">Hojalater&iacute;a y Pintura</button></li>
+						<li><button class="btn-link" ng-click="showPresupuesto('ME')">Mec&aacute;nica</button></li>
+						<li><button class="btn-link" ng-click="showPresupuesto('OG')">Otros Gastos</button></li>
 						<li><button class="btn-link" data-toggle="modal"
 								data-target="#eventoModal" ng-click="verModal('showModalGrupo')">
 								Agregar grupo</button></li>
 					</ol>
 				</div>
-				<div class="col-md-12" ng-repeat="gru in gruposCosto">
+				<div class="col-md-12" ng-repeat="gru in gruposCosto| filter:filtro" >
 
 					<div class="row">
 						<div class="col-md-6">
@@ -397,8 +397,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="pres in gru.presupuestos">
-									<td><select ng-model="pres.tipo">
+								<tr ng-repeat="pres in gru.presupuestos" ng-click="cotizaciones(pres)">
+									<td><select ng-model="pres.subtipo">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
 											<option value="IN">Insumo</option>
@@ -409,7 +409,7 @@
 										ng-model="pres.precioUnitario.value" /></td>
 									<td><input type="checkbox" ng-model="iva1" /></td>
 									<td><label disabled ng-show="iva1"
-										>{{pres.precioUnitario*0.16}}</label></td>
+										>{{pres.precioUnitario.value*0.16}}</label></td>
 									<td><input type="number" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
 									<td><label>{{pres.precioCliente.value - pres.precioUnitario.value}}</label>

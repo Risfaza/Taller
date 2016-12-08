@@ -21,6 +21,8 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
+import com.tikal.tallerWeb.control.restControllers.VO.DatosServicioVO;
+import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.data.access.AutoDAO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.data.access.ClienteDAO;
@@ -230,4 +232,11 @@ public class ServicioControl {
 	
 		resp.getWriter().println(JsonConvertidor.toJson(lista));
 	}
-}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes="application/json")
+	public void guardar(HttpServletResponse resp, HttpServletRequest req,@RequestBody String json) throws IOException {
+		DatosServicioVO data= (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
+		List<GruposCosto> lista=data.getPresupuesto();
+		
+	}
+}	
