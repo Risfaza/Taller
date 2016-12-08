@@ -21,6 +21,7 @@
 	<!-- beans daos local -->
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.AutoDAOImpLocal"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"></bean>
+	<bean class="com.tikal.tallerWeb.data.access.rest.CostoDAOImp"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.BitacoraDAOImpLocal"></bean>
 

@@ -16,19 +16,15 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 import org.springframework.stereotype.Service;
 
 import com.tikal.tallerWeb.data.access.CostoDAO;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
-
-import technology.tikal.taller.automotriz.model.servicio.costo.RegistroCosto;
+import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
 /**
  * @author Nekorp
@@ -41,7 +37,7 @@ public class CostoDAOImp implements CostoDAO {
 //    private RestTemplateFactory factory;
     
     @Override
-    public List<RegistroCosto> cargar(Long idServicio) {
+    public List<PresupuestoEntity> cargar(Long idServicio) {
         Map<String, Object> map = new HashMap<>();
         map.put("idServicio", idServicio);
 //        RegistroCosto[] r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{idServicio}/costo", RegistroCosto[].class, map);
@@ -50,12 +46,11 @@ public class CostoDAOImp implements CostoDAO {
     }
 
     @Override
-    public List<RegistroCosto> guardar(Long idServicio, List<RegistroCosto> datos) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idServicio", idServicio);
+    public List<PresupuestoEntity> guardar(Long idServicio, List<PresupuestoEntity> datos) {
+    	ofy().save().entities(datos).now();
 //        RegistroCosto[] r = factory.getTemplate().postForObject(factory.getRootUlr() + "/servicios/{idServicio}/costo", datos, RegistroCosto[].class, map);
 //        return Arrays.asList(r);
-        return null;
+        return datos;
     }
 
 }

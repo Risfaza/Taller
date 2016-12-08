@@ -18,13 +18,13 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
-import technology.tikal.taller.automotriz.model.servicio.costo.RegistroCosto;
+import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
 /**
  * @author Nekorp
  */
 public interface CostoDAO {
 
-    List<RegistroCosto> cargar(Long idServicio);
-    List<RegistroCosto> guardar(Long idServicio, List<RegistroCosto> datos);
+    List<PresupuestoEntity> cargar(Long idServicio);
+    List<PresupuestoEntity> guardar(Long idServicio, List<PresupuestoEntity> datos);
 }

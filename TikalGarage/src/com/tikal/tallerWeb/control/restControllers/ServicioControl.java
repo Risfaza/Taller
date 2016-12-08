@@ -26,10 +26,12 @@ import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.data.access.AutoDAO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.data.access.ClienteDAO;
+import com.tikal.tallerWeb.data.access.CostoDAO;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
 import com.tikal.tallerWeb.modelo.entity.AutoEntity;
 import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
+import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.NewServiceObject;
 import com.tikal.tallerWeb.server.BlobServicio;
@@ -57,6 +59,8 @@ public class ServicioControl {
 
 	@Autowired
 	ServletContext context;
+	@Autowired
+	CostoDAO costodao;
 
 	public ServicioControl() {
 
@@ -237,6 +241,16 @@ public class ServicioControl {
 	public void guardar(HttpServletResponse resp, HttpServletRequest req,@RequestBody String json) throws IOException {
 		DatosServicioVO data= (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
 		List<GruposCosto> lista=data.getPresupuesto();
-		
+		List<PresupuestoEntity> presupuesto= new ArrayList<PresupuestoEntity>();
+		for(GruposCosto gru:lista){
+			for(PresupuestoEntity pre:gru.getPresupuestos()){
+				pre.setGrupo(gru.getNombre());
+				pre.getPrecioCotizado().setValue((pre.getCantidad()*Float.parseFloat(pre.getPrecioCliente().getValue()))+"");
+				pre.setAutorizado(false);
+				pre.setId(data.getServicio().getServicio().getIdServicio());
+				presupuesto.add(pre);
+			}
+		}
+		costodao.guardar(data.getServicio().getServicio().getIdServicio(), presupuesto);
 	}
 }	
