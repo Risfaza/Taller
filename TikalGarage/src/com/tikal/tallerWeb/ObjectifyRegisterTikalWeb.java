@@ -7,6 +7,7 @@ import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.modelo.servicio.Person;
+import com.tikal.tallerWeb.modelo.usuario.Usuario;
 
 public class ObjectifyRegisterTikalWeb {
 	ObjectifyRegisterTikalWeb() {
@@ -16,5 +17,6 @@ public class ObjectifyRegisterTikalWeb {
         ObjectifyService.register(EventoEntity.class);
         ObjectifyService.register(PresupuestoEntity.class);
         ObjectifyService.register(ServicioEntity.class);
+        ObjectifyService.register(Usuario.class);
     }
 }

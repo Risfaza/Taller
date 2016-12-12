@@ -1,17 +1,31 @@
-app.service('listService',['$http','$q',function($http,$q){
+app.service('listService',['$http','$q','$location',function($http,$q,$location){
 	this.getLista=function(){
 		var d= $q.defer();
 		$http.get("/servicio/status/activos").then(function(response){
 			console.log(response);
 				d.resolve(response.data);
-		},function(response){});
+		},function(response){
+			console.log(response);
+			if(response.status == 403){
+				$location.path("/login");
+			}
+		});
 		return d.promise;
 	}
 }]);
 
 
-app.controller('serviceListController',['$scope','$location','listService',function($scope,$location,listService){
-		listService.getLista().then(function(data){
+app.controller('serviceListController',['$rootScope','$scope','$location','listService','sessionService',function($rootScope,$scope,$location,listService,sessionService){
+	if(!$rootScope.authenticated){
+		$location.path("/login");
+	}	
+	
+	listService.getLista().then(function(data){
 			$scope.listaServicios=data;
-		})
+		},function(data){
+			console.log(data);
+			if(data.status == 403){
+				$location.path("/login");
+			}
+		});
 }]);

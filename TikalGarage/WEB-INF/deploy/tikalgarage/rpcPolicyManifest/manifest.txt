@@ -1,3 +1,0 @@
-# Module tikalgarage
-# RPC service class, partial path of RPC policy file
-com.tikal.tallerWeb.client.GreetingService, E0B69FD897455F6A8CCB0FD897E9690F.gwt.rpc

@@ -1,2 +1,0 @@
-serviceClass: com.tikal.tallerWeb.client.GreetingService
-path: E0B69FD897455F6A8CCB0FD897E9690F.gwt.rpc

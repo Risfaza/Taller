@@ -1,2 +1,0 @@
-serviceClass: com.tikal.cacao.client.GreetingService
-path: 75FF971BF737C2945E09112E0CD1780F.gwt.rpc

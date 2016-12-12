@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
+import com.tikal.tallerWeb.modelo.usuario.Usuario;
 import com.tikal.tallerWeb.rest.util.NewServiceObject;
 import com.tikal.tallerWeb.server.BlobServicio;
 import com.tikal.tallerWeb.util.JsonConvertidor;
@@ -221,7 +223,7 @@ public class ServicioControl {
 		for (ServicioEntity s : a) {
 			NewServiceObject servicio = new NewServiceObject();
 			servicio.setServicio(s);
-			
+
 			servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
 			servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
 			ret.add(servicio);
@@ -230,22 +232,28 @@ public class ServicioControl {
 	}
 
 	@RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
-	public void getStatus(HttpServletResponse resp, HttpServletRequest req, @PathVariable String status) throws IOException {
-		List<ServicioIndex> lista=servdao.getIndiceServiciosPorStatus(status);
-		
-	
+	public void getStatus(HttpServletResponse resp, HttpServletRequest req, @PathVariable String status)
+			throws IOException {
+//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		Usuario user = null;
+//		if (principal instanceof Usuario) {
+//			user = ((Usuario) principal);
+//		}
+		List<ServicioIndex> lista = servdao.getIndiceServiciosPorStatus(status);
+
 		resp.getWriter().println(JsonConvertidor.toJson(lista));
 	}
-	
-	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes="application/json")
-	public void guardar(HttpServletResponse resp, HttpServletRequest req,@RequestBody String json) throws IOException {
-		DatosServicioVO data= (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
-		List<GruposCosto> lista=data.getPresupuesto();
-		List<PresupuestoEntity> presupuesto= new ArrayList<PresupuestoEntity>();
-		for(GruposCosto gru:lista){
-			for(PresupuestoEntity pre:gru.getPresupuestos()){
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
+	public void guardar(HttpServletResponse resp, HttpServletRequest req, @RequestBody String json) throws IOException {
+		DatosServicioVO data = (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
+		List<GruposCosto> lista = data.getPresupuesto();
+		List<PresupuestoEntity> presupuesto = new ArrayList<PresupuestoEntity>();
+		for (GruposCosto gru : lista) {
+			for (PresupuestoEntity pre : gru.getPresupuestos()) {
 				pre.setGrupo(gru.getNombre());
-				pre.getPrecioCotizado().setValue((pre.getCantidad()*Float.parseFloat(pre.getPrecioCliente().getValue()))+"");
+				pre.getPrecioCotizado()
+						.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
 				pre.setAutorizado(false);
 				pre.setId(data.getServicio().getServicio().getIdServicio());
 				presupuesto.add(pre);
@@ -253,4 +261,4 @@ public class ServicioControl {
 		}
 		costodao.guardar(data.getServicio().getServicio().getIdServicio(), presupuesto);
 	}
-}	
+}
