@@ -76,7 +76,7 @@ public class ServicioDAOImp implements ServicioDAO {
     public ServicioEntity cargar(Long id) {
         return ObjectifyService.ofy().load().type(ServicioEntity.class).id(id).now();
     }
-
+    
     @Override
     public List<ServicioIndex> getIndiceServicios() {
     	return ObjectifyService.ofy().load().type(ServicioIndex.class).list();

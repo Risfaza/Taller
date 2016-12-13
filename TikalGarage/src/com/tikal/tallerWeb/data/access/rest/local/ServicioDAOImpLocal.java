@@ -1,5 +1,7 @@
 package com.tikal.tallerWeb.data.access.rest.local;
 
-public class ServicioDAOImpLocal {
+import com.tikal.tallerWeb.data.access.rest.ServicioDAOImp;
+
+public class ServicioDAOImpLocal extends ServicioDAOImp{
 
 }

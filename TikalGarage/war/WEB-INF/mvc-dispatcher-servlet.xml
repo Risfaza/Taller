@@ -25,6 +25,7 @@
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.BitacoraDAOImpLocal"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.UsuarioDAOImpLocal"></bean>
+	<bean class="com.tikal.tallerWeb.data.access.rest.local.CotizacionDAOImpLocal"></bean>
 
 
 	<bean class="com.tikal.tallerWeb.server.BlobServicio"></bean>

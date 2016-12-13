@@ -3,6 +3,7 @@ package com.tikal.tallerWeb;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.modelo.entity.AutoEntity;
 import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
+import com.tikal.tallerWeb.modelo.entity.CotizacionEntity;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
@@ -18,5 +19,6 @@ public class ObjectifyRegisterTikalWeb {
         ObjectifyService.register(PresupuestoEntity.class);
         ObjectifyService.register(ServicioEntity.class);
         ObjectifyService.register(Usuario.class);
+        ObjectifyService.register(CotizacionEntity.class);
     }
 }

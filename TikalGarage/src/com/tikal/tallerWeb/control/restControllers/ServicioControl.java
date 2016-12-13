@@ -72,8 +72,8 @@ public class ServicioControl {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
-		NewServiceObject s = (NewServiceObject) JsonConvertidor.fromJson(json, NewServiceObject.class);
-		AutoEntity auto = s.getAuto();
+		DatosServicioVO datos= (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
+		NewServiceObject s = datos.getServicio();
 		AutoEntity a = (AutoEntity) autodao.cargar(s.getAuto().getNumeroSerie());
 		if (a == null) {
 			autodao.guardar(s.getAuto());
@@ -91,6 +91,16 @@ public class ServicioControl {
 		ser.setIdAuto(Long.toString(s.getAuto().getIdAuto()));
 		ser.setIdCliente(s.getCliente().getIdCliente());
 		servdao.guardar(ser);
+		List<PresupuestoEntity> presu=new ArrayList();
+		for(GruposCosto g:datos.getPresupuesto()){
+			for(PresupuestoEntity pe:g.getPresupuestos()){
+				pe.setGrupo(g.getNombre());
+				pe.setId(ser.getId());
+				presu.add(pe);
+			}
+			costodao.guardar(ser.getId(), presu);
+		}
+		
 		// List<AutoEntity> ae =
 		// ObjectifyService.ofy().load().type(AutoEntity.class)
 		// .filter("numeroSerie", s.getAuto().getNumeroSerie()).list();
@@ -99,7 +109,7 @@ public class ServicioControl {
 		// ObjectifyService.ofy().save().entities(a).now();
 		// }
 
-		response.getWriter().write(JsonConvertidor.toJson(s));
+		response.getWriter().write(JsonConvertidor.toJson(datos));
 	}
 
 	@RequestMapping(value = {
@@ -203,7 +213,11 @@ public class ServicioControl {
 		if (servicio.getServicio() != null) {
 			servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
 			servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
-			resp.getWriter().println(JsonConvertidor.toJson(servicio));
+			List<GruposCosto> grupos=costodao.cargar(servicio.getServicio().getIdServicio());
+			DatosServicioVO datos= new DatosServicioVO();
+			datos.setServicio(servicio);
+			datos.setPresupuesto(grupos);
+			resp.getWriter().println(JsonConvertidor.toJson(datos));
 		}
 	}
 

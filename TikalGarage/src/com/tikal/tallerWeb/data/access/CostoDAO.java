@@ -18,6 +18,7 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
+import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
 /**
@@ -25,6 +26,6 @@ import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
  */
 public interface CostoDAO {
 
-    List<PresupuestoEntity> cargar(Long idServicio);
+    List<GruposCosto> cargar(Long idServicio);
     List<PresupuestoEntity> guardar(Long idServicio, List<PresupuestoEntity> datos);
 }

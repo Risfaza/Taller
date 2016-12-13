@@ -80,6 +80,7 @@ app
 							$scope.presupuesto={
 									
 							}
+							$scope.gruposCosto=[];
 							$scope.urlpost = $sce.trustAsResourceUrl($scope.uri.url);
 						    $http.get("/servicio/getUpldUrl").then(function(response){
 						    	$scope.uri=response.data;
@@ -107,9 +108,10 @@ app
 								},
 							}
 							eventoService.getServicio($routeParams.id).then(function(data){
-								$scope.servicio.servicio=data.servicio;
-								$scope.servicio.auto=data.auto;
-								$scope.servicio.cliente=data.cliente;
+								$scope.servicio.servicio=data.servicio.servicio;
+								$scope.servicio.auto=data.servicio.auto;
+								$scope.servicio.cliente=data.servicio.cliente;
+								$scope.servicio.gruposCosto= data.presupuesto;
 							});
 
 							$scope.showTab = function(id) {
@@ -126,7 +128,7 @@ app
 							$scope.guardar = function() {
 								var send={
 										servicio:$scope.servicio,
-										presupuesto:$scope.gruposCosto
+										presupuesto:$scope.servicio.gruposCosto
 								}
 //								console.log(send);
 								$http.post('/servicio/save', send)
@@ -186,13 +188,13 @@ app
 							$scope.findCliente = function() {
 								// implementar servicio de búsqueda
 							}
-							$scope.gruposCosto=[];
+							
 							$scope.addGrupo=function(){
 								var nombregrupo= $scope.nombreGrupo;
 								$scope.nombreGrupo="";
 								$scope.servicio.servicio.gruposCosto.push(nombregrupo);
 								var tipo=$scope.filtro.tipo;
-								$scope.gruposCosto.push({
+								$scope.servicio.gruposCosto.push({
 									nombre:nombregrupo,
 									presupuestos:[],
 									tipo:tipo
@@ -210,7 +212,8 @@ app
 								var tipo=$scope.filtro.tipo;
 								gru.presupuestos.push({tipo:tipo,id:$routeParams.id,concepto:""});
 							}
-							$scope.filtro={tipo:"ME"};
+							$scope.filtro={tipo:"HP"};
+							$scope.filtroCot={concepto:""};
 							$scope.showPresupuesto= function(ver){
 								$scope.filtro.tipo=ver;
 							}
@@ -219,7 +222,11 @@ app
 								console.log(e);
 								if(e.subtipo){
 									if(e.subtipo=="RE" && e.concepto!=""){
-										alert("cotizaa");
+										$http.get("/presupuesto/get",{params:{ele:e}}).then(function(data){
+											console.log(data);
+										},function(data){
+											
+										});
 									}
 								}
 								

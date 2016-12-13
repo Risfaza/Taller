@@ -10,7 +10,7 @@
 
 	<security:http auto-config="true" use-expressions ="true">
 		<security:intercept-url pattern="/servicio/**" access="hasRole('ROLE_ADMIN')" />
-		<security:form-login  login-page="/login" username-parameter="username" password-parameter="password" authentication-failure-url="/Access_Denied" />
+		<security:form-login  login-page="/TikalGarage.html#/login" username-parameter="username" password-parameter="password" authentication-failure-url="/Access_Denied" />
 		<security:csrf disabled="true" />
 		<security:http-basic />
 		 

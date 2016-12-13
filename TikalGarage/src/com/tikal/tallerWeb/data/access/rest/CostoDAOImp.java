@@ -16,12 +16,16 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import org.springframework.stereotype.Service;
 
+import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.data.access.CostoDAO;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
@@ -37,12 +41,36 @@ public class CostoDAOImp implements CostoDAO {
 //    private RestTemplateFactory factory;
     
     @Override
-    public List<PresupuestoEntity> cargar(Long idServicio) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idServicio", idServicio);
-//        RegistroCosto[] r = factory.getTemplate().getForObject(factory.getRootUlr() + "/servicios/{idServicio}/costo", RegistroCosto[].class, map);
-//        return Arrays.asList(r);
-        return null;
+    public List<GruposCosto> cargar(Long idServicio) {
+    	List<PresupuestoEntity> lista= ofy().load().type(PresupuestoEntity.class).list();
+    	Map<String,List<PresupuestoEntity>> mapa= new HashMap<String,List<PresupuestoEntity>>();
+    	
+    	List<GruposCosto> res= new ArrayList<GruposCosto>();
+    	for(PresupuestoEntity p: lista){
+    		if(p.getId()==null){
+    			ofy().delete().entity(p).now();
+    			continue;
+    		}
+    		if(p.getId().compareTo(idServicio)==0){
+    			if(mapa.get(p.getGrupo())!=null){
+    				mapa.get(p.getGrupo()).add(p);
+    			}
+    			else{
+    				List<PresupuestoEntity> l= new ArrayList<PresupuestoEntity>();
+    				l.add(p);
+    				mapa.put(p.getGrupo(), l);
+    			}
+    		}
+    	}
+    	List<GruposCosto> grupos= new ArrayList<GruposCosto>();
+    	for (String key : mapa.keySet()) {
+    		GruposCosto grupo= new GruposCosto();
+    		grupo.setNombre(key);
+    		grupo.setPresupuestos(mapa.get(key));
+    		grupo.setTipo(grupo.getPresupuestos().get(0).getTipo());
+    		grupos.add(grupo);
+    	}
+        return grupos;
     }
 
     @Override
