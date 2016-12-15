@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.BucketInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.tikal.tallerWeb.data.access.rest.UsuarioDAOImp;
 import com.tikal.tallerWeb.modelo.usuario.Usuario;
 import com.tikal.tallerWeb.util.JsonConvertidor;
@@ -26,6 +30,19 @@ public class UsariosControl {
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
 		usuarioImp.crearUsuario(usuario);
 		
+	}
+	
+	@RequestMapping(value={"/prueba"}, method = RequestMethod.GET)
+	public void prueba(HttpServletRequest request, HttpServletResponse response){
+		 Storage storage = StorageOptions.getDefaultInstance().getService();
+
+		    // The name for the new bucket
+		    String bucketName = "webproyect-1332.appspot.com/taller_almacen";  // "my-new-bucket";
+
+		    // Creates the new bucket
+		    Bucket bucket = storage.create(BucketInfo.of(bucketName));
+
+		    System.out.printf("Bucket %s created.%n", bucket.getName());
 	}
 
 }

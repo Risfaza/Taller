@@ -74,4 +74,10 @@ public class BitacoraDAOImp implements BitacoraDAO {
 
 		return ObjectifyService.ofy().load().type(EventoEntity.class).id(id).now();
 	}
+
+	@Override
+	public void borrarEvento(Long id) {
+		// TODO Auto-generated method stub
+		ObjectifyService.ofy().delete().type(EventoEntity.class).id(id).now();
+	}
 }

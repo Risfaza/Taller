@@ -10,8 +10,24 @@ public class CotizacionEntity {
 	@Index private String tipo;
 	@Index private int modelo;
 	@Index private String proveedor;
-	String costo;
+	@Index private String concepto;
+	String precio;
 	String tiempo;
+	
+	
+	
+	public String getPrecio() {
+		return precio;
+	}
+	public void setPrecio(String precio) {
+		this.precio = precio;
+	}
+	public String getConcepto() {
+		return concepto;
+	}
+	public void setConcepto(String concepto) {
+		this.concepto = concepto;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -36,12 +52,6 @@ public class CotizacionEntity {
 	public void setProveedor(String proveedor) {
 		this.proveedor = proveedor;
 	}
-	public String getCosto() {
-		return costo;
-	}
-	public void setCosto(String costo) {
-		this.costo = costo;
-	}
 	public String getTiempo() {
 		return tiempo;
 	}
@@ -49,5 +59,26 @@ public class CotizacionEntity {
 		this.tiempo = tiempo;
 	}
 	
+	public boolean guardable(){
+		if(this.getConcepto()==null){
+			return false;
+		}
+		if(this.getPrecio()==null){
+			return false;
+		}
+		if(this.getProveedor()==null){
+			return false;
+		}
+		if(this.getTiempo()==null){
+			return false;
+		}
+		if(this.getTipo()==null){
+			return false;
+		}
+		if(this.getConcepto().length()==0||this.getPrecio().length()==0||this.getProveedor().length()==0||this.getTiempo().length()==0||this.getTipo().length()==0){
+			return false;
+		}
+		return true;
+	}
 	
 }

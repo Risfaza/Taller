@@ -224,7 +224,11 @@ public class ServicioControl {
 	@RequestMapping(value = "/getUpldUrl", method = RequestMethod.GET)
 	public void getUploadUrl(HttpServletResponse resp, HttpServletRequest req) throws IOException {
 		UploadUrl ur = new UploadUrl();
-		ur.setUrl(BlobServicio.urlUpld);
+		String s=BlobServicio.urlUpld;
+		s= s.substring(s.indexOf('/')+1);
+		s= s.substring(s.indexOf('/')+1);
+		s= s.substring(s.indexOf('/'));
+		ur.setUrl(s);
 		resp.getWriter().println(JsonConvertidor.toJson(ur));
 
 	}

@@ -103,8 +103,7 @@ app.service('fileUpload', ['$http','$q',
         $http.post(url, fd, {
             withCredentials: false,
             headers: {
-              'Content-Type': undefined
-            },
+              'Content-Type': undefined            },
             transformRequest: angular.identity,
             params: {
               fd
@@ -131,11 +130,13 @@ app.service('fileUpload', ['$http','$q',
 // fd.append('files', data);
         fd.append('length',indice);
         fd.append('idEvento',id);
-        
+        alert(url);
         $http.post(url, fd, {
-            withCredentials: false,
+            withCredentials: true,
             headers: {
-              'Content-Type': undefined
+              'Content-Type': undefined,
+              'Access-Control-Allow-Methods':"POST",
+              'Access-Control-Allow-Origin': undefined
             },
             transformRequest: angular.identity,
             params: {

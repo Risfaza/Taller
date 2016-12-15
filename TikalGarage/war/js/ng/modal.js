@@ -7,6 +7,10 @@ app.service('modalService', function() {
 		{
 			modal : 'showModalEvento',
 			show : false
+		},
+		{
+			modal : 'showModalEvidencias',
+			show : false
 		}];
 		for (var i = 0; i < modals.length; i++) {
 			modals[i].show
@@ -15,7 +19,7 @@ app.service('modalService', function() {
 				modals[i].show = true;
 			}
 		}
-		console.log(modals);
+//		console.log(modals);
 		return modals;
 	}
 });

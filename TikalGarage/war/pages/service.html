@@ -14,6 +14,9 @@
 	</ul>
 
 	<div class="tab-content">
+	{{servicio}}
+	{{eventos}}
+	{{listcotizaciones}}
 		<div id="cliente" class="tab-pane fade in active">
 
 			<form class="form-horizontal">
@@ -316,8 +319,10 @@
 												<b>{{ev.tipo}}</b>
 											</div>
 											<div style="float: right !important">
-												<button class="btn btn-small btn-link">Evidencias</button>
-												<button class="btn btn-small btn-link">Borrar</button>
+												<button class="btn btn-small btn-link" data-toggle="modal"
+													data-target="#eventoModal" ng-click="verEvidencias(ev)">Evidencias</button>
+												<button class="btn btn-small btn-link"
+													ng-click="borrarEvento(ev)">Borrar</button>
 											</div>
 										</div>
 										<div class="row">
@@ -358,26 +363,32 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ol class="breadcrumb">
-						<li><button class="btn-link" ng-click="showPresupuesto('HP')">Hojalater&iacute;a y Pintura</button></li>
-						<li><button class="btn-link" ng-click="showPresupuesto('ME')">Mec&aacute;nica</button></li>
-						<li><button class="btn-link" ng-click="showPresupuesto('OG')">Otros Gastos</button></li>
-						<li><button class="btn-link" data-toggle="modal"
+							<li><button class="btn-link" data-toggle="modal"
 								data-target="#eventoModal" ng-click="verModal('showModalGrupo')">
 								Agregar grupo</button></li>
 					</ol>
 				</div>
-				<div class="col-md-12" ng-repeat="gru in servicio.gruposCosto| filter:filtro" >
+				<div class="col-md-12"
+					ng-repeat="gru in servicio.gruposCosto">
 
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<b>{{gru.nombre}}</b>
-
+							<ul class="list-inline">
+								<li><button class="btn-link"
+										ng-click="addPresupuesto(gru,'HP')">Hojalater&iacute;a y
+										Pintura</button></li>
+								<li><button class="btn-link"
+										ng-click="addPresupuesto(gru,'ME')">Mec&aacute;nica</button></li>
+								<li><button class="btn-link"
+										ng-click="addPresupuesto(gru,'OG')">Otros Gastos</button></li>
+							</ul>
 						</div>
-						<div class="col-md-6">
-							<button class="btn btn-small btn-primary"
-								ng-click="addPresupuesto(gru)">
-								<i class="fa fa-plus"></i>
-						</div>
+						<!-- 						<div class="col-md-6"> -->
+						<!-- 							<button class="btn btn-small btn-primary" -->
+						<!-- 								ng-click="addPresupuesto(gru)"> -->
+						<!-- 								<i class="fa fa-plus"></i></button> -->
+						<!-- 						</div> -->
 					</div>
 					<div class="table-responsive">
 						<table class="letraChica table table-bordered table-striped">
@@ -397,7 +408,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="pres in gru.presupuestos" ng-click="cotizaciones(pres)">
+								<tr ng-repeat="pres in gru.presupuestos"
+									ng-click="cotizaciones(pres)">
 									<td><select ng-model="pres.subtipo">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
@@ -408,27 +420,57 @@
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
 									<td><input type="checkbox" ng-model="iva1" /></td>
-									<td><label disabled ng-show="iva1"
-										>{{pres.precioUnitario.value*0.16}}</label></td>
+									<td><label disabled ng-show="iva1">{{pres.precioUnitario.value*0.16}}</label></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
-									<td><label>{{pres.precioCliente.value - pres.precioUnitario.value}}</label>
-										</td>
+									<td><label>{{pres.precioCliente.value -
+											pres.precioUnitario.value}}</label></td>
 									<td><label>{{pres.precioCliente.value*pres.cantidad}}</label></td>
 									<td><input type="checkbox" ng-model="iva2" /></td>
 									<td><label ng-show="iva2">{{pres.precioCliente.value*pres.cantidad*0.16}}</label>
-									<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
-
+										<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
 								</tr>
 							</tbody>
 						</table>
-						
+
 					</div>
 				</div>
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-12"></div>
+				<div class="col-md-12">
+				<div class="table-responsive" ng-show="showCotizaciones">
+						<button class="btn btn-small btn-primary" ng-click="addCot()">
+							<i class="fa fa-plus"></i>
+						</button>
+						<table class="letraChica table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Proveedor</th>
+									<th>Precio</th>
+									<th>Tiempo de entrega</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="cot in listcotizaciones |filter:filtroCot">
+									<td><input type="text" ng-model="cot.proveedor"></td>
+									<td><input type="text" ng-model="cot.precio"></td>
+									<td><input type="text" ng-model="cot.tiempo"></td>
+									<td><input type="radio" name="optradio"
+										ng-model="cot.selected" ng-click="setPrecio(cot.precio)"></td>
+								</tr>
+								<tr>
+									<td><input type="text" ng-model="newCot.proveedor"></td>
+									<td><input type="text" ng-model="newCot.precio"></td>
+									<td><input type="text" ng-model="newCot.tiempo"></td>
+									<td><input type="radio" name="optradio"
+										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
 			</div>
 			<div id="cobranza" class="tab-pane fade">
@@ -523,6 +565,42 @@
 						data-dismiss="modal">Cerrar</button>
 					<button type="button" class="btn btn-primary" data-dismiss="modal"
 						ng-click="addGrupo()">Agregar</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal-dialog" role="document" ng-show="modals[2].show">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modalGrupo"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Evidencias</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
+									<a class="thumbnail"> <img
+										src="{{'/servicio/image/'+evi.image}}">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<input id="b_pics" accept="image/*" type="file" class="file"
+								multiple="true" multiple-File-Model="b_pics" required />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						ng-click="appendImages()">Agregar</button>
 				</div>
 			</div>
 		</div>

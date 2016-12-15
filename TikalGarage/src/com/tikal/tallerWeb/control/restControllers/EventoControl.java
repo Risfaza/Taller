@@ -44,11 +44,19 @@ public class EventoControl {
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}
 
-	@RequestMapping(value = {
-			"/getBitacora/{id}" }, method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = { "/getBitacora/{id}" }, method = RequestMethod.GET, produces = "application/json")
 	public void get(HttpServletRequest request, HttpServletResponse response, @PathVariable String id)
 			throws IOException {
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.cargar(Long.parseLong(id))));
+	}
+
+	@RequestMapping(value = { "/remove/{id}" }, method = RequestMethod.POST)
+	public void remove(HttpServletRequest request, HttpServletResponse response, @PathVariable String id)
+			throws IOException {
+		EventoEntity e= bitacora.cargarEvento(Long.parseLong(id));
+		if(e!=null){
+			bitacora.borrarEvento(e.getIdEvento());
+		}
 	}
 
 }

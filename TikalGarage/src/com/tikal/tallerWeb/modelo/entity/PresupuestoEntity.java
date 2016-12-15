@@ -18,4 +18,5 @@ public class PresupuestoEntity extends RegistroCosto {
 		return idPresupuesto;
 	}
 
+	
 }

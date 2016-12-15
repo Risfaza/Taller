@@ -7,6 +7,7 @@ import com.tikal.tallerWeb.rest.util.NewServiceObject;
 public class DatosServicioVO {
 	NewServiceObject servicio;
 	List<GruposCosto> presupuesto;
+	List<String> imagenes;
 	public NewServiceObject getServicio() {
 		return servicio;
 	}
