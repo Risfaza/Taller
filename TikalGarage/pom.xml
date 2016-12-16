@@ -89,7 +89,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
-		
+
 	</pluginRepositories>
 
 	<dependencies>
@@ -273,7 +273,7 @@
 			<artifactId>objectify</artifactId>
 			<version>5.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.jdo</groupId>
 			<artifactId>jdo</artifactId>
@@ -284,9 +284,9 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		
+
 		<!-- Spring Security -->
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -305,5 +305,17 @@
 			<version>2.1.7</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-storage</artifactId>
+			<version>0.8.0-beta</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+
+
 	</dependencies>
 </project>
