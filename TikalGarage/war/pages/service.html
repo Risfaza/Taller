@@ -3,6 +3,9 @@
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
 			<i class="fa fa-floppy-o"></i>
 		</button>
+		<button class="btn btn-large btn-primary" ng-click="imprimir()">
+			<i class="fa fa-print"></i>
+		</button>
 	</ol>
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
@@ -14,9 +17,6 @@
 	</ul>
 
 	<div class="tab-content">
-	{{servicio}}
-	{{eventos}}
-	{{listcotizaciones}}
 		<div id="cliente" class="tab-pane fade in active">
 
 			<form class="form-horizontal">
@@ -363,21 +363,20 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ol class="breadcrumb">
-							<li><button class="btn-link" data-toggle="modal"
+						<li><button class="btn-link" data-toggle="modal"
 								data-target="#eventoModal" ng-click="verModal('showModalGrupo')">
 								Agregar grupo</button></li>
 					</ol>
 				</div>
-				<div class="col-md-12"
-					ng-repeat="gru in servicio.gruposCosto">
+				<div class="col-md-12" ng-repeat="gru in servicio.gruposCosto">
 
 					<div class="row">
 						<div class="col-md-12">
 							<b>{{gru.nombre}}</b>
 							<ul class="list-inline">
 								<li><button class="btn-link"
-										ng-click="addPresupuesto(gru,'HP')">Hojalater&iacute;a y
-										Pintura</button></li>
+										ng-click="addPresupuesto(gru,'HP')">Hojalater&iacute;a
+										y Pintura</button></li>
 								<li><button class="btn-link"
 										ng-click="addPresupuesto(gru,'ME')">Mec&aacute;nica</button></li>
 								<li><button class="btn-link"
@@ -439,7 +438,7 @@
 			<hr>
 			<div class="row">
 				<div class="col-md-12">
-				<div class="table-responsive" ng-show="showCotizaciones">
+					<div class="table-responsive" ng-show="showCotizaciones">
 						<button class="btn btn-small btn-primary" ng-click="addCot()">
 							<i class="fa fa-plus"></i>
 						</button>
@@ -471,128 +470,234 @@
 						</table>
 					</div>
 				</div>
-
-			</div>
-			<div id="cobranza" class="tab-pane fade">
-				<input type="text" class="span3" style="margin: 0 auto;"
-					data-provide="typeahead" data-items="4" data-source="{{results}}">
-				<ul class="typeahead dropdown-menu"
-					style="top: 69px; left: 19px; display: none;">
-
-				</ul>
 			</div>
 		</div>
-	</div>
-
-	<div class="modal fade" id="eventoModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document" ng-show="modals[1].show">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Percepci&oacute;n</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						Tipo de Evento
-						<div class="col-md-12">
-							<select ng-model="evento.tipo" class="form-control">
-								<option>Entrada de Auto</option>
-								<option>Diagn&oacute;stico</option>
-								<option>Observaciones</option>
-								<option>Reclamaciones</option>
-								<option>Otro</option>
-								<option>Salida de Auto</option>
-								<option>Cancelaci&oacute;n</option>
-								<option>Termino de servicio</option>
-							</select>
-						</div>
-						<br>Fecha del evento
-						<div class="col-md-12">
-							<input class="form-control" type="datetime-local"
-								ng-model="evento.fecha"> <input class="form-control"
-								type="time-local" ng-model="evento.fecha">
-						</div>
-
-						<br> Responsable
-						<div class="col-md-12">
-							<input class="form-control" type="text"
-								ng-model="evento.responsable">
-						</div>
-						<br> Descripci&oacute;n:
-						<div class="col-md-12">
-							<textarea rows="3" ng-model="evento.descripcion"
-								class="form-control"></textarea>
-						</div>
-						<br> Archivos:
-						<div class="col-md-12">
-							<input id="b_pics" accept="image/*" type="file" class="file"
-								multiple="true" multiple-File-Model="b_pics" required />
+		<div id="cobranza" class="letraChica tab-pane fade">
+			<!-- 			{{servicio.servicio}} -->
+			<div class="row">
+				<button class="btn btn-small btn-primary" ng-click="appendPago()">
+					<i class="fa fa-plus"></i>
+				</button>
+			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<div class="checkbox">
+						<label><input type="checkbox"
+							ng-model="servicio.servicio.cobranza.facturado">Facturado</label>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd">N&uacute;mero
+							Factura</label>
+						<div class="col-sm-10">
+							<input type="text"
+								ng-model="servicio.servicio.cobranza.numeroFactura">
 						</div>
 					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						ng-click="addEvento()">Agregar</button>
-				</div>
-			</div>
-		</div>
-		<div class="modal-dialog" role="document" ng-show="modals[0].show">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modalGrupo"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Nevo Grupo</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-12">
-							Nombre <input type="text" ng-model="nombreGrupo" />
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd">Total
+							Servicio:</label>
+						<div class="col-sm-10">
+							<label>{{servicio.servicio.metadata.costoTotal.value}}</label>
 						</div>
 					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						ng-click="addGrupo()">Agregar</button>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd">A cuenta:</label>
+						<div class="col-sm-10">
+							<label>{{aCuenta}}</label>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="modal-dialog" role="document" ng-show="modals[2].show">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modalGrupo"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Evidencias</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
-									<a class="thumbnail"> <img
-										src="{{'/servicio/image/'+evi.image}}">
-									</a>
-								</div>
+			<div class="row">
+				<div class="row"
+					ng-repeat="pago in servicio.servicio.cobranza.pagos">
+					<div class="col-md-2">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="pwd">Fecha:</label>
+							<div class="col-sm-10">
+								<label>{{pago.fecha}}</label>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<input id="b_pics" accept="image/*" type="file" class="file"
-								multiple="true" multiple-File-Model="b_pics" required />
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-sm-3" for="pwd">Responsable:</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="pago.responsable" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="pwd">Monto:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="pago.monto.value" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<button class="btn btn-link" ng-click="borrarPago(pago)">Borrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="eventoModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document" ng-show="modals[1].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Percepci&oacute;n</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					Tipo de Evento
+					<div class="col-md-12">
+						<select ng-model="evento.tipo" class="form-control">
+							<option>Entrada de Auto</option>
+							<option>Diagn&oacute;stico</option>
+							<option>Observaciones</option>
+							<option>Reclamaciones</option>
+							<option>Otro</option>
+							<option>Salida de Auto</option>
+							<option>Cancelaci&oacute;n</option>
+							<option>Termino de servicio</option>
+						</select>
+					</div>
+					<br>Fecha del evento
+					<div class="col-md-12">
+						<input class="form-control" type="datetime-local"
+							ng-model="evento.fecha"> <input class="form-control"
+							type="time-local" ng-model="evento.fecha">
+					</div>
+
+					<br> Responsable
+					<div class="col-md-12">
+						<input class="form-control" type="text"
+							ng-model="evento.responsable">
+					</div>
+					<br> Descripci&oacute;n:
+					<div class="col-md-12">
+						<textarea rows="3" ng-model="evento.descripcion"
+							class="form-control"></textarea>
+					</div>
+					<br> Archivos:
+					<div class="col-md-12">
+						<input id="b_pics" accept="image/*" type="file" class="file"
+							multiple="true" multiple-File-Model="b_pics" required />
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addEvento()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[0].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modalGrupo"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Nevo Grupo</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						Nombre <input type="text" ng-model="nombreGrupo" />
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addGrupo()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[2].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modalGrupo"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Evidencias</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
+								<a class="thumbnail"> <img
+									src="{{'/servicio/image/'+evi.image}}">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input id="b_pics" accept="image/*" type="file" class="file"
+							multiple="true" multiple-File-Model="b_pics" required />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="appendImages()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[3].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modalGrupo"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Pago</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-6">
+								<p>Responsable</p>
+								<input type="text" ng-model="newDatoCobranza.responsable" />
+							</div>
+							<div class="col-md-6">
+								<p>Tipo</p>
+								<input type="text" ng-model="newDatoCobranza.tipo" />
+							</div>
+							<div class="col-md-6">
+								<p>Otro Tipo</p>
+								<input type="text" ng-model="newDatoCobranza.otroTipo" />
+							</div>
+							<div class="col-md-6">
+								<p>Detalle</p>
+								<input type="text" ng-model="newDatoCobranza.detalle" />
+							</div>
+							<div class="col-md-6">
+								<p>Monto</p>
+								<input type="text" ng-model="newDatoCobranza.monto.value" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -600,10 +705,9 @@
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Cerrar</button>
 					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						ng-click="appendImages()">Agregar</button>
+						ng-click="appendPago()">Agregar</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>

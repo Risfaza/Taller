@@ -2,7 +2,7 @@
 <div class="container-fluid">
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-bordered table-striped">
+		<table class="letraChica table table-bordered table-striped">
 			<thead>
 				<tr>
 				<th>Status</th>
@@ -17,13 +17,13 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="ser in listaServicios">
-					<td>{{ser.status}}</td>
-					<td>{{ser.nombre}}</td>
+					<td><a href="{{'#/servicio/view/'+ser.id}}">{{ser.status}}</a></td>
+					<td>{{ser.nombreCliente}}</td>
 					<td>{{ser.placas}}</td>
-					<td>{{ser.recepcion}}</td>
+					<td>{{ser.fechaInicio}}</td>
 					<td>{{ser.descripcion}}</td>
 					<td>{{ser.cobranza}}</td>
-					<td>{{ser.adeudo}}</td>
+					<td>{{ser.dias}}</td>
 					<td>{{ser.saldo}}</td>
 				</tr>
 			</tbody>

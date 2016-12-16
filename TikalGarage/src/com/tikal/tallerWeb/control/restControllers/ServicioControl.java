@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +23,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.control.restControllers.VO.DatosServicioVO;
 import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
+import com.tikal.tallerWeb.control.restControllers.VO.ServicioListVO;
 import com.tikal.tallerWeb.data.access.AutoDAO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.data.access.ClienteDAO;
@@ -34,7 +34,6 @@ import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
-import com.tikal.tallerWeb.modelo.usuario.Usuario;
 import com.tikal.tallerWeb.rest.util.NewServiceObject;
 import com.tikal.tallerWeb.server.BlobServicio;
 import com.tikal.tallerWeb.util.JsonConvertidor;
@@ -42,6 +41,7 @@ import com.tikal.tallerWeb.util.UploadUrl;
 
 import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndex;
 import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
+import technology.tikal.taller.automotriz.model.servicio.moneda.Moneda;
 
 @Controller
 @RequestMapping(value = { "/servicio" })
@@ -258,8 +258,13 @@ public class ServicioControl {
 //			user = ((Usuario) principal);
 //		}
 		List<ServicioIndex> lista = servdao.getIndiceServiciosPorStatus(status);
-
-		resp.getWriter().println(JsonConvertidor.toJson(lista));
+		
+		List<ServicioListVO> ret= new ArrayList<ServicioListVO>();
+		for(ServicioIndex si:lista){
+			ServicioListVO svo= new ServicioListVO(si,autodao.cargar(Long.parseLong(si.getIdAuto())),clientedao.cargar(si.getIdCliente()));
+			ret.add(svo);
+		}
+		resp.getWriter().println(JsonConvertidor.toJson(ret));
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
@@ -277,6 +282,22 @@ public class ServicioControl {
 				presupuesto.add(pre);
 			}
 		}
+		
+		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(),presupuesto));
+		autodao.guardar(data.getServicio().getAuto());
+		clientedao.guardar(data.getServicio().getCliente());
 		costodao.guardar(data.getServicio().getServicio().getIdServicio(), presupuesto);
+	}
+	
+	private ServicioEntity calcularTotal(ServicioEntity s,List<PresupuestoEntity> presupuesto){
+		double total= 0.0;
+		for(PresupuestoEntity p:presupuesto){
+			double subtotal= p.getCantidad()*Double.parseDouble(p.getPrecioCliente().getValue());
+			total+=subtotal;
+		}
+		Moneda costoTotal=new Moneda();
+		costoTotal.setValue(total+"");
+		s.getMetadata().setCostoTotal(costoTotal);
+		return s;
 	}
 }

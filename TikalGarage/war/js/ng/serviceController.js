@@ -313,6 +313,15 @@ app.controller("serviceController", [
 				var idEvento=$scope.evidenciasAdd
 				$scope.sendImages(idEvento);
 			}
+			$scope.newDatoCobranza={monto:{value:""}};
+			$scope.appendPago=function(){
+				var f = new Date();
+				var fecha= f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
+				var pago= {fecha:fecha};
+				$scope.servicio.servicio.cobranza.pagos.push(pago);
+//				$scope.newDatoCobranza={monto:{value:""}};
+//				console.log($scope.servicio.servicio);
+			}
 			
 			$scope.cotizaciones = function(e) {
 				console.log(e);
@@ -355,5 +364,20 @@ app.controller("serviceController", [
 				}
 
 			}
+			
+			$scope.imprimir=function(){
+				
+				$http.post('/reporte/presupuestoPDF',{servicio:$scope.servicio,presupuesto:$scope.servicio.gruposCosto}).then(function(response){
+					console.log(response);
+				});
+			}
+			
+			$scope.$watch('servicio.servicio.cobranza',function(){
+				$scope.aCuenta=0.0;
+				var cobranza= $scope.servicio.servicio.cobranza;
+				for(var i=0; i<cobranza.pagos.length;i++){
+					$scope.aCuenta += parseFloat(cobranza.pagos[i].monto.value);
+				}
+			},true);
 
 		} ]);
