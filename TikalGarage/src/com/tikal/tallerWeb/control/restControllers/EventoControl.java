@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.tallerWeb.control.restControllers.VO.BitacoraVO;
 import com.tikal.tallerWeb.control.restControllers.VO.EventoVO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.util.JsonConvertidor;
-
-import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 
 @Controller
 @RequestMapping(value = { "/eventos" })
@@ -59,6 +60,14 @@ public class EventoControl {
 		if (e != null) {
 			bitacora.borrarEvento(e.getIdEvento());
 		}
+	}
+	
+	@RequestMapping(value = { "/update/" }, method = RequestMethod.POST, consumes="application/json")
+	public void update(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
+			throws IOException {
+		BitacoraVO bit= (BitacoraVO) JsonConvertidor.fromJson(json, BitacoraVO.class);
+		bitacora.guardar(Long.parseLong(bit.getId()), bit.getEventos());
+		response.getWriter().println(JsonConvertidor.toJson(bit.getEventos()));
 	}
 
 }

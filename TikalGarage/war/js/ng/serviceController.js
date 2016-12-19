@@ -63,6 +63,17 @@ app.service('eventoService', [
 						});
 				return d.promise;
 			}
+			
+			this.updateBitacora=function(eventos,id){
+				var d = $q.defer();
+				$http.post("/eventos/update/",{id:id,eventos:eventos}).then(
+						function(response) {
+							d.resolve(response.data);
+						}, function(response) {
+						});
+				return d.promise;
+			}
+			
 			this.getBitacora = function(id) {
 				var d = $q.defer();
 				$http.get("/eventos/getBitacora/" + id).then(
@@ -94,8 +105,9 @@ app.controller("serviceController", [
 		'$routeParams',
 		'modalService',
 		'$rootScope',
+		'$window',
 		function($scope, $http, fileService, $sce, fileUpload, eventoService,
-				$routeParams, modalService, $rootScope) {
+				$routeParams, modalService, $rootScope,$window) {
 			$scope.ids = [ "cliente", "auto", "bitacora", "presupuesto",
 					"damage", "cobranza" ];
 			$scope.uri = {
@@ -168,7 +180,82 @@ app.controller("serviceController", [
 				}, function(response) {
 				})
 			}
+			
+			$scope.guardar = function() {
+				var send = {
+					servicio : $scope.servicio,
+					presupuesto : $scope.servicio.gruposCosto
+				}
+				// console.log(send);
+				$http.post('/servicio/save', send).then(function(response) {
+					alert("Servicio Guardado");
+				}, function(response) {
+					alert("Something went wrong");
+				})
+				var lista=$scope.listcotizaciones;
+				var nc=$scope.newCot;
+				lista.push(nc)
+				eventoService.getBitacora($routeParams.id).then(function(data) {
+				$scope.eventos = data;
+				console.log(data);
+			});
 
+				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+					$scope.listcotizaciones=[];
+				}, function(response) {
+				})
+			}
+			
+			
+			$scope.guardar = function() {
+				var send = {
+					servicio : $scope.servicio,
+					presupuesto : $scope.servicio.gruposCosto
+				}
+				// console.log(send);
+				$http.post('/servicio/save', send).then(function(response) {
+					alert("Servicio Guardado");
+				}, function(response) {
+					alert("Something went wrong");
+				})
+				var lista=$scope.listcotizaciones;
+				var nc=$scope.newCot;
+				lista.push(nc)
+				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+					$scope.listcotizaciones=[];
+				}, function(response) {
+				})
+			}
+			
+			$scope.guardar2 = function() {
+				var send = {
+					servicio : $scope.servicio,
+					presupuesto : $scope.servicio.gruposCosto
+				}
+				// console.log(send);
+				$http.post('/servicio/save', send).then(function(response) {
+					alert("Servicio Guardado");
+				}, function(response) {
+					alert("Something went wrong");
+				})
+				var lista=$scope.listcotizaciones;
+				var nc=$scope.newCot;
+				lista.push(nc)
+				eventoService.getBitacora($routeParams.id).then(function(data) {
+				$scope.eventos = data;
+				console.log(data);
+			});
+
+				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+					$scope.listcotizaciones=[];
+				}, function(response) {
+				})
+				eventoService.updateBitacora($scope.eventos,$routeParams.id).then(function(data) {
+					$scope.eventos = data;
+					$window.location.href = '/reporte/presupuestoPDF/'+$routeParams.id;
+				});
+			}
+			
 			$scope.addCaract = function() {
 				var caract = $scope.caracteristicaAuto;
 				if ($scope.servicio.auto.equipamiento.equipoAdicional
@@ -216,6 +303,7 @@ app.controller("serviceController", [
 					$scope.indice = 0;
 					$scope.sendImages(data.idEvento);
 				})
+				
 
 			}
 			$scope.results = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas',
@@ -373,13 +461,7 @@ app.controller("serviceController", [
 			}
 			
 			$scope.imprimir=function(){
-				$scope.guardar();
-				$http.post('/reporte/presupuestoPDF',{servicio:$scope.servicio,presupuesto:$scope.servicio.gruposCosto}).then(function(response){
-					console.log(response);
-					 var file = new Blob([response.data], {type: 'application/pdf'});
-					    var fileURL = URL.createObjectURL(file);
-					    window.open(fileURL);
-				});
+				$scope.guardar2();
 			}
 			
 			$scope.$watch('servicio.servicio.cobranza',function(){
