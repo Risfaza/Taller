@@ -95,15 +95,16 @@ public class ServicioControl {
 		ser.setIdCliente(s.getCliente().getIdCliente());
 		servdao.guardar(ser);
 		List<PresupuestoEntity> presu = new ArrayList();
-		for (GruposCosto g : datos.getPresupuesto()) {
-			for (PresupuestoEntity pe : g.getPresupuestos()) {
-				pe.setGrupo(g.getNombre());
-				pe.setId(ser.getId());
-				presu.add(pe);
+		if (datos.getPresupuesto() != null) {
+			for (GruposCosto g : datos.getPresupuesto()) {
+				for (PresupuestoEntity pe : g.getPresupuestos()) {
+					pe.setGrupo(g.getNombre());
+					pe.setId(ser.getId());
+					presu.add(pe);
+				}
+				costodao.guardar(ser.getId(), presu);
 			}
-			costodao.guardar(ser.getId(), presu);
 		}
-
 		// List<AutoEntity> ae =
 		// ObjectifyService.ofy().load().type(AutoEntity.class)
 		// .filter("numeroSerie", s.getAuto().getNumeroSerie()).list();
@@ -205,7 +206,7 @@ public class ServicioControl {
 			throws IOException {
 		BlobKey blobKey = new BlobKey(blobid);
 		blobstoreService.serve(blobKey, resp);
-		ImagesService imaser=ImagesServiceFactory.getImagesService();
+		ImagesService imaser = ImagesServiceFactory.getImagesService();
 		ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
 		String url = imaser.getServingUrl(blobKey);
 		System.out.println(url);
