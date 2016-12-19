@@ -11,6 +11,9 @@ app.service('modalService', function() {
 		{
 			modal : 'showModalEvidencias',
 			show : false
+		},{
+			modal : 'modalPago',
+			show : false
 		}];
 		for (var i = 0; i < modals.length; i++) {
 			modals[i].show

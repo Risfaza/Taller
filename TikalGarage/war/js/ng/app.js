@@ -32,10 +32,6 @@ app
 						templateUrl : 'pages/registro.html',
 						controller : 'usuarioController'
 					})
-					
-					$routeProvider.when('/reporte', {
-						
-					});
 
 					$routeProvider.otherwise({
 						redirectTo : '/listServicios'

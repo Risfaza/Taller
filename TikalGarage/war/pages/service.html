@@ -3,10 +3,12 @@
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
 			<i class="fa fa-floppy-o"></i>
 		</button>
-		<button class="btn btn-large btn-primary" ng-click="imprimir()">
+		<a target="_blank" href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}" class="btn btn-large btn-primary" ng-click="imprimir()">
 			<i class="fa fa-print"></i>
-		</button>
+		</a>
 	</ol>
+	
+{{servicio}}
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
 			ng-click="showTab('cliente')">Cliente</a></li>

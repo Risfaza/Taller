@@ -2,6 +2,7 @@ package com.tikal.tallerWeb.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -35,8 +40,9 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 			table = new PdfPTable(2);
 			table.setTotalWidth(523);
 			table.setLockedWidth(true);
+			//http://127.0.0.1:8888/servicio/image/qAMszxQYHcjo5eu9-UC3Ww
 			
-			Image img = Image.getInstance("C:/Users/Daniel/git/TIkalGarage/TikalGarage/war/WEB-INF/Images/ACELogo.PNG");
+			Image img = Image.getInstance(new URL("http://127.0.0.1:8888/_ah/img/qAMszxQYHcjo5eu9-UC3Ww"));
 			PdfPCell uno = new PdfPCell(img, true);
 			//uno.setRowspan(2);
 			uno.setHorizontalAlignment(Element.ALIGN_CENTER);

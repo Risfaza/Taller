@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.control.restControllers.VO.DatosServicioVO;
 import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
@@ -72,7 +75,7 @@ public class ServicioControl {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
-		DatosServicioVO datos= (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
+		DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
 		NewServiceObject s = datos.getServicio();
 		AutoEntity a = (AutoEntity) autodao.cargar(s.getAuto().getNumeroSerie());
 		if (a == null) {
@@ -91,16 +94,16 @@ public class ServicioControl {
 		ser.setIdAuto(Long.toString(s.getAuto().getIdAuto()));
 		ser.setIdCliente(s.getCliente().getIdCliente());
 		servdao.guardar(ser);
-		List<PresupuestoEntity> presu=new ArrayList();
-		for(GruposCosto g:datos.getPresupuesto()){
-			for(PresupuestoEntity pe:g.getPresupuestos()){
+		List<PresupuestoEntity> presu = new ArrayList();
+		for (GruposCosto g : datos.getPresupuesto()) {
+			for (PresupuestoEntity pe : g.getPresupuestos()) {
 				pe.setGrupo(g.getNombre());
 				pe.setId(ser.getId());
 				presu.add(pe);
 			}
 			costodao.guardar(ser.getId(), presu);
 		}
-		
+
 		// List<AutoEntity> ae =
 		// ObjectifyService.ofy().load().type(AutoEntity.class)
 		// .filter("numeroSerie", s.getAuto().getNumeroSerie()).list();
@@ -197,12 +200,22 @@ public class ServicioControl {
 		resp.getWriter().println(JsonConvertidor.toJson(car));
 	}
 
-	@RequestMapping(value = "/image/{blobid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/imagePrueba/{blobid}", method = RequestMethod.GET, produces = "image/jpeg")
+	public void getImageAsByte(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
+			throws IOException {
+		BlobKey blobKey = new BlobKey(blobid);
+		blobstoreService.serve(blobKey, resp);
+		ImagesService imaser=ImagesServiceFactory.getImagesService();
+		ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+		String url = imaser.getServingUrl(blobKey);
+		System.out.println(url);
+	}
+
+	@RequestMapping(value = "/image/{blobid}", method = RequestMethod.GET, produces = "image/jpg")
 	public void getImageAsByteArray(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
 			throws IOException {
 		BlobKey blobKey = new BlobKey(blobid);
 		blobstoreService.serve(blobKey, resp);
-
 	}
 
 	@RequestMapping(value = "/findServicio/{blobid}", method = RequestMethod.GET)
@@ -213,8 +226,8 @@ public class ServicioControl {
 		if (servicio.getServicio() != null) {
 			servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
 			servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
-			List<GruposCosto> grupos=costodao.cargar(servicio.getServicio().getIdServicio());
-			DatosServicioVO datos= new DatosServicioVO();
+			List<GruposCosto> grupos = costodao.cargar(servicio.getServicio().getIdServicio());
+			DatosServicioVO datos = new DatosServicioVO();
 			datos.setServicio(servicio);
 			datos.setPresupuesto(grupos);
 			resp.getWriter().println(JsonConvertidor.toJson(datos));
@@ -224,10 +237,10 @@ public class ServicioControl {
 	@RequestMapping(value = "/getUpldUrl", method = RequestMethod.GET)
 	public void getUploadUrl(HttpServletResponse resp, HttpServletRequest req) throws IOException {
 		UploadUrl ur = new UploadUrl();
-		String s=BlobServicio.urlUpld;
-		s= s.substring(s.indexOf('/')+1);
-		s= s.substring(s.indexOf('/')+1);
-		s= s.substring(s.indexOf('/'));
+		String s = BlobServicio.urlUpld;
+		s = s.substring(s.indexOf('/') + 1);
+		s = s.substring(s.indexOf('/') + 1);
+		s = s.substring(s.indexOf('/'));
 		ur.setUrl(s);
 		resp.getWriter().println(JsonConvertidor.toJson(ur));
 
@@ -252,16 +265,18 @@ public class ServicioControl {
 	@RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
 	public void getStatus(HttpServletResponse resp, HttpServletRequest req, @PathVariable String status)
 			throws IOException {
-//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		Usuario user = null;
-//		if (principal instanceof Usuario) {
-//			user = ((Usuario) principal);
-//		}
+		// Object principal =
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// Usuario user = null;
+		// if (principal instanceof Usuario) {
+		// user = ((Usuario) principal);
+		// }
 		List<ServicioIndex> lista = servdao.getIndiceServiciosPorStatus(status);
-		
-		List<ServicioListVO> ret= new ArrayList<ServicioListVO>();
-		for(ServicioIndex si:lista){
-			ServicioListVO svo= new ServicioListVO(si,autodao.cargar(Long.parseLong(si.getIdAuto())),clientedao.cargar(si.getIdCliente()));
+
+		List<ServicioListVO> ret = new ArrayList<ServicioListVO>();
+		for (ServicioIndex si : lista) {
+			ServicioListVO svo = new ServicioListVO(si, autodao.cargar(Long.parseLong(si.getIdAuto())),
+					clientedao.cargar(si.getIdCliente()));
 			ret.add(svo);
 		}
 		resp.getWriter().println(JsonConvertidor.toJson(ret));
@@ -282,21 +297,21 @@ public class ServicioControl {
 				presupuesto.add(pre);
 			}
 		}
-		
-		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(),presupuesto));
+
+		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(), presupuesto));
 		autodao.guardar(data.getServicio().getAuto());
 		clientedao.guardar(data.getServicio().getCliente());
 		costodao.guardar(data.getServicio().getServicio().getIdServicio(), presupuesto);
 	}
-	
-	private ServicioEntity calcularTotal(ServicioEntity s,List<PresupuestoEntity> presupuesto){
-		double total= 0.0;
-		for(PresupuestoEntity p:presupuesto){
-			double subtotal= p.getCantidad()*Double.parseDouble(p.getPrecioCliente().getValue());
-			total+=subtotal;
+
+	private ServicioEntity calcularTotal(ServicioEntity s, List<PresupuestoEntity> presupuesto) {
+		double total = 0.0;
+		for (PresupuestoEntity p : presupuesto) {
+			double subtotal = p.getCantidad() * Double.parseDouble(p.getPrecioCliente().getValue());
+			total += subtotal;
 		}
-		Moneda costoTotal=new Moneda();
-		costoTotal.setValue(total+"");
+		Moneda costoTotal = new Moneda();
+		costoTotal.setValue(total + "");
 		s.getMetadata().setCostoTotal(costoTotal);
 		return s;
 	}

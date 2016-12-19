@@ -21,6 +21,8 @@ import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
+import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
+
 @Controller
 @RequestMapping(value = { "/eventos" })
 public class EventoControl {
@@ -53,8 +55,8 @@ public class EventoControl {
 	@RequestMapping(value = { "/remove/{id}" }, method = RequestMethod.POST)
 	public void remove(HttpServletRequest request, HttpServletResponse response, @PathVariable String id)
 			throws IOException {
-		EventoEntity e= bitacora.cargarEvento(Long.parseLong(id));
-		if(e!=null){
+		EventoEntity e = bitacora.cargarEvento(Long.parseLong(id));
+		if (e != null) {
 			bitacora.borrarEvento(e.getIdEvento());
 		}
 	}
