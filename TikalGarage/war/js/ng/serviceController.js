@@ -365,8 +365,15 @@ app.controller("serviceController", [
 
 			}
 			
+			$scope.selectImage=function(img){
+				if(img.appended == true){
+					img.appended=false;
+				}else{img.appended=true;}
+				$('#'+img.image).toggleClass("selected");
+			}
+			
 			$scope.imprimir=function(){
-				
+				$scope.guardar();
 				$http.post('/reporte/presupuestoPDF',{servicio:$scope.servicio,presupuesto:$scope.servicio.gruposCosto}).then(function(response){
 					console.log(response);
 					 var file = new Blob([response.data], {type: 'application/pdf'});

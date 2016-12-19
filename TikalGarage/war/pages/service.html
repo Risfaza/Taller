@@ -3,12 +3,14 @@
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
 			<i class="fa fa-floppy-o"></i>
 		</button>
-		<a target="_blank" href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}" class="btn btn-large btn-primary" ng-click="imprimir()">
-			<i class="fa fa-print"></i>
+		<a target="_blank"
+			href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}"
+			class="btn btn-large btn-primary" ng-click="imprimir()"> <i
+			class="fa fa-print"></i>
 		</a>
 	</ol>
-	
-{{servicio}}
+
+	{{eventos}}
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
 			ng-click="showTab('cliente')">Cliente</a></li>
@@ -646,8 +648,8 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
-								<a class="thumbnail"> <img
-									src="{{'/servicio/image/'+evi.image}}">
+								<a id="{{evi.image}}" class="thumbnail" ng-class="'selected':evi.appended"> <img
+									src="{{'/servicio/image/'+evi.image}}" ng-click="selectImage(evi)">
 								</a>
 							</div>
 						</div>

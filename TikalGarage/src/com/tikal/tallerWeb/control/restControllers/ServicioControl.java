@@ -276,8 +276,15 @@ public class ServicioControl {
 
 		List<ServicioListVO> ret = new ArrayList<ServicioListVO>();
 		for (ServicioIndex si : lista) {
-			ServicioListVO svo = new ServicioListVO(si, autodao.cargar(Long.parseLong(si.getIdAuto())),
-					clientedao.cargar(si.getIdCliente()));
+			AutoEntity auto = new AutoEntity();
+			ClienteEntity cliente = new ClienteEntity();
+			try {
+				auto = autodao.cargar(Long.parseLong(si.getIdAuto()));
+				cliente = clientedao.cargar(si.getIdCliente());
+			} catch (Exception e) {
+
+			}
+			ServicioListVO svo = new ServicioListVO(si, auto, cliente);
 			ret.add(svo);
 		}
 		resp.getWriter().println(JsonConvertidor.toJson(ret));
@@ -288,17 +295,18 @@ public class ServicioControl {
 		DatosServicioVO data = (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
 		List<GruposCosto> lista = data.getPresupuesto();
 		List<PresupuestoEntity> presupuesto = new ArrayList<PresupuestoEntity>();
-		for (GruposCosto gru : lista) {
-			for (PresupuestoEntity pre : gru.getPresupuestos()) {
-				pre.setGrupo(gru.getNombre());
-				pre.getPrecioCotizado()
-						.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
-				pre.setAutorizado(false);
-				pre.setId(data.getServicio().getServicio().getIdServicio());
-				presupuesto.add(pre);
+		if (lista != null) {
+			for (GruposCosto gru : lista) {
+				for (PresupuestoEntity pre : gru.getPresupuestos()) {
+					pre.setGrupo(gru.getNombre());
+					pre.getPrecioCotizado()
+							.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
+					pre.setAutorizado(false);
+					pre.setId(data.getServicio().getServicio().getIdServicio());
+					presupuesto.add(pre);
+				}
 			}
 		}
-
 		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(), presupuesto));
 		autodao.guardar(data.getServicio().getAuto());
 		clientedao.guardar(data.getServicio().getCliente());
