@@ -39,8 +39,9 @@ app
 							}
 
 							$scope.guardar = function() {
-								console.log($scope.servico);
-								$http.post('/servicio/add', $scope.servicio)
+								console.log($scope.servicio);
+								var send={servicio:$scope.servicio};
+								$http.post('/servicio/add', send)
 										.then(function(response) {
 											alert("Servicio Guardado");
 											$rootScope.serviciosHoy.push(response.data);
