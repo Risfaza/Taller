@@ -3,13 +3,11 @@
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
 			<i class="fa fa-floppy-o"></i>
 		</button>
-		<button
-			class="btn btn-large btn-primary" ng-click="imprimir()"> <i
-			class="fa fa-print"></i>
+		<button class="btn btn-large btn-primary" data-toggle="modal"
+			data-target="#eventoModal" ng-click="imprimir()">
+			<i class="fa fa-print"></i>
 		</button>
 	</ol>
-
-	{{eventos}}
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
 			ng-click="showTab('cliente')">Cliente</a></li>
@@ -612,7 +610,7 @@
 	<div class="modal-dialog" role="document" ng-show="modals[0].show">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modalGrupo"
+				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -636,7 +634,7 @@
 	<div class="modal-dialog" role="document" ng-show="modals[2].show">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modalGrupo"
+				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -647,8 +645,10 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
-								<a id="{{evi.image}}" class="thumbnail" ng-class="'selected':evi.appended"> <img
-									src="{{'/servicio/image/'+evi.image}}" ng-click="selectImage(evi)">
+								<a id="{{evi.image}}" class="thumbnail"
+									ng-class="'selected':evi.appended"> <img
+									src="{{'/servicio/image/'+evi.image}}"
+									ng-click="selectImage(evi)">
 								</a>
 							</div>
 						</div>
@@ -671,7 +671,7 @@
 	<div class="modal-dialog" role="document" ng-show="modals[3].show">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modalGrupo"
+				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -682,35 +682,28 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-6">
-								<p>Responsable</p>
-								<input type="text" ng-model="newDatoCobranza.responsable" />
+								<a  class="btn btn-primary" target="_blank"
+									href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}">
+									<i class="fa fa-print"></i>Presupuesto
+								</a>
 							</div>
 							<div class="col-md-6">
-								<p>Tipo</p>
-								<input type="text" ng-model="newDatoCobranza.tipo" />
-							</div>
-							<div class="col-md-6">
-								<p>Otro Tipo</p>
-								<input type="text" ng-model="newDatoCobranza.otroTipo" />
-							</div>
-							<div class="col-md-6">
-								<p>Detalle</p>
-								<input type="text" ng-model="newDatoCobranza.detalle" />
-							</div>
-							<div class="col-md-6">
-								<p>Monto</p>
-								<input type="text" ng-model="newDatoCobranza.monto.value" />
+								<a  class="btn btn-primary" target="_blank"
+									href="{{'/reporte/presupuestoPDFSin/'+servicio.servicio.idServicio}}">
+									<i class="fa fa-print"></i>Evaluación
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						ng-click="appendPago()">Agregar</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cerrar</button>
+				<!-- 					<button type="button" class="btn btn-primary" data-dismiss="modal" -->
+				<!-- 						ng-click="appendPago()">Agregar</button> -->
 			</div>
 		</div>
 	</div>
+</div>
 </div>

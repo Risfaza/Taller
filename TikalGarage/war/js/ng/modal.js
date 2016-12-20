@@ -12,7 +12,7 @@ app.service('modalService', function() {
 			modal : 'showModalEvidencias',
 			show : false
 		},{
-			modal : 'modalPago',
+			modal : 'modalImprimir',
 			show : false
 		}];
 		for (var i = 0; i < modals.length; i++) {

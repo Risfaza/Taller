@@ -44,6 +44,7 @@ public class EventoControl {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
+		
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}
 
@@ -70,4 +71,26 @@ public class EventoControl {
 		response.getWriter().println(JsonConvertidor.toJson(bit.getEventos()));
 	}
 
+	private String findStatus(String tipo){
+		if(tipo.compareToIgnoreCase("Entrada de Auto")==0){
+			return "Diagnóstico";
+		}
+		if(tipo.compareToIgnoreCase("Diagnóstico")==0){
+			return "Cotización";
+		}
+		if(tipo.compareToIgnoreCase("Cotización")==0){
+			return "Autorización";
+		}
+		if(tipo.compareToIgnoreCase("Autorización")==0){
+			return "Confirmación";
+		}
+		if(tipo.compareToIgnoreCase("Confirmación")==0){
+			return "Surtido";
+		}
+		if(tipo.compareToIgnoreCase("Surtido")==0){
+			return "Reparación";
+		}
+		
+		return tipo;
+	}
 }
