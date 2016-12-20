@@ -197,6 +197,15 @@ app.controller("serviceController", [
 				lista.push(nc)
 				eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
+				for(var i=0; i< $scope.eventos.length;i++){
+					var ev=$scope.eventos[i];
+					for(var j=0; j< ev.evidencia.length;i++){
+						if(ev.evidencia[j].appended==true){
+							$('#'+ev.evidencia[j].appended).addClass('selected');
+						}
+					}
+					
+				}
 				console.log(data);
 			});
 
@@ -243,6 +252,7 @@ app.controller("serviceController", [
 				lista.push(nc)
 				eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
+				
 				console.log(data);
 			});
 
@@ -271,6 +281,15 @@ app.controller("serviceController", [
 			$scope.eventos = [];
 			eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
+				for(var i=0; i< $scope.eventos.length;i++){
+					var ev=$scope.eventos[i];
+					for(var j=0; j< ev.evidencia.length;i++){
+						if(ev.evidencia[j].appended==true){
+							$('#'+ev.evidencia[j].appended).addClass('selected');
+						}
+					}
+					
+				}
 				console.log(data);
 			});
 			$scope.fecha = function() {
@@ -342,7 +361,7 @@ app.controller("serviceController", [
 				if (!gru.presupuestos) {
 					gru.presupuestos = [];
 				}
-//				var tipo = $scope.filtro.tipo;
+// var tipo = $scope.filtro.tipo;
 				gru.presupuestos.push({
 					tipo : tipo,
 					id : $routeParams.id,
@@ -390,7 +409,7 @@ app.controller("serviceController", [
 			$scope.verEvidencias=function(e){
 				
 				$scope.modals = modalService.aver('showModalEvidencias');
-//				console.log($scope.modals);
+// console.log($scope.modals);
 				$scope.evidenciasVer=e.evidencia;
 				$scope.evidenciasAdd=e.idEvento;
 			};
@@ -407,8 +426,8 @@ app.controller("serviceController", [
 				var fecha= f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
 				var pago= {fecha:fecha};
 				$scope.servicio.servicio.cobranza.pagos.push(pago);
-//				$scope.newDatoCobranza={monto:{value:""}};
-//				console.log($scope.servicio.servicio);
+// $scope.newDatoCobranza={monto:{value:""}};
+// console.log($scope.servicio.servicio);
 			}
 			
 			$scope.cotizaciones = function(e) {
