@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.tallerWeb.control.restControllers.VO.CotizacionVO;
 import com.tikal.tallerWeb.data.access.CotizacionDAO;
 import com.tikal.tallerWeb.modelo.entity.CotizacionEntity;
+import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
 @Controller
@@ -27,6 +28,7 @@ public class CotizacionController {
 	
 	@RequestMapping(value={"/get"}, method = RequestMethod.GET, produces = "Application/Json")
 	public void get(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, IOException{
+		AsignadorDeCharset.asignar(request, response);
 		String tipo = request.getParameter("tipo");
 		String anio= request.getParameter("modelo");
 		System.out.println("Tipo "+ tipo+" Modelo "+anio);
@@ -35,6 +37,7 @@ public class CotizacionController {
 	
 	@RequestMapping(value={"/save"}, method = RequestMethod.POST, consumes = "Application/Json")
 	public void save(HttpServletRequest request, HttpServletResponse response, @RequestBody String json) throws NumberFormatException, IOException{
+		AsignadorDeCharset.asignar(request, response);
 		CotizacionVO lista= (CotizacionVO) JsonConvertidor.fromJson(json, CotizacionVO.class);
 		List<CotizacionEntity> guardar= new ArrayList<CotizacionEntity>();
 		for(CotizacionEntity o:lista.getListcotizaciones()){

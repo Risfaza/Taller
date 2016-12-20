@@ -39,6 +39,7 @@ import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.NewServiceObject;
 import com.tikal.tallerWeb.server.BlobServicio;
+import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 import com.tikal.tallerWeb.util.UploadUrl;
 
@@ -75,6 +76,7 @@ public class ServicioControl {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
+		AsignadorDeCharset.asignar(request, response);
 		DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
 		NewServiceObject s = datos.getServicio();
 		AutoEntity a = (AutoEntity) autodao.cargar(s.getAuto().getNumeroSerie());
@@ -120,6 +122,7 @@ public class ServicioControl {
 			"/update" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void update(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
+		AsignadorDeCharset.asignar(request, response);
 		NewServiceObject s = (NewServiceObject) JsonConvertidor.fromJson(json, NewServiceObject.class);
 
 		AutoEntity a = new AutoEntity();
@@ -197,6 +200,7 @@ public class ServicioControl {
 	@RequestMapping(value = "/findCar/{numSerie}", method = RequestMethod.GET, produces = "application/json")
 	public void findCar(HttpServletResponse resp, HttpServletRequest req, @PathVariable String numSerie)
 			throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		AutoEntity car = autodao.cargar(numSerie);
 		resp.getWriter().println(JsonConvertidor.toJson(car));
 	}
@@ -204,6 +208,7 @@ public class ServicioControl {
 	@RequestMapping(value = "/imagePrueba/{blobid}", method = RequestMethod.GET, produces = "image/jpeg")
 	public void getImageAsByte(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
 			throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		BlobKey blobKey = new BlobKey(blobid);
 		blobstoreService.serve(blobKey, resp);
 		ImagesService imaser = ImagesServiceFactory.getImagesService();
@@ -215,6 +220,7 @@ public class ServicioControl {
 	@RequestMapping(value = "/image/{blobid}", method = RequestMethod.GET, produces = "image/jpg")
 	public void getImageAsByteArray(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
 			throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		BlobKey blobKey = new BlobKey(blobid);
 		blobstoreService.serve(blobKey, resp);
 	}
@@ -222,6 +228,7 @@ public class ServicioControl {
 	@RequestMapping(value = "/findServicio/{blobid}", method = RequestMethod.GET)
 	public void getServicio(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
 			throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		NewServiceObject servicio = new NewServiceObject();
 		servicio.setServicio(servdao.cargar(Long.parseLong(blobid)));
 		if (servicio.getServicio() != null) {
@@ -237,6 +244,7 @@ public class ServicioControl {
 
 	@RequestMapping(value = "/getUpldUrl", method = RequestMethod.GET)
 	public void getUploadUrl(HttpServletResponse resp, HttpServletRequest req) throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		UploadUrl ur = new UploadUrl();
 		String s = BlobServicio.urlUpld;
 		s = s.substring(s.indexOf('/') + 1);
@@ -249,6 +257,7 @@ public class ServicioControl {
 
 	@RequestMapping(value = "/serviciosHoy", method = RequestMethod.GET)
 	public void getHoy(HttpServletResponse resp, HttpServletRequest req) throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		List<ServicioEntity> a = servdao.getByDate(new DateTime(), new DateTime());
 		List<NewServiceObject> ret = new ArrayList<NewServiceObject>();
 
@@ -266,6 +275,7 @@ public class ServicioControl {
 	@RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
 	public void getStatus(HttpServletResponse resp, HttpServletRequest req, @PathVariable String status)
 			throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		// Object principal =
 		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		// Usuario user = null;
@@ -292,6 +302,7 @@ public class ServicioControl {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
 	public void guardar(HttpServletResponse resp, HttpServletRequest req, @RequestBody String json) throws IOException {
+		AsignadorDeCharset.asignar(req, resp);
 		DatosServicioVO data = (DatosServicioVO) JsonConvertidor.fromJson(json, DatosServicioVO.class);
 		List<GruposCosto> lista = data.getPresupuesto();
 		List<PresupuestoEntity> presupuesto = new ArrayList<PresupuestoEntity>();

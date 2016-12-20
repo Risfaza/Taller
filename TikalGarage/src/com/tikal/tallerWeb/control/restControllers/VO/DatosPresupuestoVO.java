@@ -26,6 +26,13 @@ public class DatosPresupuestoVO {
 	
 	//Inventario de reparaciones
 	private List<GruposCosto> listaServicios;
+	
+	//Lista de paths de imagenes
+	
+	private List<String> listaImages;
+	
+	//Atributo para imprimir costos
+	private boolean conCosto;
 
 	
 	
@@ -125,6 +132,20 @@ public class DatosPresupuestoVO {
 	public void setListaServicios(List<GruposCosto> listaServicios) {
 		this.listaServicios = listaServicios;
 	}
+	public List<String> getListaImages() {
+		return listaImages;
+	}
+	public void setListaImages(List<String> listaImages) {
+		this.listaImages = listaImages;
+	}
+	public boolean isConCosto() {
+		return conCosto;
+	}
+	public void setConCosto(boolean conCosto) {
+		this.conCosto = conCosto;
+	}
+	
+	
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.tikal.tallerWeb.control.restControllers;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.tikal.tallerWeb.data.access.rest.UsuarioDAOImp;
 import com.tikal.tallerWeb.modelo.usuario.Usuario;
+import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
 
@@ -26,7 +29,8 @@ public class UsariosControl {
 	UsuarioDAOImp usuarioImp;
 	
 	@RequestMapping(value={"/registro"}, method = RequestMethod.POST, consumes = "Application/Json")
-	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json){
+	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json) throws UnsupportedEncodingException{
+		AsignadorDeCharset.asignar(request, response);
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
 		usuarioImp.crearUsuario(usuario);
 		
