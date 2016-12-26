@@ -19,7 +19,10 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 	if(!$rootScope.authenticated){
 		$location.path("/login");
 	}	
-	
+	$scope.addAbierto=function(ser){
+		$rootScope.abiertos.push(ser);
+	}
+	$rootScope.detallesView=false;
 	listService.getLista().then(function(data){
 			$scope.listaServicios=data;
 		},function(data){

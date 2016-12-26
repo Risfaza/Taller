@@ -8,6 +8,7 @@
 			<i class="fa fa-print"></i>
 		</button>
 	</ol>
+	<!-- 	{{eventos}}	-->
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
 			ng-click="showTab('cliente')">Cliente</a></li>
@@ -26,7 +27,7 @@
 				</div>
 				<div class="form-group">
 					<label for="nombreCliente" class="control-label col-sm-3">Nombre
-						o razón social</label>
+						o raz&oacute;n social</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
 							ng-model="servicio.cliente.nombre" ng-change="findCliente()" />
@@ -54,7 +55,7 @@
 						Interior</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.domicilio.numero	" />
+							ng-model="servicio.cliente.domicilio.numInterior" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,7 +63,7 @@
 						Postal</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.domicilio.cp" />
+							ng-model="servicio.cliente.domicilio.codigoPostal" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -86,15 +87,15 @@
 				<div class="form-group">
 					<label for="nombreCliente" class="control-label col-sm-3">Contacto</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" />
-						<!-- 							ng-model="servicio.cliente.contacto.contacto" /> -->
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.contacto" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="rfc" class="control-label col-sm-3">E-mail</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text" />
-						<!-- 							ng-model="servicio.cliente.contacto.email" /> -->
+						ng-model="servicio.cliente.email" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -122,11 +123,11 @@
 						</div>
 						<div class="col-sm-6">
 							<input class="form-control" type="text"
-								ng-model="servicio.cliente.telefonoContacto[0].valor" />
+								ng-model="servicio.cliente.telefonoContacto[1].valor" />
 						</div>
 						<div class="col-sm-6">
 							<select class="form-control"
-								ng-model="servicio.cliente.telefonoContacto[0].label">
+								ng-model="servicio.cliente.telefonoContacto[2].label">
 								<option>Casa</option>
 								<option>Oficina</option>
 								<option>Movil</option>
@@ -134,7 +135,7 @@
 						</div>
 						<div class="col-sm-6">
 							<input class="form-control" type="text"
-								ng-model="servicio.cliente.telefonoContacto[0].valor" />
+								ng-model="servicio.cliente.telefonoContacto[2].valor" />
 						</div>
 					</div>
 				</div>
@@ -225,7 +226,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>Transmisión</label>
+							<label>Transmisi&oacute;n</label>
 							<div class="radio">
 								<label><input type="radio" name="optradio"
 									ng-model="servicio.auto.equipamiento.transmision"
@@ -234,7 +235,7 @@
 							<div class="radio">
 								<label><input type="radio" name="optradio"
 									ng-model="servicio.auto.equipamiento.transmision"
-									value="Automatica">Automática</label>
+									value="Automatica">Autom&aacute;tica</label>
 							</div>
 						</div>
 					</div>
@@ -242,14 +243,14 @@
 						<div class="form-group">
 							<label>Elevadores</label>
 							<div class="radio">
-								<label><input type="radio" name="optradio"
+								<label><input type="radio" name="optradio2"
 									ng-model="servicio.auto.equipamiento.elevadores"
 									value="Manuales">Manuales</label>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio"
+								<label><input type="radio" name="optradio2"
 									ng-model="servicio.auto.equipamiento.elevadores"
-									value="Electricos">Eléctricos</label>
+									value="Electricos">El&eacute;ctricos</label>
 							</div>
 						</div>
 					</div>
@@ -258,7 +259,7 @@
 							<label>Bolsas de Aire</label>
 							<div>
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.equipamiento.bosasDeAire" />
+									ng-model="servicio.auto.equipamiento.bolsasDeAire" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -274,8 +275,14 @@
 					<h4>Equipamiento</h4>
 				</div>
 				<br>
+				<div class="row">
+					<div class="form-group">
+						<label for="comment">Descripci&oacute;n del Servicio:</label>
+						<textarea class="form-control" rows="4" ng-model="servicio.servicio.descripcion"></textarea>
+					</div>
+				</div>
 				<div clas="row">
-					Características del Auto
+					Caracter&iacute;sticas del Auto
 					<div class="form-group">
 						<div>
 							<input class="form-control" type="text"
@@ -507,6 +514,13 @@
 							<label>{{aCuenta}}</label>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd">Adeudo:</label>
+						<div class="col-sm-10">
+							<label>{{servicio.servicio.metadata.costoTotal.value -
+								aCuenta}}</label>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -682,15 +696,15 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-6">
-								<a  class="btn btn-primary" target="_blank"
+								<a class="btn btn-primary" target="_blank"
 									href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}">
 									<i class="fa fa-print"></i>Presupuesto
 								</a>
 							</div>
 							<div class="col-md-6">
-								<a  class="btn btn-primary" target="_blank"
+								<a class="btn btn-primary" target="_blank"
 									href="{{'/reporte/presupuestoPDFSin/'+servicio.servicio.idServicio}}">
-									<i class="fa fa-print"></i>Evaluación
+									<i class="fa fa-print"></i>Evaluaci&oacute;n
 								</a>
 							</div>
 						</div>
@@ -698,8 +712,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 				<!-- 					<button type="button" class="btn btn-primary" data-dismiss="modal" -->
 				<!-- 						ng-click="appendPago()">Agregar</button> -->
 			</div>

@@ -22,6 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.ss.formula.FormulaParseException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,11 +38,10 @@ import org.springframework.stereotype.Service;
 import org.stringtemplate.v4.ST;
 
 import com.tikal.tallerWeb.data.access.ServicioDAO;
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.modelo.reporte.global.ParametrosReporteGlobal;
 import com.tikal.tallerWeb.modelo.reporte.global.RenglonRG;
 import com.tikal.tallerWeb.servicio.reporte.GeneradorReporte;
-
-import technology.tikal.taller.automotriz.model.servicio.Servicio;
 
 /**
  * @author Nekorp
@@ -131,72 +132,77 @@ public class GeneradorReporteGlobal implements GeneradorReporte<ParametrosReport
         new CellValueMap(CellValueType.TEXT, "datosBitacora.recomendaciones"),
     };
     @Override
-    public void generaReporte(ParametrosReporteGlobal param) {
+    public void generaReporte(ParametrosReporteGlobal param, ServletOutputStream fileOut) {
 //        FileOutputStream fileOut = null;
-//        try {
-//            //List<Servicio> datos = servicioDAO.getByDate(new DateTime("2013-05-1T00:00:00.000-00:00"), new DateTime("2013-05-1T23:59:59.999-00:00"));
-//            List<Servicio> datos = servicioDAO.getByDate(param.getFechaInicial(), param.getFechaFinal());
-//            GeneradorReporteGlobal.LOGGER.debug("file:" + param.getDestination());
-//            GeneradorReporteGlobal.LOGGER.debug("fecha Inicial:" + param.getFechaInicial());
-//            GeneradorReporteGlobal.LOGGER.debug("fecha Final:" + param.getFechaFinal());
-//            XSSFWorkbook wb = new XSSFWorkbook();
-//            //estilo para las fechas
-//            XSSFCellStyle dateCellStyle = wb.createCellStyle();
-//            CreationHelper createHelper = wb.getCreationHelper();
-//            dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("m/d/yy h:mm"));
-//            //estilos para las cantidades
-//            XSSFCellStyle moneyCellStyle = wb.createCellStyle();
-//            XSSFDataFormat mf = wb.createDataFormat();
-//            moneyCellStyle.setDataFormat(mf.getFormat("$#,##0.00"));
-//            Sheet sheet = wb.createSheet("Hoja1");
-//            int rowCount = 1;
-//            Cell actual;
-//            Row r;
-//            for (Servicio x: datos) {
-//                RenglonRG datRen = renglonFactory.build(x);
-//                r = sheet.createRow(rowCount);
-//                rowCount = rowCount + 1;
-//                for (int i = 0; i < valueMap.length; i++) {
-//                    actual = r.createCell(i);
-//                    if (valueMap[i].getType() == CellValueType.TEXT) {
-//                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
-//                        actual.setCellValue(obj.toString());
-//                    }
-//                    if (valueMap[i].getType() == CellValueType.DATE) {
-//                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
-//                        if (obj != null) {
-//                            Date val = (Date) obj;
-//                            actual.setCellValue(val);
-//                            actual.setCellStyle(dateCellStyle);
-//                        }
-//                    }
-//                    if (valueMap[i].getType() == CellValueType.AMOUNT) {
-//                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
-//                        double val = (double) obj;
-//                        actual.setCellValue(val);
-//                        actual.setCellStyle(moneyCellStyle);
-//                    }
-//                    if (valueMap[i].getType() == CellValueType.FORMULA) {
-//                        String formulaRaw = valueMap[i].getValue();
-//                        ST formula = new ST(formulaRaw);
-//                        formula.add("row", rowCount + "");
-//                        actual.setCellFormula(formula.render());
-//                        actual.setCellStyle(moneyCellStyle);
-//                    }
-//                }
-//            }
-//            llenarEncabezado(sheet, 0, 0);
+        try {
+        	
+            //List<Servicio> datos = servicioDAO.getByDate(new DateTime("2013-05-1T00:00:00.000-00:00"), new DateTime("2013-05-1T23:59:59.999-00:00"));
+            List<ServicioEntity> datos = servicioDAO.getByDate(param.getFechaInicial(), param.getFechaFinal());
+            GeneradorReporteGlobal.LOGGER.debug("file:" + param.getDestination());
+            GeneradorReporteGlobal.LOGGER.debug("fecha Inicial:" + param.getFechaInicial());
+            GeneradorReporteGlobal.LOGGER.debug("fecha Final:" + param.getFechaFinal());
+            XSSFWorkbook wb = new XSSFWorkbook();
+            //estilo para las fechas
+            XSSFCellStyle dateCellStyle = wb.createCellStyle();
+            CreationHelper createHelper = wb.getCreationHelper();
+            dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("m/d/yy h:mm"));
+            //estilos para las cantidades
+            XSSFCellStyle moneyCellStyle = wb.createCellStyle();
+            XSSFDataFormat mf = wb.createDataFormat();
+            moneyCellStyle.setDataFormat(mf.getFormat("$#,##0.00"));
+            Sheet sheet = wb.createSheet("Hoja1");
+            int rowCount = 1;
+            Cell actual;
+            Row r;
+            for (ServicioEntity x: datos) {
+            	x.setId(x.getIdServicio());
+                RenglonRG datRen = renglonFactory.build(x);
+                r = sheet.createRow(rowCount);
+                rowCount = rowCount + 1;
+                for (int i = 0; i < valueMap.length; i++) {
+                    actual = r.createCell(i);
+                    if (valueMap[i].getType() == CellValueType.TEXT) {
+                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
+                        actual.setCellValue("");
+                        if(obj!=null){
+                        actual.setCellValue(obj.toString());
+                        }
+                    }
+                    if (valueMap[i].getType() == CellValueType.DATE) {
+                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
+                        if (obj != null) {
+                            Date val = (Date) obj;
+                            actual.setCellValue(val);
+                            actual.setCellStyle(dateCellStyle);
+                        }
+                    }
+                    if (valueMap[i].getType() == CellValueType.AMOUNT) {
+                        Object obj = PropertyUtils.getProperty(datRen, valueMap[i].getValue());
+                        double val = (double) obj;
+                        actual.setCellValue(val);
+                        actual.setCellStyle(moneyCellStyle);
+                    }
+                    if (valueMap[i].getType() == CellValueType.FORMULA) {
+                        String formulaRaw = valueMap[i].getValue();
+                        ST formula = new ST(formulaRaw);
+                        formula.add("row", rowCount + "");
+                        actual.setCellFormula(formula.render());
+                        actual.setCellStyle(moneyCellStyle);
+                    }
+                }
+            }
+            llenarEncabezado(sheet, 0, 0);
 //            fileOut = new FileOutputStream(param.getDestination());
-//            wb.write(fileOut);
-//        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | FormulaParseException | IOException ex) {
-//            GeneradorReporteGlobal.LOGGER.error("error al generar reporte", ex);
-//        } finally {
-//            try {
-//                fileOut.close();
-//            } catch (IOException | NullPointerException ex) {
-//                GeneradorReporteGlobal.LOGGER.error("error al cerrar archivo de reporte", ex);
-//            }
-//        }
+            wb.write(fileOut);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | FormulaParseException | IOException ex) {
+            GeneradorReporteGlobal.LOGGER.error("error al generar reporte", ex);
+        } finally {
+            try {
+                fileOut.close();
+            } catch (IOException | NullPointerException ex) {
+                GeneradorReporteGlobal.LOGGER.error("error al cerrar archivo de reporte", ex);
+            }
+        }
     }
 
     private void llenarEncabezado(Sheet sheet, int row, int col) {
@@ -206,7 +212,7 @@ public class GeneradorReporteGlobal implements GeneradorReporte<ParametrosReport
         for (String x: encabezado) {
             actual = r.createCell(cellCount);
             actual.setCellValue(x);
-            sheet.autoSizeColumn(cellCount);
+//            sheet.autoSizeColumn(cellCount);
             cellCount = cellCount + 1;
         }
     }

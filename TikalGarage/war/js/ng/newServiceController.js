@@ -40,6 +40,8 @@ app
 
 							$scope.guardar = function() {
 								console.log($scope.servicio);
+								var contac=$scope.servicio.cliente.contacto.contacto+" "+$scope.servicio.cliente.contacto.contacto.email;
+								$scope.servicio.cliente.contacto=contac;
 								var send={servicio:$scope.servicio};
 								$http.post('/servicio/add', send)
 										.then(function(response) {
@@ -63,6 +65,7 @@ app
 								var myEl = angular.element("#" + id);
 								myEl.addClass('active in');
 							};
+							$rootScope.detallesView=false;
 							$scope.addCaract = function() {
 								var caract = $scope.caracteristicaAuto;
 								if ($scope.servicio.auto.equipamiento.equipoAdicional

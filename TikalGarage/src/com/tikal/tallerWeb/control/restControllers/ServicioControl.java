@@ -91,22 +91,30 @@ public class ServicioControl {
 		} else {
 			s.setCliente(c);
 		}
+		s.getServicio().getMetadata().getCostoTotal();
 		servdao.guardar(s.getServicio());
 		ServicioEntity ser = s.getServicio();
 		ser.setIdAuto(Long.toString(s.getAuto().getIdAuto()));
 		ser.setIdCliente(s.getCliente().getIdCliente());
-		servdao.guardar(ser);
+		
 		List<PresupuestoEntity> presu = new ArrayList();
+		Long total=0l;
 		if (datos.getPresupuesto() != null) {
+			
 			for (GruposCosto g : datos.getPresupuesto()) {
 				for (PresupuestoEntity pe : g.getPresupuestos()) {
 					pe.setGrupo(g.getNombre());
 					pe.setId(ser.getId());
 					presu.add(pe);
+					total+= pe.getCantidad()*Long.parseLong(pe.getPrecioCliente().getValue());
 				}
 				costodao.guardar(ser.getId(), presu);
 			}
 		}
+		Moneda costoTotal=new Moneda();
+		costoTotal.setValue(total+"");
+		ser.getMetadata().setCostoTotal(costoTotal);
+		servdao.guardar(ser);
 		// List<AutoEntity> ae =
 		// ObjectifyService.ofy().load().type(AutoEntity.class)
 		// .filter("numeroSerie", s.getAuto().getNumeroSerie()).list();
@@ -128,7 +136,6 @@ public class ServicioControl {
 		AutoEntity a = new AutoEntity();
 		ServicioEntity ser = new ServicioEntity();
 		EventoEntity ev = new EventoEntity();
-
 		technology.tikal.taller.automotriz.model.servicio.Servicio serv = new technology.tikal.taller.automotriz.model.servicio.Servicio();
 		technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData si = new technology.tikal.taller.automotriz.model.index.servicio.ServicioIndexAutoData();
 		List<AutoEntity> ae = ObjectifyService.ofy().load().type(AutoEntity.class)
@@ -137,7 +144,6 @@ public class ServicioControl {
 			a = s.getAuto();
 			ObjectifyService.ofy().save().entities(a).now();
 		}
-		System.out.println(json);
 		response.getWriter().write(JsonConvertidor.toJson(a));
 	}
 
@@ -148,8 +154,6 @@ public class ServicioControl {
 									 * 
 									 * @RequestParam("file") MultipartFile file
 									 */) throws IOException {
-		String a = "empieza el show";
-		System.out.println(a);
 		@SuppressWarnings("deprecation")
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 		int len = Integer.parseInt(req.getParameter("length"));
@@ -214,7 +218,6 @@ public class ServicioControl {
 		ImagesService imaser = ImagesServiceFactory.getImagesService();
 		ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
 		String url = imaser.getServingUrl(blobKey);
-		System.out.println(url);
 	}
 
 	@RequestMapping(value = "/image/{blobid}", method = RequestMethod.GET, produces = "image/jpg")

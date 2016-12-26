@@ -45,7 +45,7 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 
 			// Image img = Image.getInstance(new
 			// URL("http://127.0.0.1:8888/_ah/img/qAMszxQYHcjo5eu9-UC3Ww"));
-			Image img = Image.getInstance("C:/Users/Daniel/git/TIkalGarage/TikalGarage/war/WEB-INF/Images/ACELogo.PNG");
+			Image img = Image.getInstance("WEB-INF/Images/ACELogo.PNG");
 
 			PdfPCell uno = new PdfPCell(img, true);
 			uno.setHorizontalAlignment(Element.ALIGN_CENTER);

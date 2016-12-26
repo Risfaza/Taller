@@ -17,7 +17,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="ser in listaServicios">
-					<td><a href="{{'#/servicio/view/'+ser.id}}">{{ser.status}}</a></td>
+					<td ng-click="addAbierto(ser)"><a href="{{'#/servicio/view/'+ser.id}}">{{ser.status}}</a></td>
 					<td>{{ser.nombreCliente}}</td>
 					<td>{{ser.placas}}</td>
 					<td>{{ser.fechaInicio}}</td>

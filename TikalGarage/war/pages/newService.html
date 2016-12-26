@@ -19,7 +19,7 @@
 				</div>
 				<div class="form-group">
 					<label for="nombreCliente" class="control-label col-sm-3">Nombre
-						o razón social</label>
+						o raz&oacute;n social</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
 							ng-model="servicio.cliente.nombre" ng-change="findCliente()" />
@@ -47,7 +47,7 @@
 						Interior</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.domicilio.numero	" />
+							ng-model="servicio.cliente.domicilio.numInterior" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -55,7 +55,7 @@
 						Postal</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.domicilio.cp" />
+							ng-model="servicio.cliente.domicilio.codigoPostal" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -79,15 +79,15 @@
 				<div class="form-group">
 					<label for="nombreCliente" class="control-label col-sm-3">Contacto</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" 
-													ng-model="servicio.cliente.contacto.contacto" />
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.contacto" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="rfc" class="control-label col-sm-3">E-mail</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" 
-													ng-model="servicio.cliente.contacto.email" />
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.email" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -218,7 +218,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>Transmisión</label>
+							<label>Transmisi&oacute;n</label>
 							<div class="radio">
 								<label><input type="radio" name="optradio"
 									ng-model="servicio.auto.equipamiento.transmision"
@@ -227,7 +227,7 @@
 							<div class="radio">
 								<label><input type="radio" name="optradio"
 									ng-model="servicio.auto.equipamiento.transmision"
-									value="Automatica">Automática</label>
+									value="Automatica">Autom&aacute;tica</label>
 							</div>
 						</div>
 					</div>
@@ -242,7 +242,7 @@
 							<div class="radio">
 								<label><input type="radio" name="asdf"
 									ng-model="servicio.auto.equipamiento.elevadores"
-									value="Electricos">Eléctricos</label>
+									value="Electricos">El&eacute;ctricos</label>
 							</div>
 						</div>
 					</div>
@@ -251,7 +251,7 @@
 							<label>Bolsas de Aire</label>
 							<div>
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.equipamiento.bosasDeAire" />
+									ng-model="servicio.auto.equipamiento.bolsasDeAire" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -267,8 +267,15 @@
 					<h4>Equipamiento</h4>
 				</div>
 				<br>
+				<div class="row">
+					<div class="form-group">
+						<label for="comment">Descripci&oacute;n del Servicio:</label>
+						<textarea class="form-control" rows="4"
+							ng-model="servicio.servicio.descripcion"></textarea>
+					</div>
+				</div>
 				<div clas="row">
-					Características del Auto
+					Caracter&iacute;sticas del Auto
 					<div class="form-group">
 						<div>
 							<input class="form-control" type="text"

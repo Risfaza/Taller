@@ -16,6 +16,8 @@
 
 package com.tikal.tallerWeb.servicio.reporte;
 
+import javax.servlet.ServletOutputStream;
+
 import com.tikal.tallerWeb.modelo.reporte.ParametrosReporte;
 
 /**
@@ -23,5 +25,5 @@ import com.tikal.tallerWeb.modelo.reporte.ParametrosReporte;
  */
 public interface GeneradorReporte<T extends ParametrosReporte> {
 
-    void generaReporte(T param);
+    void generaReporte(T param, ServletOutputStream fileOut);
 }

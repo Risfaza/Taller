@@ -44,7 +44,7 @@ public class RenglonRG {
 
     public DatosClienteRG getDatosCliente() {
         return datosCliente;
-    }
+    }	
 
     public void setDatosCliente(DatosClienteRG datosCliente) {
         this.datosCliente = datosCliente;

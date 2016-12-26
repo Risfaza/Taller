@@ -19,6 +19,7 @@ public class ServicioListVO {
 	private String cobranza;
 	private String dias;
 	private String saldo;
+	private String coche;
 
 	public ServicioListVO() {
 
@@ -30,8 +31,8 @@ public class ServicioListVO {
 		this.id=si.getId();
 		Date fi = si.getFechaInicio();
 		Date hoy = new Date();
-		hoy = new Date(hoy.compareTo(fi));
-		this.setDias(hoy.getDay() + "");
+//		hoy = new Date(hoy.compareTo(fi));
+		this.setDias(this.calcularDias(hoy,fi)+"");
 		this.setFechaInicio(fi.getDay() + "-" + (fi.getMonth()+1)+"-" + (900+fi.getYear()));
 		this.setNombreCliente(c.getNombre());
 		this.setPlacas(a.getPlacas());
@@ -44,6 +45,24 @@ public class ServicioListVO {
 			this.setSaldo(saldo+"");
 		}
 		this.setStatus(si.getStatus());
+		this.setCoche(a.getTipo()+" "+a.getColor());
+	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCoche() {
+		return coche;
+	}
+
+	public void setCoche(String coche) {
+		this.coche = coche;
 	}
 
 	public String getStatus() {
@@ -109,5 +128,12 @@ public class ServicioListVO {
 	public void setSaldo(String saldo) {
 		this.saldo = saldo;
 	}
+	
+	private int calcularDias(Date hoy, Date fecha){
+		final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000; //Milisegundos al día 
+		Long diferencia = ( hoy.getTime() - fecha.getTime() )/MILLSECS_PER_DAY; 
+		return diferencia.intValue();
+	}
+	
 
 }

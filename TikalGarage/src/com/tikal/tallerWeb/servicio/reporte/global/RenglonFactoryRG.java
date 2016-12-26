@@ -19,19 +19,14 @@ package com.tikal.tallerWeb.servicio.reporte.global;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.tikal.tallerWeb.data.access.CustomerDAO;
+import com.tikal.tallerWeb.data.access.ClienteDAO;
+import com.tikal.tallerWeb.data.access.RenglonDAO;
+import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.modelo.reporte.global.RenglonRG;
 
-import technology.tikal.customers.model.ClienteMx;
-import technology.tikal.customers.model.Customer;
-import technology.tikal.customers.model.address.MexicoAddress;
-import technology.tikal.customers.model.name.OrganizationName;
-import technology.tikal.customers.model.phone.MexicoPhoneNumber;
 import technology.tikal.taller.automotriz.model.servicio.Servicio;
 
 /**
@@ -40,49 +35,48 @@ import technology.tikal.taller.automotriz.model.servicio.Servicio;
 @Component
 public class RenglonFactoryRG implements DataFactoryRG<RenglonRG> {
 
-//    @Autowired
-//    @Qualifier("taller-RestTemplateFactory")
-//    private RestTemplateFactory factory;
-    @Autowired
-    private CustomerDAO customerDao;
-    
-    @Override
-    public RenglonRG build(Servicio data) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idServicio", data.getId());
-//        RenglonRG r = factory.getTemplate().getForObject(factory.getRootUlr() + "/reportes/global/renglones/servicio/{idServicio}", RenglonRG.class, map);
-//        fillClienteData(r, customerDao.cargar(data.getIdCliente()));
-//        return r;
-        return null;
-    }
-    
-    private void fillClienteData(RenglonRG r, Customer customer) {
-        if (customer != null) {
-            if (customer.getName() instanceof OrganizationName){
-                OrganizationName n = (OrganizationName) customer.getName();
-                r.getDatosCliente().setNombre(n.getName());
-            }
-            if (customer instanceof ClienteMx) {
-                ClienteMx mx = (ClienteMx) customer;
-                if (mx.getDomicilioFiscal() instanceof MexicoAddress) {
-                    MexicoAddress dir = (MexicoAddress) mx.getDomicilioFiscal();
-                    r.getDatosCliente().setCiudad(StringUtils.defaultIfEmpty(dir.getCiudad(), ""));
-                    r.getDatosCliente().setColonia(StringUtils.defaultIfEmpty(dir.getColonia(), ""));
-                    r.getDatosCliente().setDireccion(StringUtils.defaultIfEmpty(dir.getCalle(), ""));
-                }
-            }
-            if (customer.getPrimaryContact() != null) {
-                if (customer.getPrimaryContact().getName() instanceof OrganizationName) {
-                    OrganizationName n = (OrganizationName) customer.getPrimaryContact().getName();
-                    r.getDatosCliente().setContacto(n.getName());
-                }
-                if (customer.getPrimaryContact().getPhoneNumber() != null 
-                        && customer.getPrimaryContact().getPhoneNumber().length > 0
-                        && customer.getPrimaryContact().getPhoneNumber()[0] instanceof MexicoPhoneNumber) {
-                    MexicoPhoneNumber telefono = (MexicoPhoneNumber) customer.getPrimaryContact().getPhoneNumber()[0];
-                    r.getDatosCliente().setTelefono(StringUtils.defaultIfEmpty(telefono.getTelefono(), ""));
-                }
-            }
-        }
-    }
+	// @Autowired
+	// @Qualifier("taller-RestTemplateFactory")
+	// private RestTemplateFactory factory;
+	
+	@Autowired
+	private RenglonDAO renglonDao;
+	
+	@Autowired
+	private ClienteDAO customerDao;
+
+	@Override
+	public RenglonRG build(Servicio data) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("idServicio", data.getId());
+		// RenglonRG r = factory.getTemplate().getForObject(factory.getRootUlr()
+		// + "/reportes/global/renglones/servicio/{idServicio}",
+		// RenglonRG.class, map);
+		return renglonDao.getRenglon(data.getId());
+		// return null;
+	}
+
+	private void fillClienteData(RenglonRG r, ClienteEntity customer) {
+		if (customer != null) {
+			if (customer.getNombre() != null) {
+				r.getDatosCliente().setNombre(customer.getNombre());
+			}
+			if (customer.getContacto() != null) {
+				r.getDatosCliente().setContacto(customer.getContacto());
+			}
+			if (customer.getDomicilio() != null) {
+				String direccion = "";
+				direccion = direccion + " " + customer.getDomicilio().getCalle();
+				direccion = direccion + " " + customer.getDomicilio().getNumInterior();
+				direccion = direccion + " " + customer.getDomicilio().getCodigoPostal();
+				r.getDatosCliente().setDireccion(direccion);
+				r.getDatosCliente().setColonia(customer.getDomicilio().getColonia());
+				r.getDatosCliente().setCiudad(customer.getDomicilio().getCiudad());
+			}
+
+			if (customer.getTelefonoContacto().size() > 0) {
+				r.getDatosCliente().setTelefono(customer.getTelefonoContacto().get(0).getValor());
+			}
+		}
+	}
 }

@@ -145,9 +145,17 @@ app.controller("serviceController", [
 			}
 			eventoService.getServicio($routeParams.id).then(function(data) {
 				$scope.servicio.servicio = data.servicio.servicio;
+				if($scope.servicio.servicio.datosAuto.combustible){
+					var com=$scope.servicio.servicio.datosAuto.combustible;
+					com = parseInt(com); 
+					$scope.servicio.servicio.datosAuto.combustible=com;
+				}
 				$scope.servicio.auto = data.servicio.auto;
 				$scope.servicio.cliente = data.servicio.cliente;
 				$scope.servicio.gruposCosto = data.presupuesto;
+				$rootScope.actual=$scope.servicio;
+				$rootScope.detallesView=true;
+				console.log($rootScope.actual);
 			});
 
 			$scope.showTab = function(id) {
@@ -468,12 +476,35 @@ app.controller("serviceController", [
 				$window.location.href = '/reporte/presupuestoPDF'+tipo+'/'+$routeParams.id;
 			}
 			
+			function currency(value, decimals, separators) {
+			    decimals = decimals >= 0 ? parseInt(decimals, 0) : 2;
+			    separators = separators || ['.', "'", ','];
+			    var number = (parseFloat(value) || 0).toFixed(decimals);
+			    if (number.length <= (4 + decimals))
+			        return number.replace('.', separators[separators.length - 1]);
+			    var parts = number.split(/[-.]/);
+			    value = parts[parts.length > 1 ? parts.length - 2 : 0];
+			    var result = value.substr(value.length - 3, 3) + (parts.length > 1 ?
+			        separators[separators.length - 1] + parts[parts.length - 1] : '');
+			    var start = value.length - 6;
+			    var idx = 0;
+			    while (start > -3) {
+			        result = (start > 0 ? value.substr(start, 3) : value.substr(0, 3 + start))
+			            + separators[idx] + result;
+			        idx = (++idx) % 2;
+			        start -= 3;
+			    }
+			    return (parts.length == 3 ? '-' : '') + result;
+			}
+			
 			$scope.$watch('servicio.servicio.cobranza',function(){
 				$scope.aCuenta=0.0;
 				var cobranza= $scope.servicio.servicio.cobranza;
 				for(var i=0; i<cobranza.pagos.length;i++){
 					$scope.aCuenta += parseFloat(cobranza.pagos[i].monto.value);
-				}
+				} 
+				$rootScope.saldo='$'+currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
 			},true);
 
+			
 		} ]);

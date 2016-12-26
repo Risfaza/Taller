@@ -45,6 +45,8 @@ app
 
 app.run([ '$rootScope', '$http', function($rootScope, $http) {
 	$rootScope.serviciosHoy = [];
+	$rootScope.detallesView=false;
+	$rootScope.abiertos = [];
 	$http.get("/servicio/serviciosHoy").then(function(response) {
 		$rootScope.serviciosHoy = response.data;
 		console.log(response.data);
