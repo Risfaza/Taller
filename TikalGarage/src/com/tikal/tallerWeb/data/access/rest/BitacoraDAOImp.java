@@ -80,4 +80,10 @@ public class BitacoraDAOImp implements BitacoraDAO {
 		// TODO Auto-generated method stub
 		ObjectifyService.ofy().delete().type(EventoEntity.class).id(id).now();
 	}
+
+	@Override
+	public EventoEntity guardar(EventoEntity datos) {
+		ObjectifyService.ofy().save().entities(datos).now();
+		return datos;
+	}
 }

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.tallerWeb.control.restControllers.VO.BitacoraVO;
 import com.tikal.tallerWeb.control.restControllers.VO.EventoVO;
+import com.tikal.tallerWeb.control.restControllers.VO.EvidenciaVO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
 import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
+
+import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 
 @Controller
 @RequestMapping(value = { "/eventos" })
@@ -45,7 +51,23 @@ public class EventoControl {
 		}
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}
-
+	
+	@RequestMapping(value = { "/appendImages/{id}" }, method = RequestMethod.POST, produces = "application/json")
+	public void addImages(HttpServletRequest request, HttpServletResponse response, @PathVariable String id,@RequestBody String json)
+			throws IOException {
+		EvidenciaVO evi= (EvidenciaVO) JsonConvertidor.fromJson(json, EvidenciaVO.class);
+		AsignadorDeCharset.asignar(request, response);
+		
+		EventoEntity evento=bitacora.cargarEvento(evi.getIdEvento());
+		List<Evidencia> lista= new ArrayList<Evidencia>();
+		for(String image:evi.getImages()){
+			Evidencia e= new Evidencia();
+			e.setImage(image);
+			lista.add(e);
+		}
+		evento.getEvidencia().addAll(lista);
+		response.getWriter().println(JsonConvertidor.toJson(bitacora.guardar(evento)));
+	}
 	@RequestMapping(value = { "/getBitacora/{id}" }, method = RequestMethod.GET, produces = "application/json")
 	public void get(HttpServletRequest request, HttpServletResponse response, @PathVariable String id)
 			throws IOException {

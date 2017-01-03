@@ -94,7 +94,7 @@
 				<div class="form-group">
 					<label for="rfc" class="control-label col-sm-3">E-mail</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" />
+						<input class="form-control" type="text" 
 						ng-model="servicio.cliente.email" />
 					</div>
 				</div>
@@ -312,7 +312,7 @@
 								<i class="fa fa-bar-chart-o fa-fw"></i> Bitacora
 								<button class="btn btn-small btn-primary" data-toggle="modal"
 									data-target="#eventoModal"
-									ng-click="verModal('showModalEvento')">
+									ng-click="nuevoEvento()">
 									<i class="fa fa-plus"></i>
 								</button>
 
@@ -336,7 +336,7 @@
 										<div class="row">
 											<div class="col-md-3">
 												<div class="form-group">
-													<label for="fecha">Fecha</label> <input type="date"
+													<label for="fecha">Fecha</label> <input type="text"
 														class="form-control" id="fecha" ng-model="ev.fecha">
 												</div>
 											</div>
@@ -415,8 +415,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="pres in gru.presupuestos"
-									ng-click="cotizaciones(pres)">
+								<tr ng-repeat="pres in gru.presupuestos">
 									<td><select ng-model="pres.subtipo">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
@@ -446,34 +445,29 @@
 			<hr>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="table-responsive" ng-show="showCotizaciones">
+					<div class="table-responsive" >
 						<button class="btn btn-small btn-primary" ng-click="addCot()">
 							<i class="fa fa-plus"></i>
 						</button>
 						<table class="letraChica table table-striped table-bordered">
 							<thead>
-								<tr>
-									<th>Proveedor</th>
-									<th>Precio</th>
-									<th>Tiempo de entrega</th>
-									<th></th>
+								<tr><th></th>
+									<th ng-repeat="prove in listcotizaciones.proveedores"><input type="text" ng-model="prove"/></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="cot in listcotizaciones |filter:filtroCot">
-									<td><input type="text" ng-model="cot.proveedor"></td>
-									<td><input type="text" ng-model="cot.precio"></td>
-									<td><input type="text" ng-model="cot.tiempo"></td>
-									<td><input type="radio" name="optradio"
-										ng-model="cot.selected" ng-click="setPrecio(cot.precio)"></td>
+								<tr ng-repeat="cot in listcotizaciones.costos">
+								<td>{{cot.concepto}}</td>
+									<td ng-repeat="costo in cot.costos"><input type="text" ng-model="costo.precio"> <input type="radio" name="{{cot.concepto}}"
+										ng-click="setPrecio(costo.precio,cot.concepto)"></td>
+<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
-								<tr>
-									<td><input type="text" ng-model="newCot.proveedor"></td>
-									<td><input type="text" ng-model="newCot.precio"></td>
-									<td><input type="text" ng-model="newCot.tiempo"></td>
-									<td><input type="radio" name="optradio"
-										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td>
-								</tr>
+<!-- 								<tr> -->
+<!-- 									<td><input type="text" ng-model="newCot.precio"></td> -->
+<!-- 									<td><input type="text" ng-model="newCot.tiempo"></td> -->
+<!-- 									<td><input type="radio" name="optradio" -->
+<!-- 										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td> -->
+<!-- 								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -494,9 +488,9 @@
 							ng-model="servicio.servicio.cobranza.facturado">Facturado</label>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd">N&uacute;mero
+						<label class="control-label" for="pwd">N&uacute;mero
 							Factura</label>
-						<div class="col-sm-10">
+						<div>
 							<input type="text"
 								ng-model="servicio.servicio.cobranza.numeroFactura">
 						</div>
@@ -557,6 +551,9 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<textarea class="form-control ng-pristine ng-valid ng-empty ng-touched" style="font-size:9px" rows="3" ng-model="pago.detalle"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -592,8 +589,7 @@
 					<br>Fecha del evento
 					<div class="col-md-12">
 						<input class="form-control" type="datetime-local"
-							ng-model="evento.fecha"> <input class="form-control"
-							type="time-local" ng-model="evento.fecha">
+							ng-model="evento.fecha"> 
 					</div>
 
 					<br> Responsable
@@ -661,7 +657,7 @@
 							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
 								<a id="{{evi.image}}" class="thumbnail"
 									ng-class="'selected':evi.appended"> <img
-									src="{{'/servicio/image/'+evi.image}}"
+									src="{{'http://tikal.mx/tallerWeb/images/'+evi.image}}"
 									ng-click="selectImage(evi)">
 								</a>
 							</div>
@@ -695,6 +691,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row">
+						<!-- 
 							<div class="col-md-6">
 								<a class="btn btn-primary" target="_blank"
 									href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}">
@@ -707,6 +704,23 @@
 									<i class="fa fa-print"></i>Evaluaci&oacute;n
 								</a>
 							</div>
+							-->
+							 <form method="POST" action="/reporte/presupuestoPDF.pdf">
+								<div class="col-md-6">
+									<button class="btn btn-primary" target="_blank" type="submit">
+										<i class="fa fa-print"></i>Presupuesto
+									</button>
+									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+								</div>
+							</form>
+							<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
+								<div class="col-md-6">
+									<button class="btn btn-primary" target="_blank" type="submit">
+										<i class="fa fa-print"></i>Cotización
+									</button>
+									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+								</div>
+							</form> 
 						</div>
 					</div>
 				</div>

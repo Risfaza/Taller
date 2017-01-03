@@ -156,6 +156,7 @@ app.controller("serviceController", [
 				$rootScope.actual=$scope.servicio;
 				$rootScope.detallesView=true;
 				console.log($rootScope.actual);
+				$scope.cotizaciones();
 			});
 
 			$scope.showTab = function(id) {
@@ -181,9 +182,9 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-				var nc=$scope.newCot;
-				lista.push(nc)
-				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+//				var nc=$scope.newCot;
+//				lista.push(nc)
+				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					$scope.listcotizaciones=[];
 				}, function(response) {
 				})
@@ -201,14 +202,14 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-				var nc=$scope.newCot;
-				lista.push(nc)
+//				var nc=$scope.newCot;
+//				lista.push(nc)
 				eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
 				console.log(data);
 			});
 
-				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					$scope.listcotizaciones=[];
 				}, function(response) {
 				})
@@ -227,9 +228,10 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-				var nc=$scope.newCot;
-				lista.push(nc)
-				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+//				var nc=$scope.newCot;
+//				lista.push(nc)
+//				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					$scope.listcotizaciones=[];
 				}, function(response) {
 				})
@@ -247,14 +249,15 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-				var nc=$scope.newCot;
-				lista.push(nc)
+//				var nc=$scope.newCot;
+//				lista.push(nc)
 				eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
 				console.log(data);
 			});
 
-				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+//				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					$scope.listcotizaciones=[];
 				}, function(response) {
 				})
@@ -298,6 +301,14 @@ app.controller("serviceController", [
 				}
 			}
 
+			$scope.nuevoEvento=function(){
+				var fec= new Date();
+			
+				$scope.evento={
+						fecha: fec
+				}
+				$scope.verModal('showModalEvento');
+			}
 			$scope.addEvento = function() {
 				// var e = $scope.evento;
 				// $scope.eventos.push(e);
@@ -369,21 +380,43 @@ app.controller("serviceController", [
 			}
 			$scope.showCotizaciones = false;
 			$scope.addCot = function() {
-				var cot = $scope.newCot;
-				var concepto = $scope.cotizando.concepto;
-				$scope.listcotizaciones.push(cot);
-				$scope.newCot = {
-					proveedor : "",
-					precio : "",
-					tiempo : "",
-					concepto : concepto,
-					selected:false
-				};
+//				var cot = $scope.newCot;
+//				var concepto = $scope.cotizando.concepto;
+				$scope.listcotizaciones.proveedores.push("Proveedor"+ $scope.listcotizaciones.proveedores.length);
+				
+				for(var i=0; i< $scope.listcotizaciones.costos.length;i++){
+					var costo={concepto:$scope.listcotizaciones.costos[i].concepto,
+						modelo:$scope.servicio.auto.modelo,
+						tipo:$scope.servicio.auto.tipo
+					}
+					
+					$scope.listcotizaciones.costos[i].costos.push(costo);
+				}
+//				$scope.newCot = {
+//					proveedor : "",
+//					precio : "",
+//					tiempo : "",
+//					concepto : concepto,
+//					selected:false
+//				};
+				console.log($scope.listcotizaciones);
 			}
 			$scope.newCot = {selected:false};
-			$scope.setPrecio = function(precio) {
-				alert(precio);
-				$scope.cotizando.precioUnitario.value = precio;
+			$scope.setPrecio = function(precio,concepto) {
+				var encontrado=false;
+				for(var i =0; i< $scope.servicio.gruposCosto.length;i++){
+					for(var j=0; j<$scope.servicio.gruposCosto[i].presupuestos.length;j++){
+						if($scope.servicio.gruposCosto[i].presupuestos[j].concepto== concepto){
+							$scope.servicio.gruposCosto[i].presupuestos[j].precioUnitario.value=precio;
+							encontrado=true;
+							break;
+						}
+					}
+					if(encontrado){
+						break;
+					}
+				}
+//				$scope.cotizando.precioUnitario.value = precio;
 			}
 			$scope.listcotizaciones=[];
 			
@@ -391,7 +424,6 @@ app.controller("serviceController", [
 				var index=$scope.eventos.indexOf(e);
 				$scope.eventos.splice(index,1);
 				eventoService.removeEvento(e.idEvento).then(function(data){
-					console.log(data);
 				});
 			};
 			$scope.verEvidencias=function(e){
@@ -418,46 +450,16 @@ app.controller("serviceController", [
 //				console.log($scope.servicio.servicio);
 			}
 			
-			$scope.cotizaciones = function(e) {
-				console.log(e);
-				if ($scope.newCot.proveedor && $scope.newCot.precio
-						&& $scope.newCot.tiempo) {
-					if ($scope.newCot.proveedor != ""
-							&& $scope.newCot.precio != ""
-							&& $scope.newCot.tiempo != "") {
-						var nc = $scope.newCot;
-						$scope.listcotizaciones.push(nc);
-						$scope.newCot = {
-							proveedor : "",
-							precio : "",
-							tiempo : "",
-							concepto : "",
-							selected:false
-						};
-					}
-				}
-				if (e.subtipo) {
-					if (e.subtipo == "RE" && e.concepto != "") {
-						$scope.cotizando = e;
-						$scope.filtroCot.concepto = e.concepto;
-						$scope.newCot.concepto = e.concepto;
-						$scope.showCotizaciones = true;
-						$http.get("/cotizacion/get", {
-							params : {
-								concepto : e.concepto,
-								tipo : $scope.servicio.auto.tipo,
-								modelo : $scope.servicio.auto.modelo
-							}
-						}).then(function(data) {
-							$scope.listcotizaciones=data.data;
-						}, function(data) {
-
-						});
-					} else {
-						$scope.showCotizaciones = false;
-					}
-				}
-
+			$scope.cotizaciones = function() {
+				$http.get('/cotizacion/getFull',{params:{
+					tipo : $scope.servicio.auto.tipo,
+					modelo : $scope.servicio.auto.modelo,
+					cadena:{presupuesto:$scope.servicio.gruposCosto}
+				}}).success(function(response){
+					$scope.listcotizaciones=response;
+				}).error(function(response){
+					console.log(response);
+				});
 			}
 			
 			$scope.selectImage=function(img){

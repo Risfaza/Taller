@@ -40,8 +40,6 @@ app
 
 							$scope.guardar = function() {
 								console.log($scope.servicio);
-								var contac=$scope.servicio.cliente.contacto.contacto+" "+$scope.servicio.cliente.contacto.contacto.email;
-								$scope.servicio.cliente.contacto=contac;
 								var send={servicio:$scope.servicio};
 								$http.post('/servicio/add', send)
 										.then(function(response) {

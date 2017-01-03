@@ -44,12 +44,13 @@
       <div ng-controller = "myCtrl">
       {{uri.url}}
       <img src="/servicio/image/-0H8XuD-Za8o6nKYM3ZQsw">
-      <form action="{{urlpost}}" method="post">
-         <input id="b_pics" accept="image/*" type="file" class="file"
-							multiple="true" multiple-File-Model="b_pics"/>
-         <button ng-click = "uploadFile(uri.url)">upload me</button>	
-<!--          <button type="submit">Upload me</button>	 -->
+      <form action="http://tikal.mx/tallerWeb/uf.php" method="post" enctype="multipart/form-data"	>
+         <input accept="image/*" ng-model="file" name="pictures" ng-value="fileToUpload" value="{{fileToUpload}}" file-model="fileToUpload" set-file-data="fileToUpload = value;" type="file" id="my_file" multiple/>
+<!--          <button ng-click = "uploadFile(uri.url)">upload me</button>	 -->
+         <button type="submit">Upload me</button>	
       </form>
+      
+      
       
       <br>
       Muchos

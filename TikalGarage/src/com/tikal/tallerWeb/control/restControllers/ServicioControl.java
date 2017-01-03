@@ -156,6 +156,7 @@ public class ServicioControl {
 									 */) throws IOException {
 		@SuppressWarnings("deprecation")
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+		res.addHeader("Access-Control-Allow-Origin", "http://1-dot-webproyect-1332.appspot.com, http://127.0.0.1:8888");
 		int len = Integer.parseInt(req.getParameter("length"));
 		List<BlobKey> lista = new ArrayList<BlobKey>();
 		long id = Long.parseLong(req.getParameter("idEvento"));

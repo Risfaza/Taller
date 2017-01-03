@@ -130,7 +130,6 @@ public class ServicioDAOImp implements ServicioDAO {
 		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).list();
 		List<ServicioIndex> ret = new ArrayList<ServicioIndex>();
 		for (ServicioEntity s : servicios) {
-			System.out.println(s.getMetadata().getStatus());
 			if (s.getMetadata().getStatus().compareTo("Finalizado") != 0) {
 				ServicioIndex si = new ServicioIndex();
 				si.setCobranza(s.getCobranza());

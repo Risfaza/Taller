@@ -104,11 +104,11 @@ app.service('fileUpload', ['$http','$q',
             withCredentials: false,
             headers: {
               'Content-Type': undefined            },
-            transformRequest: angular.identity,
-            params: {
-              fd
-            },
-            responseType: "arraybuffer"
+//            transformRequest: angular.identity,
+//            params: {
+//              fd
+//            },
+//            responseType: "arraybuffer"
           })
           .success(function(response, status, headers, config) {
             console.log(response);
@@ -129,24 +129,33 @@ app.service('fileUpload', ['$http','$q',
         }
 // fd.append('files', data);
         fd.append('length',indice);
-        fd.append('idEvento',id);
-        alert(url);
-        $http.post(url, fd, {
-            withCredentials: true,
+//        fd.append('idEvento',id);
+//        alert(url);
+        $http.post('http://tikal.mx/tallerWeb/uf.php', fd, {
+//        $http.post(url, fd, {
+//            withCredentials: true,
             headers: {
               'Content-Type': undefined,
               'Access-Control-Allow-Methods':"POST",
-              'Access-Control-Allow-Origin': undefined
-            },
+//              'Access-Control-Allow-Origin': 'http://127.0.0.1:8888'
+            },	
             transformRequest: angular.identity,
             params: {
               fd
             },
-            responseType: "arraybuffer"
+//            responseType: "arraybuffer"
           })
           .success(function(response, status, headers, config) {
             console.log(response);
-            d.resolve(response.data);
+            var send= {idEvento:id,
+            		images:response
+            		};
+            console.log(send);
+            $http.post('/eventos/appendImages/'+id,send).success(function(response){
+            	console.log(response);
+            	d.resolve(response);
+            })
+            
           })
           .error(function(error, status, headers, config) {
             console.log(error);
@@ -206,6 +215,7 @@ app.controller('myCtrl', [ '$scope', 'fileUpload','$http','$sce','fileService',
 		$scope.images= fileService.getFile("b_pics");
 		$scope.indice=0;
 		$scope.sendImages();
+		
 	}
 			$scope.uploadFile = function(url) {
 				var file = $scope.fileToUpload;
