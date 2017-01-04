@@ -416,12 +416,12 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="pres in gru.presupuestos">
-									<td><select ng-model="pres.subtipo">
+									<td><select ng-model="pres.subtipo" ng-change="cotizaciones()">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
 											<option value="IN">Insumo</option>
 									</select></td>
-									<td><input type="text" ng-model="pres.concepto" /></td>
+									<td><input type="text" ng-model="pres.concepto" ng-change="cotizaciones()"/></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>

@@ -15,7 +15,7 @@ public class ServicioListVO {
 	private String nombreCliente;
 	private String placas;
 	private String fechaInicio;
-	private String descripción;
+	private String descripcion;
 	private String cobranza;
 	private String dias;
 	private String saldo;
@@ -27,7 +27,7 @@ public class ServicioListVO {
 
 	public ServicioListVO(ServicioIndex si, AutoEntity a, ClienteEntity c) {
 		this.setStatus(si.getStatus());
-		this.setDescripción(si.getDescripcion());
+		this.setDescripcion(si.getDescripcion());
 		this.id=si.getId();
 		Date fi = si.getFechaInicio();
 		Date hoy = new Date();
@@ -97,12 +97,12 @@ public class ServicioListVO {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public String getDescripción() {
-		return descripción;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setDescripción(String descripción) {
-		this.descripción = descripción;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public String getCobranza() {

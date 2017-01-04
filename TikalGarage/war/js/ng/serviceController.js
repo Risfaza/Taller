@@ -368,6 +368,7 @@ app.controller("serviceController", [
 					concepto : "",
 					precioUnitario:{value:""}
 				});
+				$scope.cotizaciones();
 			}
 			$scope.filtro = {
 				tipo : "HP"
