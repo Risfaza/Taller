@@ -397,6 +397,7 @@
 						<!-- 								<i class="fa fa-plus"></i></button> -->
 						<!-- 						</div> -->
 					</div>
+					{{gru.presupuestos}}
 					<div class="table-responsive">
 						<table class="letraChica table table-bordered table-striped">
 							<thead>
@@ -405,13 +406,13 @@
 									<th>Concepto</th>
 									<th style="width: 10%">Cantidad</th>
 									<th>Precio Unitario</th>
-									<th></th>
 									<th>IVA</th>
 									<th>Precio Cliente</th>
 									<th>Utilidad</th>
 									<th>Subtotal</th>
-									<th></th>
 									<th>IVA</th>
+									<th></th>
+									<th>Autorizado</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -420,20 +421,23 @@
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
 											<option value="IN">Insumo</option>
+											<option value="SE">Servicio</option>
 									</select></td>
-									<td><input type="text" ng-model="pres.concepto" ng-change="cotizaciones()"/></td>
+									<td><input type="text" ng-model="pres.concepto" ng-change="conceptoChg(pres)"/></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
-									<td><input type="checkbox" ng-model="iva1" /></td>
-									<td><label disabled ng-show="iva1">{{pres.precioUnitario.value*0.16}}</label></td>
+									<td><label disabled>{{currency(pres.precioUnitario.value*0.16,2, [',', "'", '.'])}}</label></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
-									<td><label>{{pres.precioCliente.value -
-											pres.precioUnitario.value}}</label></td>
-									<td><label>{{pres.precioCliente.value*pres.cantidad}}</label></td>
+									<td><label>{{currency(pres.precioCliente.value -
+											pres.precioUnitario.value*1.16,2, [',', "'", '.'])}} / {{currency((pres.precioCliente.value -
+											pres.precioUnitario.value*1.16)/(pres.precioUnitario.value*1.16),2, [',', "'", '.'])}}</label></td>
+									<td><label>{{currency(pres.precioCliente.value*pres.cantidad,2, [',', "'", '.'])}}</label></td>
 									<td><input type="checkbox" ng-model="iva2" /></td>
-									<td><label ng-show="iva2">{{pres.precioCliente.value*pres.cantidad*0.16}}</label>
+									<td><label ng-show="iva2">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2, [',', "'", '.'])}}</label></td>
+									<td><input type="checkbox" ng-model="pres.autorizado" /></td>
+									
 										<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
 								</tr>
 							</tbody>

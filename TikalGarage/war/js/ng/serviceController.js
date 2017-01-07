@@ -170,64 +170,65 @@ app.controller("serviceController", [
 				var myEl = angular.element("#" + id);
 				myEl.addClass('active in');
 			};
-			$scope.guardar = function() {
-				var send = {
-					servicio : $scope.servicio,
-					presupuesto : $scope.servicio.gruposCosto
-				}
-				// console.log(send);
-				$http.post('/servicio/save', send).then(function(response) {
-					alert("Servicio Guardado");
-				}, function(response) {
-					alert("Something went wrong");
-				})
-				var lista=$scope.listcotizaciones;
-//				var nc=$scope.newCot;
-//				lista.push(nc)
-				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-					$scope.listcotizaciones=[];
-				}, function(response) {
-				})
-			}
+//			$scope.guardar = function() {
+//				var send = {
+//					servicio : $scope.servicio,
+//					presupuesto : $scope.servicio.gruposCosto
+//				}
+//				// console.log(send);
+//				$http.post('/servicio/save', send).then(function(response) {
+//					alert("Servicio Guardado");
+//				}, function(response) {
+//					alert("Something went wrong");
+//				})
+//				var lista=$scope.listcotizaciones;
+////				var nc=$scope.newCot;
+////				lista.push(nc)
+//				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+//					$scope.listcotizaciones=[];
+//				}, function(response) {
+//				})
+//			}
+//			
+//			$scope.guardar = function() {
+//				var send = {
+//					servicio : $scope.servicio,
+//					presupuesto : $scope.servicio.gruposCosto
+//				}
+//				 console.log(send);
+//				$http.post('/servicio/save', send).then(function(response) {
+//					alert("Servicio Guardado");
+//				}, function(response) {
+//					alert("Something went wrong");
+//				})
+//				var lista=$scope.listcotizaciones;
+////				var nc=$scope.newCot;
+////				lista.push(nc)
+//				eventoService.getBitacora($routeParams.id).then(function(data) {
+//				$scope.eventos = data;
+////				console.log(data);
+//			});
+//
+//				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+//					$scope.listcotizaciones=[];
+//				}, function(response) {
+//				})
+//			}
+			
 			
 			$scope.guardar = function() {
 				var send = {
 					servicio : $scope.servicio,
 					presupuesto : $scope.servicio.gruposCosto
 				}
-				// console.log(send);
+				 console.log(send);
 				$http.post('/servicio/save', send).then(function(response) {
 					alert("Servicio Guardado");
 				}, function(response) {
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-//				var nc=$scope.newCot;
-//				lista.push(nc)
-				eventoService.getBitacora($routeParams.id).then(function(data) {
-				$scope.eventos = data;
-				console.log(data);
-			});
-
-				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-					$scope.listcotizaciones=[];
-				}, function(response) {
-				})
-			}
-			
-			
-			$scope.guardar = function() {
-				var send = {
-					servicio : $scope.servicio,
-					presupuesto : $scope.servicio.gruposCosto
-				}
-				// console.log(send);
-				$http.post('/servicio/save', send).then(function(response) {
-					alert("Servicio Guardado");
-				}, function(response) {
-					alert("Something went wrong");
-				})
-				var lista=$scope.listcotizaciones;
+				console.log(lista.proveedores);
 //				var nc=$scope.newCot;
 //				lista.push(nc)
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
@@ -253,10 +254,11 @@ app.controller("serviceController", [
 //				lista.push(nc)
 				eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
-				console.log(data);
+//				console.log(data);
 			});
 
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+				console.log(lista.proveedores);
 				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					$scope.listcotizaciones=[];
 				}, function(response) {
@@ -408,7 +410,8 @@ app.controller("serviceController", [
 				for(var i =0; i< $scope.servicio.gruposCosto.length;i++){
 					for(var j=0; j<$scope.servicio.gruposCosto[i].presupuestos.length;j++){
 						if($scope.servicio.gruposCosto[i].presupuestos[j].concepto== concepto){
-							$scope.servicio.gruposCosto[i].presupuestos[j].precioUnitario.value=precio;
+							$scope.servicio.gruposCosto[i].presupuestos[j].precioUnitario.value=$scope.currency(precio/1.16, 2, [',', "'", '.']);
+							$scope.servicio.gruposCosto[i].presupuestos[j].precioCliente.value=$scope.currency(precio*1.15, 2, [',', "'", '.'])
 							encontrado=true;
 							break;
 						}
@@ -463,6 +466,14 @@ app.controller("serviceController", [
 				});
 			}
 			
+			$scope.conceptoChg= function(pre){
+				if(pre.concepto){
+					if(pre.subtipo== "RE" || pre.subtipo=="IN" || pre.subtipo =="SE"){
+						$scope.cotizaciones();
+					}
+				}
+			}
+			
 			$scope.selectImage=function(img){
 				if(img.appended == true){
 					img.appended=false;
@@ -479,7 +490,7 @@ app.controller("serviceController", [
 				$window.location.href = '/reporte/presupuestoPDF'+tipo+'/'+$routeParams.id;
 			}
 			
-			function currency(value, decimals, separators) {
+			$scope.currency=function(value, decimals, separators) {
 			    decimals = decimals >= 0 ? parseInt(decimals, 0) : 2;
 			    separators = separators || ['.', "'", ','];
 			    var number = (parseFloat(value) || 0).toFixed(decimals);
@@ -506,8 +517,16 @@ app.controller("serviceController", [
 				for(var i=0; i<cobranza.pagos.length;i++){
 					$scope.aCuenta += parseFloat(cobranza.pagos[i].monto.value);
 				} 
-				$rootScope.saldo='$'+currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
+				$rootScope.saldo='$'+$scope.currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
 			},true);
 
+//			listcotizaciones.proveedores
+			
+//			$scope.cambiaProveedor= function(index,pro){
+//				$scope.listcotizaciones.proveedores[index]=pro;
+//			}
+//			$scope.$watch('listcotizaciones.proveedores',function(){
+//				alert("cambia");
+//			},true);
 			
 		} ]);
