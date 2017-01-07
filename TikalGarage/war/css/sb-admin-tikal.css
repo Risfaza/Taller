@@ -1619,3 +1619,15 @@ div.dataTables_info {
   right: 0;
   top: 0;
 }
+
+.table-presupuesto>thead>tr>th {
+padding: 5px;
+width: 7%;
+font-size: 12px;
+}
+
+.table-presupuesto input {
+
+width: 70px;
+
+}

@@ -397,18 +397,17 @@
 						<!-- 								<i class="fa fa-plus"></i></button> -->
 						<!-- 						</div> -->
 					</div>
-					{{gru.presupuestos}}
 					<div class="table-responsive">
-						<table class="letraChica table table-bordered table-striped">
+						<table class="letraChica table table-bordered table-striped table-presupuesto">
 							<thead>
 								<tr>
 									<th>Tipo</th>
 									<th>Concepto</th>
-									<th style="width: 10%">Cantidad</th>
+									<th style="width: 6%">Cantidad</th>
 									<th>Precio Unitario</th>
 									<th>IVA</th>
 									<th>Precio Cliente</th>
-									<th>Utilidad</th>
+									<th style="width: 9%">Utilidad</th>
 									<th>Subtotal</th>
 									<th>IVA</th>
 									<th></th>
@@ -423,7 +422,7 @@
 											<option value="IN">Insumo</option>
 											<option value="SE">Servicio</option>
 									</select></td>
-									<td><input type="text" ng-model="pres.concepto" ng-change="conceptoChg(pres)"/></td>
+									<td><input type="text" style="width: 100%" ng-model="pres.concepto" ng-change="conceptoChg(pres)"/></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
@@ -456,7 +455,7 @@
 						<table class="letraChica table table-striped table-bordered">
 							<thead>
 								<tr><th></th>
-									<th ng-repeat="prove in listcotizaciones.proveedores"><input type="text" ng-model="prove"/></th>
+									<th ng-repeat="prove in listcotizaciones.proveedores"><input id="proveedor{{$index}}" type="text" ng-model="prove"/></th>
 								</tr>
 							</thead>
 							<tbody>

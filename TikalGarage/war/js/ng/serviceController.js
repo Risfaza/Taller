@@ -114,8 +114,8 @@ app.controller("serviceController", [
 				url : ""
 			};
 			$scope.presupuesto = {
-
 			}
+			$scope.proveedores2=[];
 			$scope.gruposCosto = [];
 			$scope.urlpost = $sce.trustAsResourceUrl($scope.uri.url);
 			$http.get("/servicio/getUpldUrl").then(function(response) {
@@ -217,6 +217,12 @@ app.controller("serviceController", [
 			
 			
 			$scope.guardar = function() {
+				for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+					var bla = $('#proveedor'+i).val();
+					$scope.listcotizaciones.proveedores[i]=bla+"";
+				}
+				
+				
 				var send = {
 					servicio : $scope.servicio,
 					presupuesto : $scope.servicio.gruposCosto
@@ -233,7 +239,7 @@ app.controller("serviceController", [
 //				lista.push(nc)
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
 				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-					$scope.listcotizaciones=[];
+					$scope.cotizaciones();
 				}, function(response) {
 				})
 			}
@@ -260,7 +266,7 @@ app.controller("serviceController", [
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
 				console.log(lista.proveedores);
 				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-					$scope.listcotizaciones=[];
+					$scope.cotizaciones();
 				}, function(response) {
 				})
 				eventoService.updateBitacora($scope.eventos,$routeParams.id).then(function(data) {
@@ -381,7 +387,7 @@ app.controller("serviceController", [
 			$scope.showPresupuesto = function(ver) {
 				$scope.filtro.tipo = ver;
 			}
-			$scope.showCotizaciones = false;
+
 			$scope.addCot = function() {
 //				var cot = $scope.newCot;
 //				var concepto = $scope.cotizando.concepto;
@@ -461,6 +467,7 @@ app.controller("serviceController", [
 					cadena:{presupuesto:$scope.servicio.gruposCosto}
 				}}).success(function(response){
 					$scope.listcotizaciones=response;
+					$scope.proveedores2= response.proveedores;
 				}).error(function(response){
 					console.log(response);
 				});

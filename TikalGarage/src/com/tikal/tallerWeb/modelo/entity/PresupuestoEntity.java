@@ -12,6 +12,7 @@ public class PresupuestoEntity extends RegistroCosto {
 	@Id public Long idPresupuesto;
 	
 	public PresupuestoEntity(){
+		this.setAutorizado(false);
 	}
 
 	public Long getIdPresupuesto() {

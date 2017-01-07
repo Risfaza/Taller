@@ -316,7 +316,7 @@ public class ServicioControl {
 					pre.setGrupo(gru.getNombre());
 					pre.getPrecioCotizado()
 							.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
-					pre.setAutorizado(false);
+//					pre.setAutorizado(false);
 					pre.setId(data.getServicio().getServicio().getIdServicio());
 					presupuesto.add(pre);
 				}

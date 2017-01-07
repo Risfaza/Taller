@@ -1,7 +1,12 @@
 
 <div class="container-fluid">
 <div class="row">
-	<div class="col-md-12">
+<div class="col-md-3">
+<input type="text" id="searchField" class="form-control app-search-input" ng-model="busca" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="{{encontrados}}">
+</div>
+</div>
+<div class="row">
+		<div class="col-md-12">
 		<table class="letraChica table table-bordered table-striped">
 			<thead>
 				<tr>

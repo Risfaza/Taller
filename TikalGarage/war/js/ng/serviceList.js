@@ -18,7 +18,23 @@ app.service('listService',['$http','$q','$location',function($http,$q,$location)
 app.controller('serviceListController',['$rootScope','$scope','$location','listService','sessionService',function($rootScope,$scope,$location,listService,sessionService){
 	if(!$rootScope.authenticated){
 		$location.path("/login");
-	}	
+	}
+	$scope.busca="";
+	$scope.entontrados=[]
+	$scope.$whatch('busca',function(){
+		console.log($scope.busca);
+		if(busca.length>3){
+			alert(busca);
+		}
+	},true);
+	$scope.buscar=function(){
+		var bla = $('#searchField').val();
+		console.log(bla);
+		if(busca.length>3){
+			alert(bla);
+		}
+	}
+	
 	$scope.addAbierto=function(ser){
 		$rootScope.abiertos.push(ser);
 	}
