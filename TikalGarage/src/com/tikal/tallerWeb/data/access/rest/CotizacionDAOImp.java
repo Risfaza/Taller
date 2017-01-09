@@ -27,7 +27,7 @@ public class CotizacionDAOImp implements CotizacionDAO {
 		int modeloi = modelo - 2;
 		int modelof = modelo + 2;
 		List<CotizacionEntity> lista = ofy().load().type(CotizacionEntity.class).filter("tipo", tipo)
-				.filter("modelo <=", modelof).filter("modelo >=", modeloi).list();
+				.filter("modelo <=", modelof).filter("modelo >=", modeloi).filter("proveedor !=","Cliente").filter("proveedor !=","cliente").filter("proveedor !=","CLIENTE").list();
 		if (lista.size() == 0) {
 			return new ArrayList<CotizacionEntity>();
 		}

@@ -416,8 +416,12 @@ app.controller("serviceController", [
 				for(var i =0; i< $scope.servicio.gruposCosto.length;i++){
 					for(var j=0; j<$scope.servicio.gruposCosto[i].presupuestos.length;j++){
 						if($scope.servicio.gruposCosto[i].presupuestos[j].concepto== concepto){
+							var newprecio=parseFloat(precio);
+							if(parseFloat=="NaN"){
+								precio=0;
+							}
 							$scope.servicio.gruposCosto[i].presupuestos[j].precioUnitario.value=$scope.currency(precio/1.16, 2, [',', "'", '.']);
-							$scope.servicio.gruposCosto[i].presupuestos[j].precioCliente.value=$scope.currency(precio*1.15, 2, [',', "'", '.'])
+							$scope.servicio.gruposCosto[i].presupuestos[j].precioCliente={value:$scope.currency(precio*1.3, 2, [',', "'", '.'])};
 							encontrado=true;
 							break;
 						}

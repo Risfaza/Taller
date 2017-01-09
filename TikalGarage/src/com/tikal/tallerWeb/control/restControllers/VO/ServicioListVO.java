@@ -33,7 +33,7 @@ public class ServicioListVO {
 		Date hoy = new Date();
 //		hoy = new Date(hoy.compareTo(fi));
 		this.setDias(this.calcularDias(hoy,fi)+"");
-		this.setFechaInicio(fi.getDay() + "-" + (fi.getMonth()+1)+"-" + (900+fi.getYear()));
+		this.setFechaInicio(fi.getDate() + "-" + (fi.getMonth()+1)+"-" + (1900+fi.getYear()));
 		this.setNombreCliente(c.getNombre());
 		this.setPlacas(a.getPlacas());
 		Moneda ct = si.getCostoTotal();

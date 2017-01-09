@@ -84,7 +84,30 @@ public class ServicioDAOImp implements ServicioDAO {
 
 	@Override
 	public List<ServicioIndex> getIndiceServicios() {
-		return ObjectifyService.ofy().load().type(ServicioIndex.class).list();
+		List<ServicioEntity> servs = ObjectifyService.ofy().load().type(ServicioEntity.class).list();
+		List<ServicioIndex> result = new ArrayList<ServicioIndex>();
+		for (ServicioEntity s : servs) {
+			if (s.getMetadata().getStatus().compareTo("Finalizado") != 0) {
+				ServicioIndex si = new ServicioIndex();
+				si.setCobranza(s.getCobranza());
+				si.setDescripcion(s.getDescripcion());
+				si.setFechaInicio(s.getMetadata().getFechaInicio());
+				si.setId(s.getIdServicio());
+				si.setIdAuto(s.getIdAuto());
+				si.setIdCliente(s.getIdCliente());
+				si.setStatus(s.getMetadata().getStatus());
+				List<PresupuestoEntity> presupuesto = ofy().load().type(PresupuestoEntity.class)
+						.filter("id", si.getId()).list();
+				float total = 0;
+				for (PresupuestoEntity pr : presupuesto) {
+					total += Float.parseFloat(pr.getPrecioCliente().getValue()) * pr.getCantidad();
+				}
+				si.setCostoTotal(new Moneda());
+				si.getCostoTotal().setValue(total + "");
+				result.add(si);
+			}
+		}
+		return result;
 	}
 
 	@Override

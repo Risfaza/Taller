@@ -36,7 +36,10 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 
 			    updater:function (item) {
 			    	var ind=$scope.encontrados.indexOf(item);
-			        alert($scope.tipos[ind]);
+
+			    	$http.get("/search/filtra/"+item+"/"+$scope.tipos[ind]).success(function(data){
+			    		$scope.listaServicios=data;
+			    	});
 			        return item;
 			    }
 			});

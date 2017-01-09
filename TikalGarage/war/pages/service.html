@@ -709,7 +709,7 @@
 							</div>
 							-->
 							 <form method="POST" action="/reporte/presupuestoPDF.pdf">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<button class="btn btn-primary" target="_blank" type="submit">
 										<i class="fa fa-print"></i>Presupuesto
 									</button>
@@ -717,9 +717,17 @@
 								</div>
 							</form>
 							<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<button class="btn btn-primary" target="_blank" type="submit">
-										<i class="fa fa-print"></i>Cotización
+										<i class="fa fa-print"></i>Cotizaci&oacute;n
+									</button>
+									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+								</div>
+							</form> 
+							<form method="POST" action="/reporte/presupuestoPDFInterno.pdf">
+								<div class="col-md-4">
+									<button class="btn btn-primary" target="_blank" type="submit">
+										<i class="fa fa-print"></i>Interno
 									</button>
 									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
 								</div>
