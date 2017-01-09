@@ -69,9 +69,6 @@ public class AutoDAOImp  implements AutoDAO
 	}
 
 	public List<ServicioIndexAutoData> buscar(final String numeroSerie, final List<ServicioIndexAutoData> cmd) {
-		if (StringUtils.isEmpty(numeroSerie)) {
-			return new ArrayList<ServicioIndexAutoData>();
-		}
 		List<ServicioIndexAutoData> respuesta = new LinkedList<>();
 		List<Auto> lista=ObjectifyService.ofy().load().type(Auto.class).filter("numeroSerie",numeroSerie).list();
 		for(Auto auto:lista){
@@ -137,5 +134,31 @@ public class AutoDAOImp  implements AutoDAO
 	public AutoEntity cargar(long id) {
 		// TODO Auto-generated method stub
 		return ObjectifyService.ofy().load().type(AutoEntity.class).id(id).now();
+	}
+
+	@Override
+	public List<AutoEntity> buscar(String numeroSerie) {
+		List<AutoEntity> lista= ObjectifyService.ofy().load().type(AutoEntity.class).list();
+		List<AutoEntity> result= new ArrayList<AutoEntity>();
+		for(AutoEntity auto:lista){
+			if(auto.getNumeroSerie().contains(numeroSerie)){
+				result.add(auto);
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<AutoEntity> buscarPlacas(String numeroSerie) {
+		List<AutoEntity> lista= ObjectifyService.ofy().load().type(AutoEntity.class).list();
+		List<AutoEntity> result= new ArrayList<AutoEntity>();
+		for(AutoEntity auto:lista){
+			if(auto.getPlacas().toLowerCase().contains(numeroSerie.toLowerCase())){
+				result.add(auto);
+			}
+		}
+		
+		return result;
 	}
 }

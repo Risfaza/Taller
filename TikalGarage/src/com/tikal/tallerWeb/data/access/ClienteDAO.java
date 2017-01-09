@@ -55,4 +55,6 @@ public interface ClienteDAO {
      */
     List<ClienteEntity> consultaTodos();
     ClienteEntity buscarCliente(String nombre);
+    List<ClienteEntity> buscarClientes(String nombre);
+    
 }

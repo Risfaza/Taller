@@ -36,6 +36,9 @@ public interface AutoDAO {
     AutoEntity cargar(long id);
     
    	List<ServicioIndexAutoData> getIndiceAutos();
+   	
+   	List<AutoEntity> buscar(String numeroSerie);
+   	List<AutoEntity> buscarPlacas(String numeroSerie);
     
     /**
      * consulta todos de manera asyncrona

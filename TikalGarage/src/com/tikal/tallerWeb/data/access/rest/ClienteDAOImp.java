@@ -16,6 +16,7 @@
 
 package com.tikal.tallerWeb.data.access.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,6 @@ import com.tikal.tallerWeb.data.access.ClienteDAO;
 import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.rest.util.Callback;
 //import com.tikal.tallerWeb.rest.util.RestTemplateFactory;
-
-import technology.tikal.taller.automotriz.model.cliente.Cliente;
 
 /**
  * @author Nekorp
@@ -113,6 +112,18 @@ public class ClienteDAOImp implements ClienteDAO {
 			return lista.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<ClienteEntity> buscarClientes(String nombre) {
+		List<ClienteEntity> result= new ArrayList<ClienteEntity>();
+		List<ClienteEntity> todos = this.consultaTodos();
+		for(ClienteEntity cliente: todos){
+			if(cliente.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+				result.add(cliente);
+			}
+		}
+		return result;
 	}
 
 //    @Override

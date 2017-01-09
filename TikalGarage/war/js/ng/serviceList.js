@@ -15,26 +15,36 @@ app.service('listService',['$http','$q','$location',function($http,$q,$location)
 }]);
 
 
-app.controller('serviceListController',['$rootScope','$scope','$location','listService','sessionService',function($rootScope,$scope,$location,listService,sessionService){
+app.controller('serviceListController',['$rootScope','$scope','$location','listService','sessionService','$http',function($rootScope,$scope,$location,listService,sessionService,$http){
 	if(!$rootScope.authenticated){
 		$location.path("/login");
 	}
 	$scope.busca="";
 	$scope.entontrados=[]
-	$scope.$whatch('busca',function(){
-		console.log($scope.busca);
-		if(busca.length>3){
-			alert(busca);
+	$scope.$watch('busca',function(){
+		if($scope.busca.length>3){
+			$scope.buscar();
 		}
 	},true);
 	$scope.buscar=function(){
-		var bla = $('#searchField').val();
-		console.log(bla);
-		if(busca.length>3){
-			alert(bla);
-		}
+		$http.get("/search/general/"+$scope.busca).success(function(data){
+			$scope.encontrados=data.nombres;
+			$scope.tipos=data.tipos;
+			$('#searchBox').typeahead({
+
+			    source: $scope.encontrados,
+
+			    updater:function (item) {
+			    	var ind=$scope.encontrados.indexOf(item);
+			        alert($scope.tipos[ind]);
+			        return item;
+			    }
+			});
+		});
 	}
-	
+	$scope.onSelect=function($item,$model,$label){
+		alert("entra");
+	}
 	$scope.addAbierto=function(ser){
 		$rootScope.abiertos.push(ser);
 	}
@@ -47,4 +57,9 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 				$location.path("/login");
 			}
 		});
+	
+	$scope.states = [{postcode:'B1',address:'Bull ring'},{postcode:'M1',address:'Manchester'}];
+	$scope.encontrados= ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
+	
+	
 }]);
