@@ -391,6 +391,11 @@ app.controller("serviceController", [
 			$scope.addCot = function() {
 //				var cot = $scope.newCot;
 //				var concepto = $scope.cotizando.concepto;
+				
+				for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+					var bla = $('#proveedor'+i).val();
+					$scope.listcotizaciones.proveedores[i]=bla+"";
+				}
 				$scope.listcotizaciones.proveedores.push("Proveedor"+ $scope.listcotizaciones.proveedores.length);
 				
 				for(var i=0; i< $scope.listcotizaciones.costos.length;i++){
@@ -531,6 +536,26 @@ app.controller("serviceController", [
 				$rootScope.saldo='$'+$scope.currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
 			},true);
 
+			$scope.utilidad= function (pres){
+				var valor=parseFloat(pres.precioUnitario.value);
+				
+				if(valor==0){
+					return 100;
+				}
+				if(valor>0){
+					var porcentaje=$scope.currency(((pres.precioCliente.value -	pres.precioUnitario.value*1.16)/(pres.precioUnitario.value*1.16))*100,2, [',', "'", '.']);
+					return porcentaje;
+				}
+			}
+			
+			$scope.mayusculas=function(value){
+				value=value.toUpperCase();
+				return value;
+			}
+			
+			$scope.seleccionarTodoIVA=function(grupo){
+				console.log(grupo);
+			}
 //			listcotizaciones.proveedores
 			
 //			$scope.cambiaProveedor= function(index,pro){

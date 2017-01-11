@@ -30,7 +30,8 @@
 					<label for="rfc" class="control-label col-sm-3">RFC</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.rfc" />
+							ng-model="servicio.cliente.rfc"
+							ng-change="servicio.cliente.rfc=mayusculas(servicio.cliente.rfc)" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -134,7 +135,9 @@
 				</div>
 
 			</form>
-
+			<button class="btn btn-primary" ng-click="showTab('auto')">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>Sigiente
+			</button>
 		</div>
 		<div id="auto" class="tab-pane fade">
 			<div class="clearfix">
@@ -148,38 +151,10 @@
 								de Serie</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.numeroSerie" />
+									ng-model="servicio.auto.numeroSerie"
+									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)" />
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Tipo</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.tipo" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Modelo</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.modelo" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Placas</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.placas" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Combustible(%)</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="number" min="0" max="100"
-									ng-model="servicio.servicio.datosAuto.combustible" />
-							</div>
-						</div>
-
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
@@ -189,6 +164,19 @@
 									ng-model="servicio.auto.marca" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Tipo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.tipo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Versi&oacute;n</label>
 							<div class="col-sm-6">
@@ -196,6 +184,20 @@
 									ng-model="servicio.auto.version" />
 							</div>
 						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Modelo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.modelo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Color</label>
 							<div class="col-sm-6">
@@ -203,6 +205,19 @@
 									ng-model="servicio.auto.color" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Placas</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.placas" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Kilometraje</label>
 							<div class="col-sm-6">
@@ -210,6 +225,31 @@
 									ng-model="servicio.servicio.datosAuto.kilometraje" />
 							</div>
 						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Numero
+								Econ&oacute;mico</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" min="0" max="100"
+									ng-model="servicio.auto.numeroEconomico"
+									ng-change="servicio.auto.numeroEconomico=mayusculas(servicio.auto.numeroEconomico)" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Combustible(%)</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="number" min="0" max="100"
+									ng-model="servicio.servicio.datosAuto.combustible" />
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<div class="clearfix">
@@ -275,7 +315,7 @@
 							ng-model="servicio.servicio.descripcion"></textarea>
 					</div>
 				</div>
-				<div clas="row">
+				<div class="row">
 					Caracter&iacute;sticas del Auto
 					<div class="form-group">
 						<div>
@@ -296,6 +336,8 @@
 				</div>
 
 			</form>
+			<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+
 		</div>
 	</div>
 </div>

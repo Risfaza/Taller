@@ -81,5 +81,9 @@ app
 							$scope.findCliente = function() {
 								// implementar servicio de búsqueda
 							}
+							$scope.mayusculas=function(value){
+								value=value.toUpperCase();
+								return value;
+							}
 
 						} ]);

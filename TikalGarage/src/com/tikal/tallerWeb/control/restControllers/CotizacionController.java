@@ -128,12 +128,11 @@ public class CotizacionController {
 			for (int i = 0; i < pieza.getCostos().size(); i++) {
 
 				CotizacionEntity cot = pieza.getCostos().get(i);
+				cot.setProveedor(lista.getProveedores().get(i));
 				if (cot.getId() == null) {
 					cot.setConcepto(concepto);
 					cot.setModelo(Integer.parseInt(lista.getModelo()));
 					cot.setTipo(lista.getTipo());
-					cot.setProveedor(lista.getProveedores().get(i));
-
 				}
 				guardar.add(cot);
 			}

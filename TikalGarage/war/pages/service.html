@@ -37,7 +37,8 @@
 					<label for="rfc" class="control-label col-sm-3">RFC</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="text"
-							ng-model="servicio.cliente.rfc" />
+							ng-model="servicio.cliente.rfc"
+							ng-change="servicio.cliente.rfc=mayusculas(servicio.cliente.rfc)" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -94,8 +95,8 @@
 				<div class="form-group">
 					<label for="rfc" class="control-label col-sm-3">E-mail</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" 
-						ng-model="servicio.cliente.email" />
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.email" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -155,38 +156,10 @@
 								de Serie</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.numeroSerie" />
+									ng-model="servicio.auto.numeroSerie"
+									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)" />
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Tipo</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.tipo" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Modelo</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.modelo" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Placas</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.placas" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Combustible(%)</label>
-							<div class="col-sm-6">
-								<input class="form-control" type="number" min="0" max="100"
-									ng-model="servicio.servicio.datosAuto.combustible" />
-							</div>
-						</div>
-
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
@@ -196,6 +169,19 @@
 									ng-model="servicio.auto.marca" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Tipo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.tipo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Versi&oacute;n</label>
 							<div class="col-sm-6">
@@ -203,6 +189,20 @@
 									ng-model="servicio.auto.version" />
 							</div>
 						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Modelo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.modelo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Color</label>
 							<div class="col-sm-6">
@@ -210,6 +210,19 @@
 									ng-model="servicio.auto.color" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Placas</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.placas" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Kilometraje</label>
 							<div class="col-sm-6">
@@ -217,6 +230,31 @@
 									ng-model="servicio.servicio.datosAuto.kilometraje" />
 							</div>
 						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Numero
+								Econ&oacute;mico</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" min="0" max="100"
+									ng-model="servicio.auto.numeroEconomico"
+									ng-change="servicio.auto.numeroEconomico=mayusculas(servicio.auto.numeroEconomico)" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Combustible(%)</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="number" min="0" max="100"
+									ng-model="servicio.servicio.datosAuto.combustible" />
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<div class="clearfix">
@@ -278,7 +316,8 @@
 				<div class="row">
 					<div class="form-group">
 						<label for="comment">Descripci&oacute;n del Servicio:</label>
-						<textarea class="form-control" rows="4" ng-model="servicio.servicio.descripcion"></textarea>
+						<textarea class="form-control" rows="4"
+							ng-model="servicio.servicio.descripcion"></textarea>
 					</div>
 				</div>
 				<div clas="row">
@@ -311,8 +350,7 @@
 							<h3 class="panel-title">
 								<i class="fa fa-bar-chart-o fa-fw"></i> Bitacora
 								<button class="btn btn-small btn-primary" data-toggle="modal"
-									data-target="#eventoModal"
-									ng-click="nuevoEvento()">
+									data-target="#eventoModal" ng-click="nuevoEvento()">
 									<i class="fa fa-plus"></i>
 								</button>
 
@@ -383,12 +421,7 @@
 							<b>{{gru.nombre}}</b>
 							<ul class="list-inline">
 								<li><button class="btn-link"
-										ng-click="addPresupuesto(gru,'HP')">Hojalater&iacute;a
-										y Pintura</button></li>
-								<li><button class="btn-link"
-										ng-click="addPresupuesto(gru,'ME')">Mec&aacute;nica</button></li>
-								<li><button class="btn-link"
-										ng-click="addPresupuesto(gru,'OG')">Otros Gastos</button></li>
+										ng-click="addPresupuesto(gru,'')">Agregar Concepto</button></li>
 							</ul>
 						</div>
 						<!-- 						<div class="col-md-6"> -->
@@ -398,14 +431,15 @@
 						<!-- 						</div> -->
 					</div>
 					<div class="table-responsive">
-						<table class="letraChica table table-bordered table-striped table-presupuesto">
+						<table
+							class="letraChica table table-bordered table-striped table-presupuesto">
 							<thead>
 								<tr>
 									<th>Tipo</th>
 									<th>Concepto</th>
 									<th style="width: 6%">Cantidad</th>
 									<th>Precio Unitario</th>
-									<th>IVA</th>
+									<th style="width: 8%"><input style="width: auto;" type="checkbox" ng-model="gru.ivaTodos" value="false" ng-click="seleccionarTodoIVA(gru)"/>IVA</th>
 									<th>Precio Cliente</th>
 									<th style="width: 9%">Utilidad</th>
 									<th>Subtotal</th>
@@ -416,28 +450,33 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="pres in gru.presupuestos">
-									<td><select ng-model="pres.subtipo" ng-change="cotizaciones()">
+									<td><select ng-model="pres.subtipo"
+										ng-change="cotizaciones()">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
 											<option value="IN">Insumo</option>
 											<option value="SE">Servicio</option>
 									</select></td>
-									<td><input type="text" style="width: 100%" ng-model="pres.concepto" ng-change="conceptoChg(pres)"/></td>
+									<td><input type="text" style="width: 100%"
+										ng-model="pres.concepto" ng-change="conceptoChg(pres)" /></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
-									<td><label disabled>{{currency(pres.precioUnitario.value*0.16,2, [',', "'", '.'])}}</label></td>
+									<td><label disabled>{{currency(pres.precioUnitario.value*0.16,2,
+											[',', "'", '.'])}}</label></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
 									<td><label>{{currency(pres.precioCliente.value -
-											pres.precioUnitario.value*1.16,2, [',', "'", '.'])}} / {{currency((pres.precioCliente.value -
-											pres.precioUnitario.value*1.16)/(pres.precioUnitario.value*1.16),2, [',', "'", '.'])}}</label></td>
-									<td><label>{{currency(pres.precioCliente.value*pres.cantidad,2, [',', "'", '.'])}}</label></td>
-									<td><input type="checkbox" ng-model="iva2" /></td>
-									<td><label ng-show="iva2">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2, [',', "'", '.'])}}</label></td>
+											pres.precioUnitario.value*1.16,2, [',', "'", '.'])}} / {{
+											utilidad(pres)+'%'}}</label></td>
+									<td><label>{{currency(pres.precioCliente.value*pres.cantidad,2,
+											[',', "'", '.'])}}</label></td>
+									<td><input type="checkbox" ng-model="pres.subtotalConIVA" /></td>
+									<td><label ng-show="pres.subtotalConIVA">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2,
+											[',', "'", '.'])}}</label></td>
 									<td><input type="checkbox" ng-model="pres.autorizado" /></td>
-									
-										<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
+
+									<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
 								</tr>
 							</tbody>
 						</table>
@@ -448,29 +487,33 @@
 			<hr>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="table-responsive" >
+					<div class="table-responsive">
 						<button class="btn btn-small btn-primary" ng-click="addCot()">
 							<i class="fa fa-plus"></i>
 						</button>
 						<table class="letraChica table table-striped table-bordered">
 							<thead>
-								<tr><th></th>
-									<th ng-repeat="prove in listcotizaciones.proveedores"><input id="proveedor{{$index}}" type="text" ng-model="prove"/></th>
+								<tr>
+									<th></th>
+									<th ng-repeat="prove in listcotizaciones.proveedores"><input
+										id="proveedor{{$index}}" type="text" ng-model="prove" /></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="cot in listcotizaciones.costos">
-								<td>{{cot.concepto}}</td>
-									<td ng-repeat="costo in cot.costos"><input type="text" ng-model="costo.precio"> <input type="radio" name="{{cot.concepto}}"
+									<td>{{cot.concepto}}</td>
+									<td ng-repeat="costo in cot.costos"><input type="text"
+										ng-model="costo.precio"> <input type="radio"
+										name="{{cot.concepto}}"
 										ng-click="setPrecio(costo.precio,cot.concepto)"></td>
-<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
+									<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
-<!-- 								<tr> -->
-<!-- 									<td><input type="text" ng-model="newCot.precio"></td> -->
-<!-- 									<td><input type="text" ng-model="newCot.tiempo"></td> -->
-<!-- 									<td><input type="radio" name="optradio" -->
-<!-- 										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td> -->
-<!-- 								</tr> -->
+								<!-- 								<tr> -->
+								<!-- 									<td><input type="text" ng-model="newCot.precio"></td> -->
+								<!-- 									<td><input type="text" ng-model="newCot.tiempo"></td> -->
+								<!-- 									<td><input type="radio" name="optradio" -->
+								<!-- 										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td> -->
+								<!-- 								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -488,14 +531,16 @@
 				<div class="col-md-9">
 					<div class="checkbox">
 						<label><input type="checkbox"
-							ng-model="servicio.servicio.cobranza.facturado">Facturado</label>
+							ng-model="servicio.servicio.cobranza.facturado"
+							ng-click="servicio.servicio.cobranza.numeroFactura=''">Facturado</label>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="pwd">N&uacute;mero
 							Factura</label>
 						<div>
 							<input type="text"
-								ng-model="servicio.servicio.cobranza.numeroFactura">
+								ng-model="servicio.servicio.cobranza.numeroFactura"
+								ng-disabled="servicio.servicio.cobranza.facturado">
 						</div>
 					</div>
 					<div class="form-group">
@@ -555,7 +600,9 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<textarea class="form-control ng-pristine ng-valid ng-empty ng-touched" style="font-size:9px" rows="3" ng-model="pago.detalle"></textarea>
+						<textarea
+							class="form-control ng-pristine ng-valid ng-empty ng-touched"
+							style="font-size: 9px" rows="3" ng-model="pago.detalle"></textarea>
 					</div>
 				</div>
 			</div>
@@ -592,7 +639,7 @@
 					<br>Fecha del evento
 					<div class="col-md-12">
 						<input class="form-control" type="datetime-local"
-							ng-model="evento.fecha"> 
+							ng-model="evento.fecha">
 					</div>
 
 					<br> Responsable
@@ -694,7 +741,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row">
-						<!-- 
+							<!-- 
 							<div class="col-md-6">
 								<a class="btn btn-primary" target="_blank"
 									href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}">
@@ -708,12 +755,13 @@
 								</a>
 							</div>
 							-->
-							 <form method="POST" action="/reporte/presupuestoPDF.pdf">
+							<form method="POST" action="/reporte/presupuestoPDF.pdf">
 								<div class="col-md-4">
 									<button class="btn btn-primary" target="_blank" type="submit">
 										<i class="fa fa-print"></i>Presupuesto
 									</button>
-									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+									<input type="hidden" name="id"
+										value="{{servicio.servicio.idServicio}}">
 								</div>
 							</form>
 							<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
@@ -721,17 +769,19 @@
 									<button class="btn btn-primary" target="_blank" type="submit">
 										<i class="fa fa-print"></i>Cotizaci&oacute;n
 									</button>
-									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+									<input type="hidden" name="id"
+										value="{{servicio.servicio.idServicio}}">
 								</div>
-							</form> 
+							</form>
 							<form method="POST" action="/reporte/presupuestoPDFInterno.pdf">
 								<div class="col-md-4">
 									<button class="btn btn-primary" target="_blank" type="submit">
 										<i class="fa fa-print"></i>Interno
 									</button>
-									<input type="hidden" name = "id" value="{{servicio.servicio.idServicio}}">
+									<input type="hidden" name="id"
+										value="{{servicio.servicio.idServicio}}">
 								</div>
-							</form> 
+							</form>
 						</div>
 					</div>
 				</div>
