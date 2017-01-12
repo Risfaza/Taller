@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.tikal.tallerWeb.data.access.CotizacionDAO;
 import com.tikal.tallerWeb.modelo.entity.CotizacionEntity;
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 
 public class CotizacionDAOImp implements CotizacionDAO {
 
@@ -35,12 +36,12 @@ public class CotizacionDAOImp implements CotizacionDAO {
 	}
 
 	@Override
-	public List<CotizacionEntity> consultarFull(String tipo, int modelo, List<String> conceptos) {
+	public List<CotizacionEntity> consultarFull(String tipo, int modelo, List<String> conceptos,Long idServicio) {
 		int modeloi = modelo - 2;
 		int modelof = modelo + 2;
 		List<CotizacionEntity> lista= new ArrayList<CotizacionEntity>();
 		for(String concepto:conceptos){
-		lista.addAll(ofy().load().type(CotizacionEntity.class).filter("tipo", tipo).filter("concepto",concepto)
+		lista.addAll(ofy().load().type(CotizacionEntity.class).ancestor(ofy().load().type(ServicioEntity.class).id(idServicio)).filter("tipo", tipo).filter("concepto",concepto)
 				.filter("modelo <=", modelof).filter("modelo >=", modeloi).list());
 		}
 		return lista;

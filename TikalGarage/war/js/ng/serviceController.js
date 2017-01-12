@@ -143,22 +143,23 @@ app.controller("serviceController", [
 					}
 				},
 			}
-			eventoService.getServicio($routeParams.id).then(function(data) {
-				$scope.servicio.servicio = data.servicio.servicio;
-				if($scope.servicio.servicio.datosAuto.combustible){
-					var com=$scope.servicio.servicio.datosAuto.combustible;
-					com = parseInt(com); 
-					$scope.servicio.servicio.datosAuto.combustible=com;
-				}
-				$scope.servicio.auto = data.servicio.auto;
-				$scope.servicio.cliente = data.servicio.cliente;
-				$scope.servicio.gruposCosto = data.presupuesto;
-				$rootScope.actual=$scope.servicio;
-				$rootScope.detallesView=true;
-				console.log($rootScope.actual);
-				$scope.cotizaciones();
+			$scope.cargarServicio=function(){
+				eventoService.getServicio($routeParams.id).then(function(data) {
+					$scope.servicio.servicio = data.servicio.servicio;
+					if($scope.servicio.servicio.datosAuto.combustible){
+						var com=$scope.servicio.servicio.datosAuto.combustible;
+						com = parseInt(com); 
+						$scope.servicio.servicio.datosAuto.combustible=com;
+					}
+					$scope.servicio.auto = data.servicio.auto;
+					$scope.servicio.cliente = data.servicio.cliente;
+					$scope.servicio.gruposCosto = data.presupuesto;
+					$rootScope.actual=$scope.servicio;
+					$rootScope.detallesView=true;
+					console.log($rootScope.actual);
+					$scope.cotizaciones();
 			});
-
+			}
 			$scope.showTab = function(id) {
 				$scope.ids.forEach(function(i) {
 					// console.log(i);
@@ -239,11 +240,13 @@ app.controller("serviceController", [
 //				lista.push(nc)
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
 				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+					
+					$scope.cargarServicio();
 					$scope.cotizaciones();
 				}, function(response) {
 				})
 			}
-			
+			$scope.cargarServicio();
 			$scope.guardar2 = function() {
 				var send = {
 					servicio : $scope.servicio,
@@ -555,6 +558,17 @@ app.controller("serviceController", [
 			
 			$scope.seleccionarTodoIVA=function(grupo){
 				console.log(grupo);
+			}
+			
+			$scope.seleccionarTodoIVASub=function(gru){
+				for(var i = 0; i<gru.presupuestos.length;i++){
+					gru.presupuestos[i].subtotalConIVA=gru.ivaSubTodos;
+				}
+			}
+			$scope.seleccionarTodoAutorizado=function(gru){
+				for(var i = 0; i<gru.presupuestos.length;i++){
+					gru.presupuestos[i].autorizado=gru.autoTodos;
+				}
 			}
 //			listcotizaciones.proveedores
 			

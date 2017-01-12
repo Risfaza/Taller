@@ -11,6 +11,7 @@ public class CotizacionVO {
 	private String modelo;
 	private List<String> proveedores;
 	private List<PiezaCotizacionVO> costos;
+	private String idServicio;
 	
 	
 	public CotizacionVO(){
@@ -56,6 +57,14 @@ public class CotizacionVO {
 
 	public void setProveedores(List<String> proveedores) {
 		this.proveedores = proveedores;
+	}
+
+	public String getIdServicio() {
+		return idServicio;
+	}
+
+	public void setIdServicio(String idServicio) {
+		this.idServicio = idServicio;
 	}
 	
 	

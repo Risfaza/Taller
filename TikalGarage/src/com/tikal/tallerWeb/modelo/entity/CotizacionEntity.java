@@ -1,11 +1,16 @@
 package com.tikal.tallerWeb.modelo.entity;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 public class CotizacionEntity {
+	
+	@Parent
+	Key<ServicioEntity> servicio;
 	@Id private Long id;
 	@Index private String tipo;
 	@Index private int modelo;
@@ -15,7 +20,12 @@ public class CotizacionEntity {
 	String tiempo;
 	
 	
-	
+	public Key<ServicioEntity> getServicio() {
+		return servicio;
+	}
+	public void setServicio(Key<ServicioEntity> servicio) {
+		this.servicio = servicio;
+	}
 	public String getPrecio() {
 		return precio;
 	}

@@ -11,6 +11,7 @@ import technology.tikal.taller.automotriz.model.auto.Equipamiento;
 public class AutoEntity{
 	@Id public Long idAuto;
 	@Index String numeroSerie;
+	String numeroEconomico;
 	String color;
 	Equipamiento equipamiento;
 	String marca;
@@ -19,6 +20,16 @@ public class AutoEntity{
 	String tipo;
 	String version;
 	
+	
+	
+	public String getNumeroEconomico() {
+		return numeroEconomico;
+	}
+
+	public void setNumeroEconomico(String numeroEconomico) {
+		this.numeroEconomico = numeroEconomico;
+	}
+
 	public String getNumeroSerie() {
 		return numeroSerie;
 	}

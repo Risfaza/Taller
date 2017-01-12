@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.googlecode.objectify.Key;
 import com.tikal.tallerWeb.control.restControllers.VO.CotizacionVO;
 import com.tikal.tallerWeb.control.restControllers.VO.DatosServicioVO;
 import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.control.restControllers.VO.PiezaCotizacionVO;
 import com.tikal.tallerWeb.data.access.CotizacionDAO;
+import com.tikal.tallerWeb.data.access.ServicioDAO;
 import com.tikal.tallerWeb.modelo.entity.CotizacionEntity;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
@@ -31,6 +34,8 @@ public class CotizacionController {
 
 	@Autowired
 	CotizacionDAO cotizaciondao;
+	@Autowired	
+	ServicioDAO servdao;
 
 	@RequestMapping(value = { "/get" }, method = RequestMethod.GET, produces = "Application/Json")
 	public void get(HttpServletRequest request, HttpServletResponse response)
@@ -49,6 +54,7 @@ public class CotizacionController {
 		String cadena = request.getParameter("cadena");
 		String tipo = request.getParameter("tipo");
 		String anio = request.getParameter("modelo");
+		Long idServicio = Long.parseLong(request.getParameter("idServicio"));
 		DatosServicioVO grupos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
 
 		List<String> cotizar = new ArrayList<String>();
@@ -59,7 +65,7 @@ public class CotizacionController {
 				}
 			}
 		}
-		List<CotizacionEntity> cots = cotizaciondao.consultarFull(tipo, Integer.parseInt(anio), cotizar);
+		List<CotizacionEntity> cots = cotizaciondao.consultarFull(tipo, Integer.parseInt(anio), cotizar,idServicio);
 		Map<String, List<CotizacionEntity>> mapa = new HashMap<String, List<CotizacionEntity>>();
 		List<String> proveedores = new ArrayList<String>();
 		for (CotizacionEntity cot : cots) {
@@ -122,6 +128,7 @@ public class CotizacionController {
 		// }
 		// }
 		// cotizaciondao.guarda(guardar);
+		ServicioEntity servicio=servdao.cargar(Long.parseLong(lista.getIdServicio()));
 		List<PiezaCotizacionVO> costos = lista.getCostos();
 		for (PiezaCotizacionVO pieza : costos) {
 			String concepto = pieza.getConcepto();
@@ -134,6 +141,7 @@ public class CotizacionController {
 					cot.setModelo(Integer.parseInt(lista.getModelo()));
 					cot.setTipo(lista.getTipo());
 				}
+				cot.setServicio(Key.create(servicio));
 				guardar.add(cot);
 			}
 		}
