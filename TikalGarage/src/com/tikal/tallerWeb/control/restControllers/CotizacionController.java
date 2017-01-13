@@ -34,7 +34,7 @@ public class CotizacionController {
 
 	@Autowired
 	CotizacionDAO cotizaciondao;
-	@Autowired	
+	@Autowired
 	ServicioDAO servdao;
 
 	@RequestMapping(value = { "/get" }, method = RequestMethod.GET, produces = "Application/Json")
@@ -55,20 +55,45 @@ public class CotizacionController {
 		String tipo = request.getParameter("tipo");
 		String anio = request.getParameter("modelo");
 		Long idServicio = Long.parseLong(request.getParameter("idServicio"));
-		DatosServicioVO grupos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
 
-		List<String> cotizar = new ArrayList<String>();
-		for (GruposCosto g : grupos.getPresupuesto()) {
+		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
+		List<String> todos = new ArrayList<String>();
+
+		DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
+		for (GruposCosto g : datos.getPresupuesto()) {
 			for (PresupuestoEntity p : g.getPresupuestos()) {
 				if (p.getSubtipo().compareToIgnoreCase("RE") == 0 || p.getSubtipo().compareToIgnoreCase("IN") == 0) {
-					cotizar.add(p.getConcepto());
+					todos.add(p.getConcepto());
 				}
 			}
 		}
-		List<CotizacionEntity> cots = cotizaciondao.consultarFull(tipo, Integer.parseInt(anio), cotizar,idServicio);
+
+		boolean completa = Boolean.parseBoolean(request.getParameter("full"));
+		if (!completa) {
+			PresupuestoEntity grupos = (PresupuestoEntity) JsonConvertidor.fromJson(cadena, PresupuestoEntity.class);
+			List<String> cotizar = new ArrayList<String>();
+
+			cotizar.add(grupos.getConcepto());
+			// for (GruposCosto g : grupos.getPresupuesto()) {
+			// for (PresupuestoEntity p : g.getPresupuestos()) {
+			// if (p.getSubtipo().compareToIgnoreCase("RE") == 0 ||
+			// p.getSubtipo().compareToIgnoreCase("IN") == 0) {
+			// cotizar.add(p.getConcepto());
+			// }
+			// }
+			// }
+			List<CotizacionEntity> cots = cotizaciondao.consultarFull(tipo, Integer.parseInt(anio), cotizar);
+			for (int i = 0; i < guardados.size(); i++) {
+				CotizacionEntity cot = guardados.get(i);
+				if (cot.getConcepto().compareTo(grupos.getConcepto()) == 0) {
+					guardados.set(i, cots.get(0));
+					break;
+				}
+			}
+		}
 		Map<String, List<CotizacionEntity>> mapa = new HashMap<String, List<CotizacionEntity>>();
 		List<String> proveedores = new ArrayList<String>();
-		for (CotizacionEntity cot : cots) {
+		for (CotizacionEntity cot : guardados) {
 			if (mapa.containsKey(cot.getProveedor())) {
 				mapa.get(cot.getProveedor()).add(cot);
 
@@ -86,9 +111,9 @@ public class CotizacionController {
 		// }
 
 		List<PiezaCotizacionVO> lista = new ArrayList<PiezaCotizacionVO>();
-		for (int j = 0; j < cotizar.size(); j++) {
+		for (int j = 0; j < todos.size(); j++) {
 			PiezaCotizacionVO pcvo = new PiezaCotizacionVO();
-			pcvo.setConcepto(cotizar.get(j));
+			pcvo.setConcepto(todos.get(j));
 
 			for (int i = 0; i < proveedores.size(); i++) {
 				boolean nohay = true;
@@ -128,7 +153,7 @@ public class CotizacionController {
 		// }
 		// }
 		// cotizaciondao.guarda(guardar);
-		ServicioEntity servicio=servdao.cargar(Long.parseLong(lista.getIdServicio()));
+		Key<ServicioEntity> servicio = servdao.getKey(Long.parseLong(lista.getIdServicio()));
 		List<PiezaCotizacionVO> costos = lista.getCostos();
 		for (PiezaCotizacionVO pieza : costos) {
 			String concepto = pieza.getConcepto();
@@ -140,8 +165,11 @@ public class CotizacionController {
 					cot.setConcepto(concepto);
 					cot.setModelo(Integer.parseInt(lista.getModelo()));
 					cot.setTipo(lista.getTipo());
+					cot.setServicio(servicio);
 				}
-				cot.setServicio(Key.create(servicio));
+				if(cot.getServicio()==null){
+					cot.setServicio(servicio);
+				}
 				guardar.add(cot);
 			}
 		}

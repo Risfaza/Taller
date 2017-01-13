@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.googlecode.objectify.Key;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.Callback;
 
@@ -51,4 +52,6 @@ public interface ServicioDAO {
     List<ServicioIndex> getIndiceServiciosPorStatus(String status);
     
     List<ServicioIndex> getServiciosHoy();
+    
+	public Key<ServicioEntity> getKey(Long id);
 }

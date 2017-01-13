@@ -486,6 +486,7 @@
 			</div>
 			<hr>
 			<div class="row">
+			{{listcotizaciones.costos}}
 				<div class="col-md-12">
 					<div class="table-responsive">
 						<button class="btn btn-small btn-primary" ng-click="addCot()">
@@ -503,9 +504,10 @@
 								<tr ng-repeat="cot in listcotizaciones.costos">
 									<td>{{cot.concepto}}</td>
 									<td ng-repeat="costo in cot.costos"><input type="text"
-										ng-model="costo.precio"> <input type="radio"
+										ng-model="costo.precio"> <input type="checkbox"
 										name="{{cot.concepto}}"
-										ng-click="setPrecio(costo.precio,cot.concepto)"></td>
+										ng-model="costo.selected"
+										ng-click="setPrecio(costo.precio,cot.concepto,costo)"></td>
 									<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
 								<!-- 								<tr> -->

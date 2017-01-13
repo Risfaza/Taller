@@ -36,14 +36,22 @@ public class CotizacionDAOImp implements CotizacionDAO {
 	}
 
 	@Override
-	public List<CotizacionEntity> consultarFull(String tipo, int modelo, List<String> conceptos,Long idServicio) {
+	public List<CotizacionEntity> consultarFull(String tipo, int modelo, List<String> conceptos) {
 		int modeloi = modelo - 2;
 		int modelof = modelo + 2;
 		List<CotizacionEntity> lista= new ArrayList<CotizacionEntity>();
 		for(String concepto:conceptos){
-		lista.addAll(ofy().load().type(CotizacionEntity.class).ancestor(ofy().load().type(ServicioEntity.class).id(idServicio)).filter("tipo", tipo).filter("concepto",concepto)
+		lista.addAll(ofy().load().type(CotizacionEntity.class).filter("tipo", tipo).filter("concepto",concepto)
 				.filter("modelo <=", modelof).filter("modelo >=", modeloi).list());
 		}
+		return lista;
+	}
+
+	@Override
+	public List<CotizacionEntity> consultar(Long idServicio) {
+		List<CotizacionEntity> lista= new ArrayList<CotizacionEntity>();
+		ServicioEntity servicio=ofy().load().type(ServicioEntity.class).id(idServicio).now();
+		lista.addAll(ofy().load().type(CotizacionEntity.class).ancestor(servicio).list());
 		return lista;
 	}
 

@@ -312,13 +312,16 @@ public class ServicioControl {
 		List<PresupuestoEntity> presupuesto = new ArrayList<PresupuestoEntity>();
 		if (lista != null) {
 			for (GruposCosto gru : lista) {
+				int indice=0;
 				for (PresupuestoEntity pre : gru.getPresupuestos()) {
+					pre.setIndice(indice);
 					pre.setGrupo(gru.getNombre());
 					pre.getPrecioCotizado()
 							.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
 //					pre.setAutorizado(false);
 					pre.setId(data.getServicio().getServicio().getIdServicio());
 					presupuesto.add(pre);
+					indice++;
 				}
 			}
 		}

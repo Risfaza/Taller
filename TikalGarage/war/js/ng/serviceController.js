@@ -156,7 +156,7 @@ app.controller("serviceController", [
 					$scope.servicio.gruposCosto = data.presupuesto;
 					$rootScope.actual=$scope.servicio;
 					$rootScope.detallesView=true;
-					console.log($rootScope.actual);
+					console.log($scope.servicio);
 					$scope.cotizaciones();
 			});
 			}
@@ -239,7 +239,7 @@ app.controller("serviceController", [
 //				var nc=$scope.newCot;
 //				lista.push(nc)
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
-				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+				$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					
 					$scope.cargarServicio();
 					$scope.cotizaciones();
@@ -369,6 +369,11 @@ app.controller("serviceController", [
 				$scope.modals = modalService.aver(modal);
 			}
 			$scope.addPresupuesto = function(gru,tipo) {
+
+				for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+					var bla = $('#proveedor'+i).val();
+					$scope.listcotizaciones.proveedores[i]=bla+"";
+				}
 				if (!gru.presupuestos) {
 					gru.presupuestos = [];
 				}
@@ -379,7 +384,14 @@ app.controller("serviceController", [
 					concepto : "",
 					precioUnitario:{value:""}
 				});
-				$scope.cotizaciones();
+				var lista=$scope.listcotizaciones;
+				$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+					
+//					$scope.cargarServicio();
+					$scope.cotizaciones();
+				}, function(response) {
+				})
+//				$scope.cotizaciones();
 			}
 			$scope.filtro = {
 				tipo : "HP"
@@ -419,7 +431,7 @@ app.controller("serviceController", [
 				console.log($scope.listcotizaciones);
 			}
 			$scope.newCot = {selected:false};
-			$scope.setPrecio = function(precio,concepto) {
+			$scope.setPrecio = function(precio,concepto,cotizacion) {
 				var encontrado=false;
 				for(var i =0; i< $scope.servicio.gruposCosto.length;i++){
 					for(var j=0; j<$scope.servicio.gruposCosto[i].presupuestos.length;j++){
@@ -438,6 +450,16 @@ app.controller("serviceController", [
 						break;
 					}
 				}
+				
+				for(var i= 0; i<$scope.listcotizaciones.costos.length;i++){
+					if($scope.listcotizaciones.costos[i].concepto==concepto){
+						for(var j = 0;j<$scope.listcotizaciones.costos[i].costos.length;j++){
+							$scope.listcotizaciones.costos[i].costos[j].selected=false;
+						}
+						break;
+					}
+				}
+				cotizacion.selected=true;
 //				$scope.cotizando.precioUnitario.value = precio;
 			}
 			$scope.listcotizaciones=[];
@@ -472,23 +494,32 @@ app.controller("serviceController", [
 //				console.log($scope.servicio.servicio);
 			}
 			
-			$scope.cotizaciones = function() {
-				$http.get('/cotizacion/getFull',{params:{
+			$scope.cotizaciones = function(pre) {
+				var send={params:{
+					
+					full:true,
 					tipo : $scope.servicio.auto.tipo,
 					modelo : $scope.servicio.auto.modelo,
+					idServicio:$scope.servicio.servicio.idServicio,
 					cadena:{presupuesto:$scope.servicio.gruposCosto}
-				}}).success(function(response){
-					$scope.listcotizaciones=response;
-					$scope.proveedores2= response.proveedores;
-				}).error(function(response){
-					console.log(response);
-				});
+				}}				
+				if(pre){
+					send.params.presupuesto=pre;
+					send.params.full=false;
+				}
+					$http.get('/cotizacion/getFull',send).success(function(response){
+						$scope.listcotizaciones=response;
+						$scope.proveedores2= response.proveedores;
+					}).error(function(response){
+						console.log(response);
+					});
+				
 			}
 			
 			$scope.conceptoChg= function(pre){
 				if(pre.concepto){
 					if(pre.subtipo== "RE" || pre.subtipo=="IN" || pre.subtipo =="SE"){
-						$scope.cotizaciones();
+						$scope.cotizaciones(pre);
 					}
 				}
 			}

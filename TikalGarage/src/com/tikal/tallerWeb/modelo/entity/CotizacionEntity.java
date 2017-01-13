@@ -1,5 +1,7 @@
 package com.tikal.tallerWeb.modelo.entity;
 
+import java.util.Date;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -16,6 +18,20 @@ public class CotizacionEntity {
 	@Index private int modelo;
 	@Index private String proveedor;
 	@Index private String concepto;
+	@Index private int indice;
+	@Index private Date fecha;
+	private boolean selected;
+	
+	public CotizacionEntity(){
+		fecha = new Date();
+	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 	String precio;
 	String tiempo;
 	
@@ -89,6 +105,20 @@ public class CotizacionEntity {
 			return false;
 		}
 		return true;
+	}
+	public int getIndice() {
+		return indice;
+	}
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 }

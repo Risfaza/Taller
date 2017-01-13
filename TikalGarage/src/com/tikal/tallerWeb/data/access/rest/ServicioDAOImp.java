@@ -21,12 +21,14 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
@@ -205,6 +207,22 @@ public class ServicioDAOImp implements ServicioDAO {
 	public List<ServicioIndex> getServiciosHoy() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Key<ServicioEntity> getKey(Long id){
+		ServicioEntity servicio= this.cargar(id);
+		Map<Key<Object>,Object> claves=(Map<Key<Object>, Object>) ObjectifyService.ofy().load().type(ServicioEntity.class).;
+		Iterator it = claves.entrySet().iterator();
+		 
+	    while (it.hasNext()) {
+	        Map.Entry e = (Map.Entry)it.next();
+	        ServicioEntity valor=(ServicioEntity) e.getValue();
+	        if(servicio.getIdServicio()==valor.getIdServicio()){
+	        	Key<ServicioEntity> clave= (Key<ServicioEntity>) e.getKey();
+	        	return clave;
+	        }
+	   }
+	    return Key.create(servicio);
 	}
 
 }
