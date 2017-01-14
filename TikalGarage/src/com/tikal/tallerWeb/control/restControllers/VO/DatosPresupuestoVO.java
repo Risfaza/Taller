@@ -33,9 +33,44 @@ public class DatosPresupuestoVO {
 	
 	//Atributo para imprimir costos
 	private boolean conCosto;
-
+	
+	//Atributo para imprimir las firmas
+	private boolean conFirmas;
+	
+	//Atributo para incluir la tabla con imagenes
+	private boolean conImagenes;
+	
+	//Atributo para las firmas sencillas;
+	private boolean conFirmasSencillas;
 	
 	
+	public boolean isConFirmasSencillas() {
+		return conFirmasSencillas;
+	}
+	public void setConFirmasSencillas(boolean conFirmasSencillas) {
+		this.conFirmasSencillas = conFirmasSencillas;
+	}
+	//Atributo para incluir el diagnostico
+	private boolean conDiagnostico;
+		
+	public boolean isConDiagnostico() {
+		return conDiagnostico;
+	}
+	public void setConDiagnostico(boolean conDiagnostico) {
+		this.conDiagnostico = conDiagnostico;
+	}
+	public boolean isConImagenes() {
+		return conImagenes;
+	}
+	public void setConImagenes(boolean conImagenes) {
+		this.conImagenes = conImagenes;
+	}
+	public boolean isConFirmas() {
+		return conFirmas;
+	}
+	public void setConFirmas(boolean conFirmas) {
+		this.conFirmas = conFirmas;
+	}
 	public String getNombre() {
 		return nombre;
 	}

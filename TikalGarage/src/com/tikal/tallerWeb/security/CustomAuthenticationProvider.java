@@ -34,9 +34,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
               throw new BadCredentialsException("Wrong password.");
           }
    
+          user.resetPassword();
           Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-   
-          return new UsernamePasswordAuthenticationToken(user, password, authorities);
+          return new UsernamePasswordAuthenticationToken(user, "", authorities);
   }
 
   public boolean supports(Class<?> arg0) {

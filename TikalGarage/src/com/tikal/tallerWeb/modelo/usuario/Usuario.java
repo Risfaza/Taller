@@ -33,6 +33,9 @@ public class Usuario implements UserDetails{
 	public String getPassword() {
 		return this.pass;
 	}
+	public void resetPassword(){
+		this.pass="";
+	}
 
 	@Override
 	public String getUsername() {

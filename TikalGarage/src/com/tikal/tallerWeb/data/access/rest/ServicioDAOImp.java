@@ -210,19 +210,7 @@ public class ServicioDAOImp implements ServicioDAO {
 	}
 	
 	public Key<ServicioEntity> getKey(Long id){
-		ServicioEntity servicio= this.cargar(id);
-		Map<Key<Object>,Object> claves=(Map<Key<Object>, Object>) ObjectifyService.ofy().load().type(ServicioEntity.class).;
-		Iterator it = claves.entrySet().iterator();
-		 
-	    while (it.hasNext()) {
-	        Map.Entry e = (Map.Entry)it.next();
-	        ServicioEntity valor=(ServicioEntity) e.getValue();
-	        if(servicio.getIdServicio()==valor.getIdServicio()){
-	        	Key<ServicioEntity> clave= (Key<ServicioEntity>) e.getKey();
-	        	return clave;
-	        }
-	   }
-	    return Key.create(servicio);
+		return Key.create(ServicioEntity.class,id);
 	}
 
 }

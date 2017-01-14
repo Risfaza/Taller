@@ -57,6 +57,15 @@ public class SearchController {
 		resp.getWriter().println(JsonConvertidor.toJson(vo));
 
 	}
+	
+	@RequestMapping(value = "/cliente/{busca}", method = RequestMethod.GET)
+	public void buscarCliente(HttpServletResponse resp, HttpServletRequest req, @PathVariable String busca)
+			throws IOException {
+		List<ClienteEntity> clientes = clientedao.buscarClientes(busca);
+		
+		resp.getWriter().println(JsonConvertidor.toJson(clientes));
+
+	}
 
 	@RequestMapping(value = "/filtra/{busca}/{tipo}", method = RequestMethod.GET)
 	public void buscarTipo(HttpServletResponse resp, HttpServletRequest req, @PathVariable String busca,

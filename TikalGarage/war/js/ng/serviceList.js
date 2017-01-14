@@ -30,6 +30,7 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 		$http.get("/search/general/"+$scope.busca).success(function(data){
 			$scope.encontrados=data.nombres;
 			$scope.tipos=data.tipos;
+			
 			$('#searchBox').typeahead({
 
 			    source: $scope.encontrados,
@@ -39,10 +40,12 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 
 			    	$http.get("/search/filtra/"+item+"/"+$scope.tipos[ind]).success(function(data){
 			    		$scope.listaServicios=data;
+			    		$scope.busca="";
 			    	});
 			        return item;
 			    }
 			});
+			$('#searchBox').data('typeahead').source=$scope.encontrados;
 		});
 	}
 	$scope.onSelect=function($item,$model,$label){

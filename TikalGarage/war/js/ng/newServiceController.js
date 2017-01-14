@@ -79,7 +79,27 @@ app
 								// f.getDay()+"-"+f.getMonth()+"-"+f.getFullYear()+"T"+f.getHours()+":"+f.getMinutes();
 							}
 							$scope.findCliente = function() {
-								// implementar servicio de búsqueda
+								if($scope.servicio.cliente.nombre.length>3){
+								$http.get("/search/cliente/"+$scope.servicio.cliente.nombre).success(function(data){
+									$scope.clientesEncontrados=data;
+									console.log(data);
+									$('#searchCliente').typeahead({
+
+									    source: $scope.clientesEncontrados,
+
+									    updater:function (item) {
+									    	var ind=$scope.clientesEncontrados.indexOf(item);
+
+									    	$http.get("/search/filtra/"+item+"/"+$scope.tipos[ind]).success(function(data){
+									    		$scope.listaServicios=data;
+									    		$scope.busca="";
+									    	});
+									        return item;
+									    }
+									});
+									$('#searchCliente').data('typeahead').source=$scope.clientesEncontrados;
+								});
+								}
 							}
 							$scope.mayusculas=function(value){
 								value=value.toUpperCase();

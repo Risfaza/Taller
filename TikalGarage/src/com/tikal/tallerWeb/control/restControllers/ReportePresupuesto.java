@@ -241,6 +241,9 @@ public class ReportePresupuesto {
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
 		datos.setConCosto(true);
+		datos.setConFirmas(false);
+		datos.setConImagenes(false);
+		datos.setConDiagnostico(true);
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
@@ -305,6 +308,8 @@ public class ReportePresupuesto {
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
 		datos.setConCosto(false);
+		datos.setConImagenes(true);
+		datos.setConFirmasSencillas(true);
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
@@ -380,6 +385,9 @@ public class ReportePresupuesto {
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
 		datos.setConCosto(false);
+		datos.setConDiagnostico(true);
+		datos.setConImagenes(false);
+		datos.setConFirmas(false);
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
@@ -407,6 +415,151 @@ public class ReportePresupuesto {
 			}
 		}
 		
+		datos.setListaImages(pathImagenes);
+		nuevo.setDatos(datos);
+		PdfWriter writer = PdfWriter.getInstance(nuevo.getDocument(), response.getOutputStream());
+		nuevo.getDocument().open();
+		nuevo.imprimirPresupuesto();
+		nuevo.getDocument().close();
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+	}
+	
+	@RequestMapping(value={"/presupuestoPDFAutorizadoFirmas"}, method = RequestMethod.POST,produces="application/pdf")
+	public void generaReporteAutorizadoFirmas(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+		
+		AsignadorDeCharset.asignar(request, response);
+		
+		response.setContentType("Application/Pdf");
+		String id = request.getParameter("id");
+		PdfMaker nuevo = new PdfMaker();
+		
+		NewServiceObject servicio = new NewServiceObject();
+		servicio.setServicio(servdao.cargar(Long.parseLong(id)));
+		servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
+		servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
+		List<GruposCosto> grupos = costodao.cargar(servicio.getServicio().getIdServicio());
+		for(GruposCosto gru:grupos){
+			List<PresupuestoEntity> news= new ArrayList<PresupuestoEntity>();
+			for(PresupuestoEntity pre:gru.getPresupuestos()){
+				if(pre.isAutorizado()){
+					news.add(pre);
+				}
+			}
+			gru.setPresupuestos(news);
+		}
+		
+		DatosServicioVO datosin = new DatosServicioVO();
+		datosin.setServicio(servicio);
+		datosin.setPresupuesto(grupos);
+		
+		NewServiceObject interfacin = datosin.getServicio();
+		List<GruposCosto> presupuestin = datosin.getPresupuesto();
+		AutoEntity auto = interfacin.getAuto();
+		ClienteEntity cliente = interfacin.getCliente();
+		ServicioEntity servicin = interfacin.getServicio();
+		
+		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
+				
+		DatosPresupuestoVO datos = new DatosPresupuestoVO();
+		datos.setConCosto(true);
+		datos.setConFirmas(true);
+		datos.setConImagenes(false);
+		datos.setConDiagnostico(true);
+		datos.setNombre(cliente.getNombre());
+		datos.setDireccion(domicilio);
+		datos.setEmail(cliente.getEmail());
+		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
+		datos.setAsesor("S/D");
+		datos.setMarca(auto.getMarca());
+		datos.setTipo(auto.getTipo());
+		datos.setModelo(auto.getModelo());
+		datos.setColor(auto.getColor());
+		datos.setPlacas(auto.getPlacas());
+		datos.setKilometros(servicin.getDatosAuto().getKilometraje());
+		datos.setSerie(auto.getNumeroSerie());
+		datos.setServicio(servicin.getDescripcion());
+		datos.setNivelCombustible(servicin.getDatosAuto().getCombustible());
+		datos.setObservaciones("Sin Obervaciones");
+		datos.setListaServicios(presupuestin);
+	
+		List<EventoEntity> eventin = bitacorin.cargar(Long.parseLong(id));
+		List<String> pathImagenes= new ArrayList<String>();
+		for(EventoEntity evento:eventin){
+			for(Evidencia ev:evento.getEvidencia()){
+				if(ev.isAppended(true)){
+					pathImagenes.add(ev.getImage());
+				}
+			}
+		}
+		
+		datos.setListaImages(pathImagenes);
+		nuevo.setDatos(datos);
+		PdfWriter writer = PdfWriter.getInstance(nuevo.getDocument(), response.getOutputStream());
+		nuevo.getDocument().open();
+		nuevo.imprimirPresupuesto();
+		nuevo.getDocument().close();
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+	}
+	
+	@RequestMapping(value={"/presupuestoPDFSoloDatos"}, method = RequestMethod.POST, produces="application/pdf")
+	public void generaReporteSoloDatos(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+		AsignadorDeCharset.asignar(request, response);
+		
+		response.setContentType("Application/Pdf");
+		String id = request.getParameter("id");
+
+		PdfMaker nuevo = new PdfMaker();
+		NewServiceObject servicio = new NewServiceObject();
+		servicio.setServicio(servdao.cargar(Long.parseLong(id)));
+		servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
+		servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
+		List<GruposCosto> grupos = costodao.cargar(servicio.getServicio().getIdServicio());
+		DatosServicioVO datosin = new DatosServicioVO();
+		datosin.setServicio(servicio);
+		datosin.setPresupuesto(grupos);
+		
+		NewServiceObject interfacin = datosin.getServicio();
+		List<GruposCosto> presupuestin = datosin.getPresupuesto();
+		AutoEntity auto = interfacin.getAuto();
+		ClienteEntity cliente = interfacin.getCliente();
+		ServicioEntity servicin = interfacin.getServicio();
+		
+		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
+				
+		DatosPresupuestoVO datos = new DatosPresupuestoVO();
+		datos.setConCosto(false);
+		datos.setConFirmas(false);
+		datos.setConImagenes(false);
+		datos.setConDiagnostico(false);
+		datos.setConFirmasSencillas(true);
+		datos.setNombre(cliente.getNombre());
+		datos.setDireccion(domicilio);
+		datos.setEmail(cliente.getEmail());
+		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
+		datos.setAsesor("S/D");
+		datos.setMarca(auto.getMarca());
+		datos.setTipo(auto.getTipo());
+		datos.setModelo(auto.getModelo());
+		datos.setColor(auto.getColor());
+		datos.setPlacas(auto.getPlacas());
+		datos.setKilometros(servicin.getDatosAuto().getKilometraje());
+		datos.setSerie(auto.getNumeroSerie());
+		datos.setServicio(servicin.getDescripcion());
+		datos.setNivelCombustible(servicin.getDatosAuto().getCombustible());
+		datos.setObservaciones("Sin Obervaciones");
+		datos.setListaServicios(presupuestin);
+	
+		List<EventoEntity> eventin = bitacorin.cargar(Long.parseLong(id));
+		List<String> pathImagenes= new ArrayList<String>();
+		for(EventoEntity evento:eventin){
+			for(Evidencia ev:evento.getEvidencia()){
+				if(ev.isAppended(true)){
+					pathImagenes.add(ev.getImage());
+				}
+			}
+		}
 		datos.setListaImages(pathImagenes);
 		nuevo.setDatos(datos);
 		PdfWriter writer = PdfWriter.getInstance(nuevo.getDocument(), response.getOutputStream());
