@@ -42,10 +42,9 @@ public class CostoDAOImp implements CostoDAO {
     
     @Override
     public List<GruposCosto> cargar(Long idServicio) {
-    	List<PresupuestoEntity> lista= ofy().load().type(PresupuestoEntity.class).list();
+    	List<PresupuestoEntity> lista= ofy().load().type(PresupuestoEntity.class).order("indice").list();
     	Map<String,List<PresupuestoEntity>> mapa= new HashMap<String,List<PresupuestoEntity>>();
     	
-    	List<GruposCosto> res= new ArrayList<GruposCosto>();
     	for(PresupuestoEntity p: lista){
     		if(p.getId()==null){
     			ofy().delete().entity(p).now();
