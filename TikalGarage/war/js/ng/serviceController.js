@@ -235,7 +235,7 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
-				console.log(lista.proveedores);
+//				console.log(lista.proveedores);
 //				var nc=$scope.newCot;
 //				lista.push(nc)
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
@@ -382,7 +382,8 @@ app.controller("serviceController", [
 					tipo : tipo,
 					id : $routeParams.id,
 					concepto : "",
-					precioUnitario:{value:""}
+					precioUnitario:{value:""},
+					precioUnitarioConIVA:true
 				});
 				var lista=$scope.listcotizaciones;
 				$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
@@ -506,6 +507,7 @@ app.controller("serviceController", [
 				if(pre){
 					send.params.presupuesto=pre;
 					send.params.full=false;
+					send.params.cadena=pre;
 				}
 					$http.get('/cotizacion/getFull',send).success(function(response){
 						$scope.listcotizaciones=response;
@@ -519,7 +521,10 @@ app.controller("serviceController", [
 			$scope.conceptoChg= function(pre){
 				if(pre.concepto){
 					if(pre.subtipo== "RE" || pre.subtipo=="IN" || pre.subtipo =="SE"){
-						$scope.cotizaciones(pre);
+						var lista=$scope.listcotizaciones;
+						$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+							$scope.cotizaciones(pre);
+						});
 					}
 				}
 			}
@@ -532,7 +537,7 @@ app.controller("serviceController", [
 			}
 			
 			$scope.imprimir=function(){
-				$scope.guardar2();
+				$scope.guardar();
 				$scope.modals=modalService.aver('modalImprimir');
 			}
 			

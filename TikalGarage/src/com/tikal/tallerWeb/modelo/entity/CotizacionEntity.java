@@ -11,8 +11,6 @@ import com.googlecode.objectify.annotation.Parent;
 @Entity
 public class CotizacionEntity {
 	
-	@Parent
-	Key<ServicioEntity> servicio;
 	@Id private Long id;
 	@Index private String tipo;
 	@Index private int modelo;
@@ -20,6 +18,7 @@ public class CotizacionEntity {
 	@Index private String concepto;
 	@Index private int indice;
 	@Index private Date fecha;
+	@Index private Long servicio;
 	private boolean selected;
 	
 	public CotizacionEntity(){
@@ -36,10 +35,10 @@ public class CotizacionEntity {
 	String tiempo;
 	
 	
-	public Key<ServicioEntity> getServicio() {
+	public Long getServicio() {
 		return servicio;
 	}
-	public void setServicio(Key<ServicioEntity> servicio) {
+	public void setServicio(Long servicio) {
 		this.servicio = servicio;
 	}
 	public String getPrecio() {

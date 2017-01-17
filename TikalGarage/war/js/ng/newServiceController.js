@@ -44,11 +44,12 @@ app
 								$http.post('/servicio/add', send)
 										.then(function(response) {
 											alert("Servicio Guardado");
+											if(!$rootScope.serviciosHoy){
+												$rootScope.serviciosHoy=[]
+											}
 											$rootScope.serviciosHoy.push(response.data);
 											$location.path("servicio/view/"+response.data.servicio.idServicio);
-											console.log(response);
 										}, function(response) {
-											console.log(response);
 											alert("Something went wrong");
 										})
 							}

@@ -14,6 +14,7 @@ public class PresupuestoEntity extends RegistroCosto {
 	@Index private int indice;
 	
 	public PresupuestoEntity(){
+		this.setPrecioUnitarioConIVA(true);
 		this.setAutorizado(false);
 	}
 

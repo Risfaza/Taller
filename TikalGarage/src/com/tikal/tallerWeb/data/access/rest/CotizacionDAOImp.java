@@ -50,8 +50,7 @@ public class CotizacionDAOImp implements CotizacionDAO {
 	@Override
 	public List<CotizacionEntity> consultar(Long idServicio) {
 		List<CotizacionEntity> lista= new ArrayList<CotizacionEntity>();
-		ServicioEntity servicio=ofy().load().type(ServicioEntity.class).id(idServicio).now();
-		lista.addAll(ofy().load().type(CotizacionEntity.class).ancestor(servicio).list());
+		lista.addAll(ofy().load().type(CotizacionEntity.class).filter("servicio",idServicio).list());
 		return lista;
 	}
 
