@@ -58,17 +58,19 @@ public class CotizacionController {
 
 		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
 		List<String> todos = new ArrayList<String>();
-
-		DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
-		for (GruposCosto g : datos.getPresupuesto()) {
-			for (PresupuestoEntity p : g.getPresupuestos()) {
-				if (p.getSubtipo().compareToIgnoreCase("RE") == 0 || p.getSubtipo().compareToIgnoreCase("IN") == 0) {
-					todos.add(p.getConcepto());
+		boolean completa = Boolean.parseBoolean(request.getParameter("full"));
+		if (completa) {
+			DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
+			for (GruposCosto g : datos.getPresupuesto()) {
+				for (PresupuestoEntity p : g.getPresupuestos()) {
+					if (p.getSubtipo().compareToIgnoreCase("RE") == 0 || p.getSubtipo().compareToIgnoreCase("IN") == 0
+							|| p.getSubtipo().compareToIgnoreCase("SE") == 0) {
+						todos.add(p.getConcepto());
+					}
 				}
 			}
 		}
 
-		boolean completa = Boolean.parseBoolean(request.getParameter("full"));
 		if (!completa) {
 			PresupuestoEntity grupos = (PresupuestoEntity) JsonConvertidor.fromJson(cadena, PresupuestoEntity.class);
 			List<String> cotizar = new ArrayList<String>();
@@ -153,7 +155,6 @@ public class CotizacionController {
 		// }
 		// }
 		// cotizaciondao.guarda(guardar);
-		Key<ServicioEntity> servicio = servdao.getKey(Long.parseLong(lista.getIdServicio()));
 		List<PiezaCotizacionVO> costos = lista.getCostos();
 		for (PiezaCotizacionVO pieza : costos) {
 			String concepto = pieza.getConcepto();
@@ -161,14 +162,17 @@ public class CotizacionController {
 
 				CotizacionEntity cot = pieza.getCostos().get(i);
 				cot.setProveedor(lista.getProveedores().get(i));
+				if (cot.getServicio().compareTo(Long.parseLong(lista.getIdServicio())) != 0) {
+					cot.setId(null);
+				}
 				if (cot.getId() == null) {
 					cot.setConcepto(concepto);
 					cot.setModelo(Integer.parseInt(lista.getModelo()));
 					cot.setTipo(lista.getTipo());
-					cot.setServicio(servicio);
+					cot.setServicio(Long.parseLong(lista.getIdServicio()));
 				}
-				if(cot.getServicio()==null){
-					cot.setServicio(servicio);
+				if (cot.getServicio() == null) {
+					cot.setServicio(Long.parseLong(lista.getIdServicio()));
 				}
 				guardar.add(cot);
 			}
