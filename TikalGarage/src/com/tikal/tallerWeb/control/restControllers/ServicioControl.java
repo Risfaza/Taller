@@ -96,23 +96,23 @@ public class ServicioControl {
 		ServicioEntity ser = s.getServicio();
 		ser.setIdAuto(Long.toString(s.getAuto().getIdAuto()));
 		ser.setIdCliente(s.getCliente().getIdCliente());
-		
+
 		List<PresupuestoEntity> presu = new ArrayList();
-		Long total=0l;
+		Long total = 0l;
 		if (datos.getPresupuesto() != null) {
-			
+
 			for (GruposCosto g : datos.getPresupuesto()) {
 				for (PresupuestoEntity pe : g.getPresupuestos()) {
 					pe.setGrupo(g.getNombre());
 					pe.setId(ser.getId());
 					presu.add(pe);
-					total+= pe.getCantidad()*Long.parseLong(pe.getPrecioCliente().getValue());
+					total += pe.getCantidad() * Long.parseLong(pe.getPrecioCliente().getValue());
 				}
 				costodao.guardar(ser.getId(), presu);
 			}
 		}
-		Moneda costoTotal=new Moneda();
-		costoTotal.setValue(total+"");
+		Moneda costoTotal = new Moneda();
+		costoTotal.setValue(total + "");
 		ser.getMetadata().setCostoTotal(costoTotal);
 		servdao.guardar(ser);
 		// List<AutoEntity> ae =
@@ -236,8 +236,12 @@ public class ServicioControl {
 		NewServiceObject servicio = new NewServiceObject();
 		servicio.setServicio(servdao.cargar(Long.parseLong(blobid)));
 		if (servicio.getServicio() != null) {
-			servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
-			servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
+			if (servicio.getServicio().getIdAuto() != null) {
+				servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
+			}
+			if (servicio.getServicio().getIdCliente() != null) {
+				servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
+			}
 			List<GruposCosto> grupos = costodao.cargar(servicio.getServicio().getIdServicio());
 			DatosServicioVO datos = new DatosServicioVO();
 			datos.setServicio(servicio);
@@ -311,23 +315,34 @@ public class ServicioControl {
 		List<GruposCosto> lista = data.getPresupuesto();
 		List<PresupuestoEntity> presupuesto = new ArrayList<PresupuestoEntity>();
 		if (lista != null) {
+			int indicegru=0;
 			for (GruposCosto gru : lista) {
-				int indice=0;
+				int indice = 0;
 				for (PresupuestoEntity pre : gru.getPresupuestos()) {
-					pre.setIndice(indice);
+					pre.setIndice(Integer.parseInt(indicegru+"00"+indice));
 					pre.setGrupo(gru.getNombre());
 					pre.getPrecioCotizado()
 							.setValue((pre.getCantidad() * Float.parseFloat(pre.getPrecioCliente().getValue())) + "");
-//					pre.setAutorizado(false);
+					// pre.setAutorizado(false);
 					pre.setId(data.getServicio().getServicio().getIdServicio());
 					presupuesto.add(pre);
 					indice++;
 				}
+				indicegru++;
 			}
 		}
+		
+		AutoEntity auto= data.getServicio().getAuto();
+		autodao.guardar(auto);
+		if(data.getServicio().getServicio().getIdAuto()==null){
+			data.getServicio().getServicio().setIdAuto(auto.getIdAuto().toString());
+		}
+		ClienteEntity cliente=data.getServicio().getCliente();
+		clientedao.guardar(cliente);
+		if(data.getServicio().getServicio().getIdCliente()==null){
+			data.getServicio().getServicio().setIdCliente(cliente.getIdCliente());
+		}
 		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(), presupuesto));
-		autodao.guardar(data.getServicio().getAuto());
-		clientedao.guardar(data.getServicio().getCliente());
 		costodao.guardar(data.getServicio().getServicio().getIdServicio(), presupuesto);
 	}
 

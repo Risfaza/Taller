@@ -444,37 +444,39 @@
 									<th>Precio Cliente</th>
 									<th style="width: 9%">Utilidad</th>
 									<th>Subtotal</th>
-									<th>IVA  <input style="width: auto;" type="checkbox" ng-model="gru.ivaSubTodos" value="false" ng-click="seleccionarTodoIVASub(gru)"/></th>
-									<th></th>
-									<th>Autorizado  <input style="width: auto;" type="checkbox" ng-model="gru.autoTodos" value="false" ng-click="seleccionarTodoAutorizado(gru)"/></th>
+									<th>IVA</th>
+									<th>Autorizado <input style="width: auto;" type="checkbox"
+										ng-model="gru.autoTodos" value="false"
+										ng-click="seleccionarTodoAutorizado(gru)" /></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="pres in gru.presupuestos">
 									<td><select ng-model="pres.subtipo"
-										ng-change="cotizaciones()">
+										ng-change="conceptoChg(pres,$index,gru)">
 											<option value="MO">Mano de Obra</option>
 											<option value="RE">Refacciones</option>
 											<option value="IN">Insumo</option>
 											<option value="SE">Servicio</option>
 									</select></td>
 									<td><input type="text" style="width: 100%"
-										ng-model="pres.concepto" ng-change="conceptoChg(pres)" /></td>
+										ng-model="pres.concepto"
+										ng-change="conceptoChg(pres,$index,gru)" /></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
-									<td><input type="checkbox" ng-model="pres.precioUnitarioConIVA"/></td>
+									<td><input type="checkbox"
+										ng-model="pres.precioUnitarioConIVA"
+										ng-click="pres.precioUnitario.value=calcularPUI(pres)" /></td>
 									<td><label disabled ng-show="pres.precioUnitarioConIVA">{{currency(pres.precioUnitario.value*0.16,2,
 											[',', "'", '.'])}}</label></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
-									<td><label>{{currency(pres.precioCliente.value -
-											pres.precioUnitario.value*1.16,2, [',', "'", '.'])}} / {{
+									<td><label>{{utilidad1(pres)}} / {{
 											utilidad(pres)+'%'}}</label></td>
 									<td><label>{{currency(pres.precioCliente.value*pres.cantidad,2,
 											[',', "'", '.'])}}</label></td>
-									<td><input type="checkbox" ng-model="pres.subtotalConIVA" /></td>
-									<td><label ng-show="pres.subtotalConIVA">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2,
+									<td><label ng-show="servicio.servicio.cobranza.facturado">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2,
 											[',', "'", '.'])}}</label></td>
 									<td><input type="checkbox" ng-model="pres.autorizado" /></td>
 
@@ -488,7 +490,7 @@
 			</div>
 			<hr>
 			<div class="row">
-			{{listcotizaciones.costos}}
+				<!-- 			{{listcotizaciones.costos}} -->
 				<div class="col-md-12">
 					<div class="table-responsive">
 						<button class="btn btn-small btn-primary" ng-click="addCot()">
@@ -507,8 +509,7 @@
 									<td>{{cot.concepto}}</td>
 									<td ng-repeat="costo in cot.costos"><input type="text"
 										ng-model="costo.precio"> <input type="checkbox"
-										name="{{cot.concepto}}"
-										ng-model="costo.selected"
+										name="{{cot.concepto}}" ng-model="costo.selected"
 										ng-click="setPrecio(costo.precio,cot.concepto,costo)"></td>
 									<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
@@ -544,7 +545,7 @@
 						<div>
 							<input type="text"
 								ng-model="servicio.servicio.cobranza.numeroFactura"
-								ng-disabled="servicio.servicio.cobranza.facturado">
+								ng-enabled="servicio.servicio.cobranza.facturado">
 						</div>
 					</div>
 					<div class="form-group">
@@ -759,42 +760,47 @@
 								</a>
 							</div>
 							-->
-							<form method="POST" action="/reporte/presupuestoPDFSoloDatos.pdf">
-								<div class="col-md-4">
-									<button class="btn btn-primary" target="_blank" type="submit">
-										<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo
-									</button>
-									<input type="hidden" name="id"
-										value="{{servicio.servicio.idServicio}}">
-								</div>
-							</form>
-							<form method="POST" action="/reporte/presupuestoPDF.pdf">
-								<div class="col-md-4">
-									<button class="btn btn-primary" target="_blank" type="submit">
-										<i class="fa fa-print"></i>Presupuesto
-									</button>
-									<input type="hidden" name="id"
-										value="{{servicio.servicio.idServicio}}">
-								</div>
-							</form>
-							<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
-								<div class="col-md-4">
-									<button class="btn btn-primary" target="_blank" type="submit">
-										<i class="fa fa-print"></i>Cotizaci&oacute;n
-									</button>
-									<input type="hidden" name="id"
-										value="{{servicio.servicio.idServicio}}">
-								</div>
-							</form>
-							<form method="POST" action="/reporte/presupuestoPDFInterno.pdf">
-								<div class="col-md-4">
-									<button class="btn btn-primary" target="_blank" type="submit">
-										<i class="fa fa-print"></i>Interno
-									</button>
-									<input type="hidden" name="id"
-										value="{{servicio.servicio.idServicio}}">
-								</div>
-							</form>
+							<div class="row">
+								<form method="POST"
+									action="/reporte/presupuestoPDFSoloDatos.pdf">
+									<div class="col-md-4">
+										<button class="btn btn-primary" target="_blank" type="submit">
+											<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo
+										</button>
+										<input type="hidden" name="id"
+											value="{{servicio.servicio.idServicio}}">
+									</div>
+								</form>
+								<form method="POST" action="/reporte/presupuestoPDF.pdf">
+									<div class="col-md-4">
+										<button class="btn btn-primary" target="_blank" type="submit">
+											<i class="fa fa-print"></i>Presupuesto
+										</button>
+										<input type="hidden" name="id"
+											value="{{servicio.servicio.idServicio}}">
+									</div>
+								</form>
+							</div>
+							<div class="row">
+								<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
+									<div class="col-md-4">
+										<button class="btn btn-primary" target="_blank" type="submit">
+											<i class="fa fa-print"></i>Cotizaci&oacute;n
+										</button>
+										<input type="hidden" name="id"
+											value="{{servicio.servicio.idServicio}}">
+									</div>
+								</form>
+								<form method="POST" action="/reporte/presupuestoPDFInterno.pdf">
+									<div class="col-md-4">
+										<button class="btn btn-primary" target="_blank" type="submit">
+											<i class="fa fa-print"></i>Interno
+										</button>
+										<input type="hidden" name="id"
+											value="{{servicio.servicio.idServicio}}">
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>

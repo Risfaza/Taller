@@ -39,7 +39,7 @@ app
 							}
 
 							$scope.guardar = function() {
-								console.log($scope.servicio);
+//								console.log($scope.servicio);
 								var send={servicio:$scope.servicio};
 								$http.post('/servicio/add', send)
 										.then(function(response) {
@@ -47,8 +47,10 @@ app
 											if(!$rootScope.serviciosHoy){
 												$rootScope.serviciosHoy=[]
 											}
-											$rootScope.serviciosHoy.push(response.data);
-											$location.path("servicio/view/"+response.data.servicio.idServicio);
+//											$rootScope.serviciosHoy.push(response.data);
+//											console.log(response);
+											window.scrollTo(0, 0);
+											$location.path("servicio/view/"+response.data.servicio.servicio.idServicio);
 										}, function(response) {
 											alert("Something went wrong");
 										})
@@ -105,6 +107,10 @@ app
 							$scope.mayusculas=function(value){
 								value=value.toUpperCase();
 								return value;
+							}
+							$scope.siguienteBtn=function(){
+								$scope.showTab('auto');
+								window.scrollTo(0, 0);
 							}
 
 						} ]);

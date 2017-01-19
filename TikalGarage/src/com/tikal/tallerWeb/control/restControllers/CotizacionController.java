@@ -2,6 +2,7 @@ package com.tikal.tallerWeb.control.restControllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class CotizacionController {
 		String cadena = request.getParameter("cadena");
 		String tipo = request.getParameter("tipo");
 		String anio = request.getParameter("modelo");
+		CotizacionVO datosProv= (CotizacionVO) JsonConvertidor.fromJson(request.getParameter("proveedores"), CotizacionVO.class);
 		Long idServicio = Long.parseLong(request.getParameter("idServicio"));
 
 		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
@@ -74,7 +76,7 @@ public class CotizacionController {
 		if (!completa) {
 			PresupuestoEntity grupos = (PresupuestoEntity) JsonConvertidor.fromJson(cadena, PresupuestoEntity.class);
 			List<String> cotizar = new ArrayList<String>();
-
+			todos.add(grupos.getConcepto());
 			cotizar.add(grupos.getConcepto());
 			// for (GruposCosto g : grupos.getPresupuesto()) {
 			// for (PresupuestoEntity p : g.getPresupuestos()) {
@@ -85,16 +87,30 @@ public class CotizacionController {
 			// }
 			// }
 			List<CotizacionEntity> cots = cotizaciondao.consultarFull(tipo, Integer.parseInt(anio), cotizar);
+			for (CotizacionEntity cot : cots) {
+				cot.setSelected(false);
+				cot.setFecha(new Date());
+			}
+			boolean flag = true;
 			for (int i = 0; i < guardados.size(); i++) {
 				CotizacionEntity cot = guardados.get(i);
 				if (cot.getConcepto().compareTo(grupos.getConcepto()) == 0) {
 					guardados.set(i, cots.get(0));
+					flag = false;
 					break;
 				}
+			}
+			if (flag) {
+				guardados.addAll(cots);
 			}
 		}
 		Map<String, List<CotizacionEntity>> mapa = new HashMap<String, List<CotizacionEntity>>();
 		List<String> proveedores = new ArrayList<String>();
+		for(String provee:datosProv.getProveedores()){
+			List<CotizacionEntity> precios = new ArrayList<CotizacionEntity>();
+			mapa.put(provee, precios);
+			proveedores.add(provee);
+		}
 		for (CotizacionEntity cot : guardados) {
 			if (mapa.containsKey(cot.getProveedor())) {
 				mapa.get(cot.getProveedor()).add(cot);
@@ -158,23 +174,29 @@ public class CotizacionController {
 		List<PiezaCotizacionVO> costos = lista.getCostos();
 		for (PiezaCotizacionVO pieza : costos) {
 			String concepto = pieza.getConcepto();
-			for (int i = 0; i < pieza.getCostos().size(); i++) {
 
-				CotizacionEntity cot = pieza.getCostos().get(i);
-				cot.setProveedor(lista.getProveedores().get(i));
-				if (cot.getServicio().compareTo(Long.parseLong(lista.getIdServicio())) != 0) {
-					cot.setId(null);
+			for (int i = 0; i < lista.getProveedores().size(); i++) {
+				if (pieza.getCostos().size() > i) {
+					CotizacionEntity cot = pieza.getCostos().get(i);
+					cot.setProveedor(lista.getProveedores().get(i));
+					if (cot.getServicio() == null) {
+						cot.setServicio(Long.parseLong(lista.getIdServicio()));
+					}
+					if (cot.getServicio().compareTo(Long.parseLong(lista.getIdServicio())) != 0) {
+						cot.setId(null);
+					}
+					if (cot.getId() == null) {
+						cot.setConcepto(concepto);
+						cot.setModelo(Integer.parseInt(lista.getModelo()));
+						cot.setTipo(lista.getTipo());
+						cot.setServicio(Long.parseLong(lista.getIdServicio()));
+					}
+					if (cot.getPrecio() != null) {
+						if (cot.getPrecio().compareTo("") != 0) {
+							guardar.add(cot);
+						}
+					}
 				}
-				if (cot.getId() == null) {
-					cot.setConcepto(concepto);
-					cot.setModelo(Integer.parseInt(lista.getModelo()));
-					cot.setTipo(lista.getTipo());
-					cot.setServicio(Long.parseLong(lista.getIdServicio()));
-				}
-				if (cot.getServicio() == null) {
-					cot.setServicio(Long.parseLong(lista.getIdServicio()));
-				}
-				guardar.add(cot);
 			}
 		}
 		cotizaciondao.guarda(guardar);

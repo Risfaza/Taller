@@ -44,6 +44,15 @@ public class DatosPresupuestoVO {
 	private boolean conFirmasSencillas;
 	
 	
+	//Atributo para facturar
+	private boolean esFacturado;
+	
+	public boolean isEsFacturado() {
+		return esFacturado;
+	}
+	public void setEsFacturado(boolean esFacturado) {
+		this.esFacturado = esFacturado;
+	}
 	public boolean isConFirmasSencillas() {
 		return conFirmasSencillas;
 	}

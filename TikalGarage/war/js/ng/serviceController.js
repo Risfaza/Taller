@@ -218,11 +218,12 @@ app.controller("serviceController", [
 			
 			
 			$scope.guardar = function() {
-				for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
-					var bla = $('#proveedor'+i).val();
-					$scope.listcotizaciones.proveedores[i]=bla+"";
+				if($scope.listcotizaciones.proveedores){
+					for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+						var bla = $('#proveedor'+i).val();
+						$scope.listcotizaciones.proveedores[i]=bla+"";
+					}
 				}
-				
 				
 				var send = {
 					servicio : $scope.servicio,
@@ -302,6 +303,7 @@ app.controller("serviceController", [
 			}
 
 			$scope.sendImages = function(id) {
+				
 				if ($scope.images.length) {
 					var file = $scope.images;
 					fileUpload.uploadFileToUrl(file, $scope.uri.url, id).then(
@@ -310,6 +312,7 @@ app.controller("serviceController", [
 								// recursivo
 							});
 				}
+				
 			}
 
 			$scope.nuevoEvento=function(){
@@ -331,7 +334,11 @@ app.controller("serviceController", [
 					// console.log(data);
 					$scope.images = fileService.getFile("b_pics");
 					$scope.indice = 0;
-					$scope.sendImages(data.idEvento);
+					if($scope.images){
+						$scope.sendImages(data.idEvento);
+					}else{
+						$scope.eventos.push(data);
+					}
 				})
 				
 
@@ -495,14 +502,16 @@ app.controller("serviceController", [
 //				console.log($scope.servicio.servicio);
 			}
 			
-			$scope.cotizaciones = function(pre) {
+			$scope.cotizaciones = function(pre,append,indice) {
 				var send={params:{
 					
 					full:true,
 					tipo : $scope.servicio.auto.tipo,
 					modelo : $scope.servicio.auto.modelo,
 					idServicio:$scope.servicio.servicio.idServicio,
+					proveedores:{proveedores:$scope.listcotizaciones.proveedores},
 					cadena:{presupuesto:$scope.servicio.gruposCosto}
+			
 				}}				
 				if(pre){
 					send.params.presupuesto=pre;
@@ -510,20 +519,44 @@ app.controller("serviceController", [
 					send.params.cadena=pre;
 				}
 					$http.get('/cotizacion/getFull',send).success(function(response){
-						$scope.listcotizaciones=response;
-						$scope.proveedores2= response.proveedores;
+						if(!append){
+							$scope.listcotizaciones=response;
+							$scope.proveedores2= response.proveedores;
+						}else{
+							$scope.listcotizaciones.costos[indice]=response.costos[0];
+							$scope.proveedores2= response.proveedores;
+						}
 					}).error(function(response){
 						console.log(response);
 					});
 				
 			}
 			
-			$scope.conceptoChg= function(pre){
+			$scope.conceptoChg= function(pre,indice,gru){
+				var indiceReal=0;
+				var indiceGrupo= $scope.servicio.gruposCosto.indexOf(gru);
+				for(var i = 0; i<indiceGrupo; i++){
+					var grupo= $scope.servicio.gruposCosto[i];
+					indiceReal+=grupo.presupuestos.length;
+				}
+				indiceReal+=indice;
+				if($scope.contarCotizables()>$scope.listcotizaciones.costos.length){
+					var insert={concepto:pre.concepto,costos:[]};
+					for(var z=0; z< $scope.listcotizaciones.proveedores.length;z++){
+						insert.costos.push({concepto:pre.concepto});
+					}
+					
+					$scope.listcotizaciones.costos.splice(indiceReal,0,insert);
+				}
 				if(pre.concepto){
 					if(pre.subtipo== "RE" || pre.subtipo=="IN" || pre.subtipo =="SE"){
 						var lista=$scope.listcotizaciones;
+						for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+							var bla = $('#proveedor'+i).val();
+							$scope.listcotizaciones.proveedores[i]=bla+"";
+						}
 						$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-							$scope.cotizaciones(pre);
+							$scope.cotizaciones(pre,true,indiceReal);
 						});
 					}
 				}
@@ -575,6 +608,18 @@ app.controller("serviceController", [
 				$rootScope.saldo='$'+$scope.currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
 			},true);
 
+			$scope.utilidad1= function(pres){
+				if(pres.precioUnitarioConIVA){
+					if(pres.precioCliente.value){
+				return $scope.currency(pres.precioCliente.value -
+						pres.precioUnitario.value*1.16,2, [',', "'", '.']);
+				}
+				}
+				if(pres.precioCliente.value){
+				return $scope.currency(pres.precioCliente.value -
+						pres.precioUnitario.value,2, [',', "'", '.']);
+				}
+			}
 			$scope.utilidad= function (pres){
 				var valor=parseFloat(pres.precioUnitario.value);
 				
@@ -582,8 +627,13 @@ app.controller("serviceController", [
 					return 100;
 				}
 				if(valor>0){
-					var porcentaje=$scope.currency(((pres.precioCliente.value -	pres.precioUnitario.value*1.16)/(pres.precioUnitario.value*1.16))*100,2, [',', "'", '.']);
-					return porcentaje;
+					if(pres.precioUnitarioConIVA){
+						var porcentaje=$scope.currency(((pres.precioCliente.value -	pres.precioUnitario.value*1.16)/(pres.precioUnitario.value*1.16))*100,2, [',', "'", '.']);
+						return porcentaje;
+					}else{
+						var porcentaje= $scope.currency(((pres.precioCliente.value -	pres.precioUnitario.value)/(pres.precioUnitario.value))*100,2, [',', "'", '.']);
+						return porcentaje;
+					}
 				}
 			}
 			
@@ -605,6 +655,34 @@ app.controller("serviceController", [
 				for(var i = 0; i<gru.presupuestos.length;i++){
 					gru.presupuestos[i].autorizado=gru.autoTodos;
 				}
+			}
+			
+			$scope.calcularPUI=function(pre){
+				
+				if(pre.precioUnitarioConIVA){
+					return Math.round((pre.precioUnitario.value/1.16)*100)/100;
+				}
+				var concepto= pre.concepto;
+				for(var i= 0; i< $scope.listcotizaciones.costos.length;i++){
+					if($scope.listcotizaciones.costos[i].concepto==concepto){
+						for(var j = 0; j < $scope.listcotizaciones.costos[i].costos.length;j++){
+							if($scope.listcotizaciones.costos[i].costos[j].selected){
+								return pre.precioUnitario.value=$scope.listcotizaciones.costos[i].costos[j].precio;
+							}
+						}
+					}
+				}
+			}
+			
+			$scope.contarCotizables=function(){
+				var valor= 0;
+				for(var i = 0;i<$scope.servicio.gruposCosto.length;i++){
+					var gru= $scope.servicio.gruposCosto[i];
+					for(var j = 0; j< gru.presupuestos.length; j++){
+						valor++;
+					}
+				}
+				return valor;
 			}
 //			listcotizaciones.proveedores
 			

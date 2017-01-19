@@ -22,6 +22,8 @@ import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
 public class PdfMaker {
+	
+	
 
 	private DatosPresupuestoVO datos;
 	private Document document;
@@ -39,6 +41,7 @@ public class PdfMaker {
 	}
 
 	public void imprimirPresupuesto() throws DocumentException, IOException {
+		
 
 		////////////////////////////////////////////////////////////////////////////// HEADER
 
@@ -259,7 +262,7 @@ public class PdfMaker {
 
 			firmasTableS.setWidthPercentage(100);
 
-			PdfPCell em = new PdfPCell(new Paragraph(" "));
+			PdfPCell em = new PdfPCell(new Paragraph(""));
 			em.setBorderWidth(0);
 
 			firmasTableS.addCell(em);
@@ -275,7 +278,7 @@ public class PdfMaker {
 			fechaInput.setFixedHeight(60f);
 			firmasTableS.addCell(fechaInput);
 
-			PdfPCell nombreFirmaInput = new PdfPCell(new Paragraph("Autorizo la revisión " + "de la unidad", font4));
+			PdfPCell nombreFirmaInput = new PdfPCell(new Paragraph("Autorizo la revisión \n" + "de la unidad", font4));
 			nombreFirmaInput.setFixedHeight(50f);
 			nombreFirmaInput.setVerticalAlignment(Element.ALIGN_BOTTOM);
 			firmasTableS.addCell(nombreFirmaInput);
@@ -444,52 +447,83 @@ public class PdfMaker {
 					contadorRenglones += 1;
 				}
 
-				table8.addCell(emptytable8);
+				
+				
+				if(datos.isEsFacturado()==true){
+					
+					PdfPCell celdaSinBorde = new PdfPCell();
+					celdaSinBorde.setBorderWidth(0);
+					
+					table8.addCell(celdaSinBorde);
+					
+					PdfPCell SubTotalCellLabel = new PdfPCell(new Paragraph("SubTotal ", font4));
+					SubTotalCellLabel.setBorderWidthLeft(0);
+					SubTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					SubTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					table8.addCell(SubTotalCellLabel);
 
-				PdfPCell SubTotalCellLabel = new PdfPCell(new Paragraph("SubTotal ", font4));
-				SubTotalCellLabel.setBorderWidthLeft(0);
-				SubTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				SubTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				table8.addCell(SubTotalCellLabel);
+					PdfPCell SubTotalCell = new PdfPCell(new Paragraph(formatter.format(total), font4));
+					SubTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					SubTotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					SubTotalCell.setFixedHeight(30f);
+					table8.addCell(SubTotalCell);
 
-				PdfPCell SubTotalCell = new PdfPCell(new Paragraph(formatter.format(total), font4));
-				SubTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				SubTotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				SubTotalCell.setFixedHeight(30f);
-				table8.addCell(SubTotalCell);
+					table8.addCell(celdaSinBorde);
 
-				table8.addCell(emptytable8);
+					PdfPCell IvaTotalCellLabel = new PdfPCell(new Paragraph("IVA ", font4));
+					IvaTotalCellLabel.setBorderWidthLeft(0);
+					IvaTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					IvaTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					table8.addCell(IvaTotalCellLabel);
 
-				PdfPCell IvaTotalCellLabel = new PdfPCell(new Paragraph("IVA ", font4));
-				IvaTotalCellLabel.setBorderWidthLeft(0);
-				IvaTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				IvaTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				table8.addCell(IvaTotalCellLabel);
+					PdfPCell IvaTotalCell = new PdfPCell(new Paragraph(formatter.format(total * 0.16), font4));
+					IvaTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					IvaTotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					IvaTotalCell.setFixedHeight(30f);
+					table8.addCell(IvaTotalCell);
 
-				PdfPCell IvaTotalCell = new PdfPCell(new Paragraph(formatter.format(total * 0.16), font4));
-				IvaTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				IvaTotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				IvaTotalCell.setFixedHeight(30f);
-				table8.addCell(IvaTotalCell);
+					table8.addCell(celdaSinBorde);
 
-				table8.addCell(emptytable8);
+					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
+					TotalCellLabel.setBorderWidthLeft(0);
+					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					table8.addCell(TotalCellLabel);
 
-				PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
-				TotalCellLabel.setBorderWidthLeft(0);
-				TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				table8.addCell(TotalCellLabel);
+					PdfPCell TotalCell = new PdfPCell(new Paragraph(formatter.format(total * 1.16), font4));
+					TotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					TotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					TotalCell.setFixedHeight(30f);
+					table8.addCell(TotalCell);
 
-				PdfPCell TotalCell = new PdfPCell(new Paragraph(formatter.format(total * 1.16), font4));
-				TotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				TotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				TotalCell.setFixedHeight(30f);
-				table8.addCell(TotalCell);
+//					PdfPCell leyenda = new PdfPCell(new Paragraph("*Los costos no incluyen IVA", font6));
+//					leyenda.setBorderWidth(0);
+//					leyenda.setColspan(3);
+//					table8.addCell(leyenda);
+					
+				} else {
 
-				PdfPCell leyenda = new PdfPCell(new Paragraph("*Los costos no incluyen IVA", font6));
-				leyenda.setBorderWidth(0);
-				leyenda.setColspan(3);
-				table8.addCell(leyenda);
+					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
+					TotalCellLabel.setBorderWidthLeft(0);
+					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					TotalCellLabel.setColspan(2);
+					table8.addCell(TotalCellLabel);
+
+					PdfPCell TotalCell = new PdfPCell(new Paragraph(formatter.format(total), font4));
+					TotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					TotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					TotalCell.setFixedHeight(30f);
+					table8.addCell(TotalCell);
+
+					PdfPCell leyenda = new PdfPCell(new Paragraph("*Los costos no incluyen IVA", font6));
+					leyenda.setBorderWidth(0);
+					leyenda.setColspan(3);
+					table8.addCell(leyenda);
+				}
+				
+
+				
 
 			} else {
 
@@ -595,7 +629,7 @@ public class PdfMaker {
 			PdfPTable firmasTable = new PdfPTable(2);
 			firmasTable.setWidthPercentage(100);
 			
-			PdfPCell em = new PdfPCell(new Paragraph(" "));
+			PdfPCell em = new PdfPCell(new Paragraph(""));
 			em.setBorderWidth(0);
 			
 			firmasTable.addCell(em);
@@ -608,10 +642,10 @@ public class PdfMaker {
 			firmasTable.addCell(nombreFirmaLabel);
 
 			PdfPCell fechaInput = new PdfPCell();
-			fechaInput.setFixedHeight(60f);
+			fechaInput.setFixedHeight(50f);
 			firmasTable.addCell(fechaInput);
 
-			PdfPCell nombreFirmaInput = new PdfPCell(new Paragraph("Autorizo la revisión " + "de la unidad", font4));
+			PdfPCell nombreFirmaInput = new PdfPCell(new Paragraph("Autorizo la revisión \n" + "de la unidad", font4));
 			nombreFirmaInput.setFixedHeight(50f);
 			nombreFirmaInput.setVerticalAlignment(Element.ALIGN_BOTTOM);
 			firmasTable.addCell(nombreFirmaInput);
