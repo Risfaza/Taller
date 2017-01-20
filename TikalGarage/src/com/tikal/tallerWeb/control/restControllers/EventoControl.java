@@ -49,6 +49,8 @@ public class EventoControl {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
+		String tipo = vo.getEvento().getTipo();
+		
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}
 	
@@ -93,4 +95,10 @@ public class EventoControl {
 		response.getWriter().println(JsonConvertidor.toJson(bit.getEventos()));
 	}
 
+	private String getStatus(String tipo){
+		if(tipo.compareToIgnoreCase("Entrada de Auto")==0){
+			return "Diagnóstico";
+		}
+		return "Activo";
+	}
 }

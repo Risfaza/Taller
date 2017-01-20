@@ -262,7 +262,7 @@ public class PdfMaker {
 
 			firmasTableS.setWidthPercentage(100);
 
-			PdfPCell em = new PdfPCell(new Paragraph(""));
+			PdfPCell em = new PdfPCell(new Paragraph(" "));
 			em.setBorderWidth(0);
 
 			firmasTableS.addCell(em);
@@ -454,10 +454,15 @@ public class PdfMaker {
 					PdfPCell celdaSinBorde = new PdfPCell();
 					celdaSinBorde.setBorderWidth(0);
 					
-					table8.addCell(celdaSinBorde);
+					PdfPCell celdaSinBorde2 = new PdfPCell();
+					celdaSinBorde2.setBorderWidthBottom(0);
+					celdaSinBorde2.setBorderWidthLeft(0);
+					celdaSinBorde2.setBorderWidthRight(0);
+					
+					table8.addCell(celdaSinBorde2);
 					
 					PdfPCell SubTotalCellLabel = new PdfPCell(new Paragraph("SubTotal ", font4));
-					SubTotalCellLabel.setBorderWidthLeft(0);
+					//SubTotalCellLabel.setBorderWidthLeft(0);
 					SubTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					SubTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(SubTotalCellLabel);
@@ -471,7 +476,7 @@ public class PdfMaker {
 					table8.addCell(celdaSinBorde);
 
 					PdfPCell IvaTotalCellLabel = new PdfPCell(new Paragraph("IVA ", font4));
-					IvaTotalCellLabel.setBorderWidthLeft(0);
+					//IvaTotalCellLabel.setBorderWidthLeft(0);
 					IvaTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					IvaTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(IvaTotalCellLabel);
@@ -485,7 +490,7 @@ public class PdfMaker {
 					table8.addCell(celdaSinBorde);
 
 					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
-					TotalCellLabel.setBorderWidthLeft(0);
+					//TotalCellLabel.setBorderWidthLeft(0);
 					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(TotalCellLabel);
@@ -504,7 +509,7 @@ public class PdfMaker {
 				} else {
 
 					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
-					TotalCellLabel.setBorderWidthLeft(0);
+					//TotalCellLabel.setBorderWidthLeft(0);
 					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					TotalCellLabel.setColspan(2);

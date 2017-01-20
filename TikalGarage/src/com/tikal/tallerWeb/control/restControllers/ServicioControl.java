@@ -339,7 +339,7 @@ public class ServicioControl {
 		}
 		ClienteEntity cliente=data.getServicio().getCliente();
 		clientedao.guardar(cliente);
-		if(data.getServicio().getServicio().getIdCliente()==null){
+		if(data.getServicio().getServicio().getIdCliente()==null||data.getServicio().getServicio().getIdCliente().compareTo(cliente.idCliente)!=0){
 			data.getServicio().getServicio().setIdCliente(cliente.getIdCliente());
 		}
 		servdao.guardar(this.calcularTotal(data.getServicio().getServicio(), presupuesto));

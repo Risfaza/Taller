@@ -156,6 +156,8 @@ app.controller("serviceController", [
 					$scope.servicio.gruposCosto = data.presupuesto;
 					$rootScope.actual=$scope.servicio;
 					$rootScope.detallesView=true;
+					var proveedores=$scope.servicio.servicio.proveedores;
+					$scope.listcotizaciones={proveedores:proveedores};
 					console.log($scope.servicio);
 					$scope.cotizaciones();
 			});
@@ -171,51 +173,6 @@ app.controller("serviceController", [
 				var myEl = angular.element("#" + id);
 				myEl.addClass('active in');
 			};
-//			$scope.guardar = function() {
-//				var send = {
-//					servicio : $scope.servicio,
-//					presupuesto : $scope.servicio.gruposCosto
-//				}
-//				// console.log(send);
-//				$http.post('/servicio/save', send).then(function(response) {
-//					alert("Servicio Guardado");
-//				}, function(response) {
-//					alert("Something went wrong");
-//				})
-//				var lista=$scope.listcotizaciones;
-////				var nc=$scope.newCot;
-////				lista.push(nc)
-//				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-//					$scope.listcotizaciones=[];
-//				}, function(response) {
-//				})
-//			}
-//			
-//			$scope.guardar = function() {
-//				var send = {
-//					servicio : $scope.servicio,
-//					presupuesto : $scope.servicio.gruposCosto
-//				}
-//				 console.log(send);
-//				$http.post('/servicio/save', send).then(function(response) {
-//					alert("Servicio Guardado");
-//				}, function(response) {
-//					alert("Something went wrong");
-//				})
-//				var lista=$scope.listcotizaciones;
-////				var nc=$scope.newCot;
-////				lista.push(nc)
-//				eventoService.getBitacora($routeParams.id).then(function(data) {
-//				$scope.eventos = data;
-////				console.log(data);
-//			});
-//
-//				$http.post('/cotizacion/save', {costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
-//					$scope.listcotizaciones=[];
-//				}, function(response) {
-//				})
-//			}
-			
 			
 			$scope.guardar = function() {
 				if($scope.listcotizaciones.proveedores){
@@ -236,6 +193,7 @@ app.controller("serviceController", [
 					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
+				$scope.servicio.servicio.proveedores= $scope.listcotizaciones.proveedores;
 //				console.log(lista.proveedores);
 //				var nc=$scope.newCot;
 //				lista.push(nc)
@@ -249,23 +207,35 @@ app.controller("serviceController", [
 			}
 			$scope.cargarServicio();
 			$scope.guardar2 = function() {
+				if($scope.listcotizaciones.proveedores){
+					for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
+						var bla = $('#proveedor'+i).val();
+						$scope.listcotizaciones.proveedores[i]=bla+"";
+					}
+				}
+				
 				var send = {
 					servicio : $scope.servicio,
 					presupuesto : $scope.servicio.gruposCosto
 				}
-				// console.log(send);
+				 console.log(send);
 				$http.post('/servicio/save', send).then(function(response) {
-//					alert("Servicio Guardado");
+					alert("Servicio Guardado");
 				}, function(response) {
-					alert("Something went wrong");
 				})
 				var lista=$scope.listcotizaciones;
+				$scope.servicio.servicio.proveedores= $scope.listcotizaciones.proveedores;
+//				console.log(lista.proveedores);
 //				var nc=$scope.newCot;
 //				lista.push(nc)
-				eventoService.getBitacora($routeParams.id).then(function(data) {
-				$scope.eventos = data;
-//				console.log(data);
-			});
+//				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
+				$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
+					
+					$scope.cargarServicio();
+					$scope.cotizaciones();
+				}, function(response) {
+				})
+			
 
 //				$http.post('/cotizacion/save', {listcotizaciones:lista,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo}).then(function(response) {
 				console.log(lista.proveedores);
@@ -570,7 +540,7 @@ app.controller("serviceController", [
 			}
 			
 			$scope.imprimir=function(){
-				$scope.guardar();
+				$scope.guardar2();
 				$scope.modals=modalService.aver('modalImprimir');
 			}
 			
@@ -580,7 +550,8 @@ app.controller("serviceController", [
 			
 			$scope.currency=function(value, decimals, separators) {
 			    decimals = decimals >= 0 ? parseInt(decimals, 0) : 2;
-			    separators = separators || ['.', "'", ','];
+//			    separators = separators || ['.', "", ''];
+			    separators = ['', "", '.'];
 			    var number = (parseFloat(value) || 0).toFixed(decimals);
 			    if (number.length <= (4 + decimals))
 			        return number.replace('.', separators[separators.length - 1]);
@@ -611,13 +582,15 @@ app.controller("serviceController", [
 			$scope.utilidad1= function(pres){
 				if(pres.precioUnitarioConIVA){
 					if(pres.precioCliente.value){
-				return $scope.currency(pres.precioCliente.value -
-						pres.precioUnitario.value*1.16,2, [',', "'", '.']);
+						var valor=pres.precioCliente.value-pres.precioUnitario.value*1.16;
+				return $scope.currency(valor,2, [',', "'", '.']);
 				}
 				}
 				if(pres.precioCliente.value){
-				return $scope.currency(pres.precioCliente.value -
-						pres.precioUnitario.value,2, [',', "'", '.']);
+					var valor=pres.precioCliente.value -
+					pres.precioUnitario.value;
+				
+				return $scope.currency(valor,2, [',', "'", '.']);
 				}
 			}
 			$scope.utilidad= function (pres){
@@ -679,7 +652,9 @@ app.controller("serviceController", [
 				for(var i = 0;i<$scope.servicio.gruposCosto.length;i++){
 					var gru= $scope.servicio.gruposCosto[i];
 					for(var j = 0; j< gru.presupuestos.length; j++){
-						valor++;
+						if(gru.presupuestos[j].subtipo=="RE" || gru.presupuestos[j].subtipo=="IN" || gru.presupuestos[j].subtipo=="SE"){
+							valor++;
+						}
 					}
 				}
 				return valor;
