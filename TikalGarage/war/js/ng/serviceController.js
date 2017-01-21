@@ -158,6 +158,7 @@ app.controller("serviceController", [
 					$rootScope.detallesView=true;
 					var proveedores=$scope.servicio.servicio.proveedores;
 					$scope.listcotizaciones={proveedores:proveedores};
+					$scope.proveedores2=proveedores;
 					console.log($scope.servicio);
 					$scope.cotizaciones();
 			});
@@ -220,7 +221,6 @@ app.controller("serviceController", [
 				}
 				 console.log(send);
 				$http.post('/servicio/save', send).then(function(response) {
-					alert("Servicio Guardado");
 				}, function(response) {
 				})
 				var lista=$scope.listcotizaciones;
@@ -245,6 +245,14 @@ app.controller("serviceController", [
 				})
 				eventoService.updateBitacora($scope.eventos,$routeParams.id).then(function(data) {
 					$scope.eventos = data;
+					for(var i =0; $scope.eventos.length; i++){
+						var eve= $scope.eventos[i];
+						for(var j= 0; j< eve.evidencia.length;j++){
+							if(eve.evidencia[j].appended){
+								$('#'+eve.image).addClass("selected");
+							}
+						}
+					}
 //					$window.location.href = '/reporte/presupuestoPDF/'+$routeParams.id;
 				});
 			}
@@ -264,7 +272,14 @@ app.controller("serviceController", [
 			$scope.eventos = [];
 			eventoService.getBitacora($routeParams.id).then(function(data) {
 				$scope.eventos = data;
-				console.log(data);
+				for(var i =0; i<$scope.eventos.length; i++){
+					var eve= $scope.eventos[i];
+					for(var j= 0; j< eve.evidencia.length;j++){
+						if(eve.evidencia[j].appended){
+							$('#'+eve.image).addClass("selected");
+						}
+					}
+				}
 			});
 			$scope.fecha = function() {
 				var f = new Date();
@@ -278,7 +293,18 @@ app.controller("serviceController", [
 					var file = $scope.images;
 					fileUpload.uploadFileToUrl(file, $scope.uri.url, id).then(
 							function(data) {
-								$scope.eventos.push(data);
+								var id= data.idEvento;
+								var notfound=true;
+								for(var i = 0;i< $scope.eventos.length;i++){
+									if($scope.eventos[i].idEvento==id){
+										$scope.eventos[i]=data;
+										notfound=false;
+										break;
+									}
+								}
+								if(notfound){
+									$scope.eventos.push(data);
+								}
 								// recursivo
 							});
 				}
@@ -366,7 +392,7 @@ app.controller("serviceController", [
 				$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 					
 //					$scope.cargarServicio();
-					$scope.cotizaciones();
+//					$scope.cotizaciones();
 				}, function(response) {
 				})
 //				$scope.cotizaciones();
@@ -451,10 +477,23 @@ app.controller("serviceController", [
 			$scope.verEvidencias=function(e){
 				
 				$scope.modals = modalService.aver('showModalEvidencias');
-//				console.log($scope.modals);
 				$scope.evidenciasVer=e.evidencia;
 				$scope.evidenciasAdd=e.idEvento;
+					for(var j= 0; j< $scope.evidenciasVer.length;j++){
+						if($scope.evidenciasVer[j].appended){
+							$('#'+$scope.evidenciasVer[j].image).addClass("selected");
+						}
+					}
 			};
+			$scope.$watch('evidenciasVer',function(){
+				if($scope.evidenciasVer){
+				   for(var j= 0; j< $scope.evidenciasVer.length;j++){
+						if($scope.evidenciasVer[j].appended){
+							$('#'+$scope.evidenciasVer[j].image).addClass("selected");
+						}
+					}
+				}
+			},true);
 			
 			$scope.appendImages=function(){
 				$scope.images = fileService.getFile("b_pics");
@@ -465,7 +504,7 @@ app.controller("serviceController", [
 			$scope.newDatoCobranza={monto:{value:""}};
 			$scope.appendPago=function(){
 				var f = new Date();
-				var fecha= f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
+				var fecha= new Date();
 				var pago= {fecha:fecha};
 				$scope.servicio.servicio.cobranza.pagos.push(pago);
 //				$scope.newDatoCobranza={monto:{value:""}};
@@ -494,6 +533,7 @@ app.controller("serviceController", [
 							$scope.proveedores2= response.proveedores;
 						}else{
 							$scope.listcotizaciones.costos[indice]=response.costos[0];
+							$scope.listcotizaciones.proveedores=response.proveedores;
 							$scope.proveedores2= response.proveedores;
 						}
 					}).error(function(response){
@@ -507,7 +547,12 @@ app.controller("serviceController", [
 				var indiceGrupo= $scope.servicio.gruposCosto.indexOf(gru);
 				for(var i = 0; i<indiceGrupo; i++){
 					var grupo= $scope.servicio.gruposCosto[i];
-					indiceReal+=grupo.presupuestos.length;
+					for(var z = 0; z<grupo.presupuestos.length;z++){
+						if(grupo.presupuestos[z].subtipo=="RE" || grupo.presupuestos[z].subtipo=="IN" || grupo.presupuestos[z].subtipo=="SE"){
+							indiceReal++;
+						}
+					}
+					
 				}
 				indiceReal+=indice;
 				if($scope.contarCotizables()>$scope.listcotizaciones.costos.length){
@@ -581,7 +626,7 @@ app.controller("serviceController", [
 
 			$scope.utilidad1= function(pres){
 				if(pres.precioUnitarioConIVA){
-					if(pres.precioCliente.value){
+					if(pres.precioCliente){
 						var valor=pres.precioCliente.value-pres.precioUnitario.value*1.16;
 				return $scope.currency(valor,2, [',', "'", '.']);
 				}

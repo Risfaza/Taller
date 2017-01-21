@@ -366,7 +366,7 @@
 											</div>
 											<div style="float: right !important">
 												<button class="btn btn-small btn-link" data-toggle="modal"
-													data-target="#eventoModal" ng-click="verEvidencias(ev)">Evidencias</button>
+													data-target="#eventoModal" ng-click="verEvidencias(ev); pausar();">Evidencias</button>
 												<button class="btn btn-small btn-link"
 													ng-click="borrarEvento(ev)">Borrar</button>
 											</div>
@@ -463,20 +463,20 @@
 										ng-model="pres.concepto"
 										ng-change="conceptoChg(pres,$index,gru)" /></td>
 									<td><input type="text" ng-model="pres.cantidad" min="0" /></td>
-									<td><input type="text" step="0.01"
+									<td>$<input type="text" step="0.01"
 										ng-model="pres.precioUnitario.value" /></td>
 									<td><input type="checkbox"
 										ng-model="pres.precioUnitarioConIVA"
 										ng-click="pres.precioUnitario.value=calcularPUI(pres)" /></td>
-									<td><label disabled ng-show="pres.precioUnitarioConIVA">{{currency(pres.precioUnitario.value*0.16,2,
+									<td><label disabled ng-show="pres.precioUnitarioConIVA">{{'$'+currency(pres.precioUnitario.value*0.16,2,
 											[',', "'", '.'])}}</label></td>
 									<td><input type="text" step="0.01"
 										ng-model="pres.precioCliente.value" /></td>
-									<td><label>{{utilidad1(pres)}} / {{
+									<td><label>{{'$'+utilidad1(pres)}} / {{
 											utilidad(pres)+'%'}}</label></td>
-									<td><label>{{currency(pres.precioCliente.value*pres.cantidad,2,
+									<td><label>{{'$'+currency(pres.precioCliente.value*pres.cantidad,2,
 											[',', "'", '.'])}}</label></td>
-									<td><label ng-show="servicio.servicio.cobranza.facturado">{{currency(pres.precioCliente.value*pres.cantidad*0.16,2,
+									<td><label ng-show="servicio.servicio.cobranza.facturado">{{'$'+currency(pres.precioCliente.value*pres.cantidad*0.16,2,
 											[',', "'", '.'])}}</label></td>
 									<td><input type="checkbox" ng-model="pres.autorizado" /></td>
 
@@ -552,20 +552,20 @@
 						<label class="control-label col-sm-2" for="pwd">Total
 							Servicio:</label>
 						<div class="col-sm-10">
-							<label>{{servicio.servicio.metadata.costoTotal.value}}</label>
+							<label>{{'$'+currency(servicio.servicio.metadata.costoTotal.value,2,[])}}</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd">A cuenta:</label>
 						<div class="col-sm-10">
-							<label>{{aCuenta}}</label>
+							<label>{{'$'+currency(aCuenta,2,[])}}</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd">Adeudo:</label>
 						<div class="col-sm-10">
-							<label>{{servicio.servicio.metadata.costoTotal.value -
-								aCuenta}}</label>
+							<label>{{'$'+currency(servicio.servicio.metadata.costoTotal.value -
+								aCuenta,2,[])}}</label>
 						</div>
 					</div>
 				</div>
@@ -711,8 +711,8 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
 								<a id="{{evi.image}}" class="thumbnail"
-									ng-class="'selected':evi.appended"> <img
-									src="{{'http://tikal.mx/tallerWeb/images/'+evi.image}}"
+									ng-class="{'selected' : evi.appended}"> <img
+									src="{{'http://tikal.mx/tallerWeb/images/'+evi.image+'.jpg'}}"
 									ng-click="selectImage(evi)">
 								</a>
 							</div>
@@ -740,7 +740,7 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Pago</h4>
+				<h4 class="modal-title" id="myModalLabel">Reportes</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -761,45 +761,38 @@
 							</div>
 							-->
 							<div class="row">
-								<form method="POST"
-									action="/reporte/presupuestoPDFSoloDatos.pdf">
+								<div class="col-md-4">
+									<a href="/reporte/presupuestoPDFSoloDatos/{{servicio.servicio.idServicio}}" class="btn btn-primary" target="_blank">
+										<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo
+									</a>
+								</div>
+								<!-- 								<form method="POST" -->
+<!-- 									action="/reporte/presupuestoPDFSoloDatos.pdf"> -->
+<!-- 									<div class="col-md-4"> -->
+<!-- 										<button class="btn btn-primary" target="_blank" type="submit"> -->
+<!-- 											<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo -->
+<!-- 										</button> -->
+<!-- 										<input type="hidden" name="id" -->
+<!-- 											value="{{servicio.servicio.idServicio}}"> -->
+<!-- 									</div> -->
+<!-- 								</form> -->
 									<div class="col-md-4">
-										<button class="btn btn-primary" target="_blank" type="submit">
-											<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo
-										</button>
-										<input type="hidden" name="id"
-											value="{{servicio.servicio.idServicio}}">
-									</div>
-								</form>
-								<form method="POST" action="/reporte/presupuestoPDF.pdf">
-									<div class="col-md-4">
-										<button class="btn btn-primary" target="_blank" type="submit">
+										<a href="/reporte/presupuestoPDF/{{servicio.servicio.idServicio}}" class="btn btn-primary" target="_blank" type="submit">
 											<i class="fa fa-print"></i>Presupuesto
-										</button>
-										<input type="hidden" name="id"
-											value="{{servicio.servicio.idServicio}}">
+										</a>
 									</div>
-								</form>
 							</div>
 							<div class="row">
-								<form method="POST" action="/reporte/presupuestoPDFSin.pdf">
 									<div class="col-md-4">
-										<button class="btn btn-primary" target="_blank" type="submit">
+										<a href="/reporte/presupuestoPDFSin/{{servicio.servicio.idServicio}}" class="btn btn-primary" target="_blank" type="submit">
 											<i class="fa fa-print"></i>Cotizaci&oacute;n
-										</button>
-										<input type="hidden" name="id"
-											value="{{servicio.servicio.idServicio}}">
+										</a>
 									</div>
-								</form>
-								<form method="POST" action="/reporte/presupuestoPDFInterno.pdf">
 									<div class="col-md-4">
-										<button class="btn btn-primary" target="_blank" type="submit">
+										<a href="/reporte/presupuestoPDFInterno/{{servicio.servicio.idServicio}}" class="btn btn-primary" target="_blank" type="submit">
 											<i class="fa fa-print"></i>Interno
-										</button>
-										<input type="hidden" name="id"
-											value="{{servicio.servicio.idServicio}}">
+										</a>
 									</div>
-								</form>
 							</div>
 						</div>
 					</div>

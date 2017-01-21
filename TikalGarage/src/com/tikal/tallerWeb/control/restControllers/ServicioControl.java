@@ -229,7 +229,7 @@ public class ServicioControl {
 		blobstoreService.serve(blobKey, resp);
 	}
 
-	@RequestMapping(value = "/findServicio/{blobid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/findServicio/{blobid}", method = RequestMethod.GET,produces ="application/json")
 	public void getServicio(HttpServletResponse resp, HttpServletRequest req, @PathVariable String blobid)
 			throws IOException {
 		AsignadorDeCharset.asignar(req, resp);

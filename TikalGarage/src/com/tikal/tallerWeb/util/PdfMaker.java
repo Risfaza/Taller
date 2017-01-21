@@ -22,8 +22,6 @@ import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
 public class PdfMaker {
-	
-	
 
 	private DatosPresupuestoVO datos;
 	private Document document;
@@ -41,7 +39,6 @@ public class PdfMaker {
 	}
 
 	public void imprimirPresupuesto() throws DocumentException, IOException {
-		
 
 		////////////////////////////////////////////////////////////////////////////// HEADER
 
@@ -202,21 +199,39 @@ public class PdfMaker {
 		///////////////////////////////////////////////////////////////////////////// TABLA5
 
 		if (datos.isConImagenes() == true) {
-			PdfPTable table5 = new PdfPTable(2);
-			PdfPCell cellh = new PdfPCell(new Paragraph("Inventario de Daños", font3));
-			cellh.setColspan(2);
-			cellh.setBorderWidth(0);
-			table5.addCell(cellh);
-			table5.setWidthPercentage(100);
-			for (String path : datos.getListaImages()) {
-				String ruta = "http://tikal.mx/tallerWeb/images/";
-				Image img = Image.getInstance(new URL(ruta.concat(path)));
-				img.scalePercent(50);
-				PdfPCell cell = new PdfPCell(img, true);
-				table5.addCell(cell);
-			}
+			if (datos.getListaImages().size() > 0) {
+				PdfPTable table5 = new PdfPTable(2);
+				PdfPCell cellh = new PdfPCell(new Paragraph("Inventario de Daños", font3));
+				cellh.setColspan(2);
+				cellh.setBorderWidth(0);
+				table5.addCell(cellh);
+				table5.setWidthPercentage(100);
+				for (String path : datos.getListaImages()) {
+					String ruta = "http://tikal.mx/tallerWeb/images/" + path + ".jpg";
+					Image img = Image.getInstance(new URL(ruta));
+					img.scalePercent(50);
+					PdfPCell cell = new PdfPCell(img, true);
+					table5.addCell(cell);
+				}
+				if (!(datos.getListaImages().size() % 2 == 0)) {
+					PdfPCell jsdnf = new PdfPCell(new Paragraph(" "));
+					jsdnf.setBorderWidthBottom(0);
+					jsdnf.setBorderWidthLeft(0);
+					table5.addCell(jsdnf);
+				}
+				PdfPCell fin = new PdfPCell(new Paragraph(" "));
+				PdfPCell find = new PdfPCell(new Paragraph(" "));
+				fin.setBorderWidthTop(0);
+				fin.setBorderWidthRight(0);
 
-			document.add(table5);
+				find.setBorderWidthTop(0);
+				find.setBorderWidthLeft(0);
+
+				table5.addCell(fin);
+				table5.addCell(find);
+
+				document.add(table5);
+			}
 		}
 
 		///////////////////////////////////////////////////////////////////////////// TABLA5
@@ -447,22 +462,20 @@ public class PdfMaker {
 					contadorRenglones += 1;
 				}
 
-				
-				
-				if(datos.isEsFacturado()==true){
-					
+				if (datos.isEsFacturado() == true) {
+
 					PdfPCell celdaSinBorde = new PdfPCell();
 					celdaSinBorde.setBorderWidth(0);
-					
+
 					PdfPCell celdaSinBorde2 = new PdfPCell();
 					celdaSinBorde2.setBorderWidthBottom(0);
 					celdaSinBorde2.setBorderWidthLeft(0);
 					celdaSinBorde2.setBorderWidthRight(0);
-					
+
 					table8.addCell(celdaSinBorde2);
-					
+
 					PdfPCell SubTotalCellLabel = new PdfPCell(new Paragraph("SubTotal ", font4));
-					//SubTotalCellLabel.setBorderWidthLeft(0);
+					// SubTotalCellLabel.setBorderWidthLeft(0);
 					SubTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					SubTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(SubTotalCellLabel);
@@ -476,7 +489,7 @@ public class PdfMaker {
 					table8.addCell(celdaSinBorde);
 
 					PdfPCell IvaTotalCellLabel = new PdfPCell(new Paragraph("IVA ", font4));
-					//IvaTotalCellLabel.setBorderWidthLeft(0);
+					// IvaTotalCellLabel.setBorderWidthLeft(0);
 					IvaTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					IvaTotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(IvaTotalCellLabel);
@@ -490,7 +503,7 @@ public class PdfMaker {
 					table8.addCell(celdaSinBorde);
 
 					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
-					//TotalCellLabel.setBorderWidthLeft(0);
+					// TotalCellLabel.setBorderWidthLeft(0);
 					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table8.addCell(TotalCellLabel);
@@ -501,15 +514,16 @@ public class PdfMaker {
 					TotalCell.setFixedHeight(30f);
 					table8.addCell(TotalCell);
 
-//					PdfPCell leyenda = new PdfPCell(new Paragraph("*Los costos no incluyen IVA", font6));
-//					leyenda.setBorderWidth(0);
-//					leyenda.setColspan(3);
-//					table8.addCell(leyenda);
-					
+					// PdfPCell leyenda = new PdfPCell(new Paragraph("*Los
+					// costos no incluyen IVA", font6));
+					// leyenda.setBorderWidth(0);
+					// leyenda.setColspan(3);
+					// table8.addCell(leyenda);
+
 				} else {
 
 					PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("Total ", font4));
-					//TotalCellLabel.setBorderWidthLeft(0);
+					// TotalCellLabel.setBorderWidthLeft(0);
 					TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					TotalCellLabel.setColspan(2);
@@ -526,9 +540,6 @@ public class PdfMaker {
 					leyenda.setColspan(3);
 					table8.addCell(leyenda);
 				}
-				
-
-				
 
 			} else {
 
@@ -633,13 +644,13 @@ public class PdfMaker {
 
 			PdfPTable firmasTable = new PdfPTable(2);
 			firmasTable.setWidthPercentage(100);
-			
+
 			PdfPCell em = new PdfPCell(new Paragraph(""));
 			em.setBorderWidth(0);
-			
+
 			firmasTable.addCell(em);
 			firmasTable.addCell(em);
-			
+
 			PdfPCell fechaLabel = new PdfPCell(new Paragraph("Fecha ", font4));
 			firmasTable.addCell(fechaLabel);
 
@@ -666,7 +677,7 @@ public class PdfMaker {
 			firmasTable.addCell(nombreFirmaInputSalida);
 
 			firmasTable.addCell(nombreFirmaInput);
-			
+
 			firmasTable.addCell(em);
 			firmasTable.addCell(em);
 
@@ -681,6 +692,8 @@ public class PdfMaker {
 		PdfPTable headerTable = new PdfPTable(2);
 		headerTable.setWidthPercentage(100);
 		Image img = Image.getInstance("WEB-INF/Images/ACELogo.PNG");
+		// Image img =
+		// Image.getInstance("http://tikal.mx/tallerWeb/images/1484941303.jpg");
 		PdfPCell cell1 = new PdfPCell(img, true);
 		cell1.setBorderWidth(0);
 		headerTable.addCell(cell1);

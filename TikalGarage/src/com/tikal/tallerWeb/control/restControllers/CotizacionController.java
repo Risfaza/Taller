@@ -59,6 +59,7 @@ public class CotizacionController {
 		Long idServicio = Long.parseLong(request.getParameter("idServicio"));
 
 		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
+		System.out.println("sgasd");
 		List<String> todos = new ArrayList<String>();
 		boolean completa = Boolean.parseBoolean(request.getParameter("full"));
 		if (completa) {
@@ -90,6 +91,7 @@ public class CotizacionController {
 			for (CotizacionEntity cot : cots) {
 				cot.setSelected(false);
 				cot.setFecha(new Date());
+				cot.setId(null);
 			}
 			boolean flag = true;
 			for (int i = 0; i < guardados.size(); i++) {
@@ -113,8 +115,19 @@ public class CotizacionController {
 		}
 		for (CotizacionEntity cot : guardados) {
 			if (mapa.containsKey(cot.getProveedor())) {
-				mapa.get(cot.getProveedor()).add(cot);
-
+				List<CotizacionEntity> lc=mapa.get(cot.getProveedor());
+				boolean repe= false;
+				for(int ind=0;ind<lc.size();ind++){
+					CotizacionEntity ce= lc.get(ind);
+					if(ce.getConcepto().compareTo(cot.getConcepto())==0){
+						repe=true;
+						lc.set(ind, this.getCandidato(cot, ce, idServicio));
+						break;
+					}
+				}
+				if(!repe){
+					lc.add(cot);
+				}
 			} else {
 				List<CotizacionEntity> precios = new ArrayList<CotizacionEntity>();
 				precios.add(cot);
@@ -173,6 +186,7 @@ public class CotizacionController {
 		// cotizaciondao.guarda(guardar);
 		List<PiezaCotizacionVO> costos = lista.getCostos();
 		for (PiezaCotizacionVO pieza : costos) {
+			if(pieza!=null && pieza.getConcepto()!=null){
 			String concepto = pieza.getConcepto();
 
 			for (int i = 0; i < lista.getProveedores().size(); i++) {
@@ -180,6 +194,10 @@ public class CotizacionController {
 					CotizacionEntity cot = pieza.getCostos().get(i);
 					cot.setProveedor(lista.getProveedores().get(i));
 					if (cot.getServicio() == null) {
+						cot.setServicio(Long.parseLong(lista.getIdServicio()));
+					}
+					if(cot.getServicio()==null){
+						cot.setId(null);
 						cot.setServicio(Long.parseLong(lista.getIdServicio()));
 					}
 					if (cot.getServicio().compareTo(Long.parseLong(lista.getIdServicio())) != 0) {
@@ -198,8 +216,23 @@ public class CotizacionController {
 					}
 				}
 			}
+			}
 		}
 		cotizaciondao.guarda(guardar);
+		
+	}
+	
+	private CotizacionEntity getCandidato(CotizacionEntity c1, CotizacionEntity c2, Long id){
+		if(c1.getServicio().compareTo(id)==0){
+			return c1;
+		}
+		if(c2.getServicio().compareTo(id)==0){
+			return c2;
+		}
+		if(c1.getFecha().compareTo(c2.getFecha())>0){
+			return c1;
+		}
+		return c2;
 	}
 
 }

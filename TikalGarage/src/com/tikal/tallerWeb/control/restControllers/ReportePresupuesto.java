@@ -171,6 +171,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -214,12 +215,12 @@ public class ReportePresupuesto {
 	@Autowired
 	BitacoraDAO bitacorin;
 	
-	@RequestMapping(value={"/presupuestoPDF"}, method = RequestMethod.POST, produces="application/pdf")
-	public void generaReporte(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+	@RequestMapping(value={"/presupuestoPDF/{id}"}, method = RequestMethod.GET, produces="application/pdf")
+	public void generaReporte(HttpServletRequest request, HttpServletResponse response, @PathVariable String id) throws DocumentException, IOException{
 		AsignadorDeCharset.asignar(request, response);
 		
 		response.setContentType("Application/Pdf");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 
 		PdfMaker nuevo = new PdfMaker();
 		NewServiceObject servicio = new NewServiceObject();
@@ -281,13 +282,13 @@ public class ReportePresupuesto {
 		response.getOutputStream().close();
 	}
 	
-	@RequestMapping(value={"/presupuestoPDFSin"}, method = RequestMethod.POST,produces="application/pdf")
-	public void generaReporteSinCosto(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+	@RequestMapping(value={"/presupuestoPDFSin/{id}"}, method = RequestMethod.GET,produces="application/pdf")
+	public void generaReporteSinCosto(HttpServletRequest request, HttpServletResponse response, @PathVariable String id) throws DocumentException, IOException{
 
 		AsignadorDeCharset.asignar(request, response);
 		
 		response.setContentType("Application/Pdf");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 		PdfMaker nuevo = new PdfMaker();
 		
 		NewServiceObject servicio = new NewServiceObject();
@@ -322,7 +323,7 @@ public class ReportePresupuesto {
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
-		datos.setConImagenes(true);
+		datos.setConImagenes(false);
 		datos.setConFirmasSencillas(true);
 		datos.setConDiagnostico(true);
 		datos.setConCosto(true);
@@ -364,13 +365,13 @@ public class ReportePresupuesto {
 		response.getOutputStream().close();
 	}
 	
-	@RequestMapping(value={"/presupuestoPDFInterno"}, method = RequestMethod.POST,produces="application/pdf")
-	public void generaReporteInterno(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+	@RequestMapping(value={"/presupuestoPDFInterno/{id}"}, method = RequestMethod.GET,produces="application/pdf")
+	public void generaReporteInterno(HttpServletRequest request, HttpServletResponse response, @PathVariable String id) throws DocumentException, IOException{
 		
 		AsignadorDeCharset.asignar(request, response);
 		
 		response.setContentType("Application/Pdf");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 		PdfMaker nuevo = new PdfMaker();
 		
 		NewServiceObject servicio = new NewServiceObject();
@@ -442,13 +443,13 @@ public class ReportePresupuesto {
 		response.getOutputStream().close();
 	}
 	
-	@RequestMapping(value={"/presupuestoPDFAutorizadoFirmas"}, method = RequestMethod.POST,produces="application/pdf")
-	public void generaReporteAutorizadoFirmas(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+	@RequestMapping(value={"/presupuestoPDFAutorizadoFirmas/{id}"}, method = RequestMethod.GET,produces="application/pdf")
+	public void generaReporteAutorizadoFirmas(HttpServletRequest request, HttpServletResponse response, @PathVariable String id) throws DocumentException, IOException{
 		
 		AsignadorDeCharset.asignar(request, response);
 		
 		response.setContentType("Application/Pdf");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 		PdfMaker nuevo = new PdfMaker();
 		
 		NewServiceObject servicio = new NewServiceObject();
@@ -520,12 +521,12 @@ public class ReportePresupuesto {
 		response.getOutputStream().close();
 	}
 	
-	@RequestMapping(value={"/presupuestoPDFSoloDatos"}, method = RequestMethod.POST, produces="application/pdf")
-	public void generaReporteSoloDatos(HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException{
+	@RequestMapping(value={"/presupuestoPDFSoloDatos/{id}"}, method = RequestMethod.GET, produces="application/pdf")
+	public void generaReporteSoloDatos(HttpServletRequest request, HttpServletResponse response,@PathVariable String id) throws DocumentException, IOException{
 		AsignadorDeCharset.asignar(request, response);
 		
 		response.setContentType("Application/Pdf");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 
 		PdfMaker nuevo = new PdfMaker();
 		NewServiceObject servicio = new NewServiceObject();
@@ -548,7 +549,7 @@ public class ReportePresupuesto {
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
 		datos.setConCosto(false);
 		datos.setConFirmas(false);
-		datos.setConImagenes(false);
+		datos.setConImagenes(true);
 		datos.setConDiagnostico(false);
 		datos.setConFirmasSencillas(true);
 		datos.setNombre(cliente.getNombre());
