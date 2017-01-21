@@ -12,6 +12,7 @@ public class CotizacionVO {
 	private List<String> proveedores;
 	private List<PiezaCotizacionVO> costos;
 	private String idServicio;
+	private String cadena;
 	
 	
 	public CotizacionVO(){
@@ -65,6 +66,14 @@ public class CotizacionVO {
 
 	public void setIdServicio(String idServicio) {
 		this.idServicio = idServicio;
+	}
+
+	public String getCadena() {
+		return cadena;
+	}
+
+	public void setCadena(String cadena) {
+		this.cadena = cadena;
 	}
 	
 	

@@ -572,9 +572,9 @@ public class ReportePresupuesto {
 		List<EventoEntity> eventin = bitacorin.cargar(Long.parseLong(id));
 		List<String> pathImagenes= new ArrayList<String>();
 		for(EventoEntity evento:eventin){
-			for(Evidencia ev:evento.getEvidencia()){
-				if(ev.isAppended(true)){
-					pathImagenes.add(ev.getImage());
+			if(evento.getTipo().compareToIgnoreCase("entrada de auto")==0){
+				for(Evidencia ev:evento.getEvidencia()){
+						pathImagenes.add(ev.getImage());
 				}
 			}
 		}

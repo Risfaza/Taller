@@ -527,7 +527,20 @@ app.controller("serviceController", [
 					send.params.full=false;
 					send.params.cadena=pre;
 				}
-					$http.get('/cotizacion/getFull',send).success(function(response){
+				var send2={
+						full:true,
+						tipo : $scope.servicio.auto.tipo,
+						modelo : $scope.servicio.auto.modelo,
+						idServicio:$scope.servicio.servicio.idServicio,
+						proveedores:{proveedores:$scope.listcotizaciones.proveedores},
+						cadena:{presupuesto:$scope.servicio.gruposCosto}
+				}
+				if(pre){
+					send2.presupuesto=pre;
+					send2.full=false;
+					send2.cadena=pre;
+				}
+					$http.post('/cotizacion/getFull',send2).success(function(response){
 						if(!append){
 							$scope.listcotizaciones=response;
 							$scope.proveedores2= response.proveedores;
