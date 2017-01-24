@@ -22,8 +22,11 @@ import com.tikal.tallerWeb.control.restControllers.VO.BitacoraVO;
 import com.tikal.tallerWeb.control.restControllers.VO.EventoVO;
 import com.tikal.tallerWeb.control.restControllers.VO.EvidenciaVO;
 import com.tikal.tallerWeb.data.access.BitacoraDAO;
+import com.tikal.tallerWeb.data.access.ServicioDAO;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
+import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.util.AsignadorDeCharset;
+import com.tikal.tallerWeb.util.EstatusMap;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
 import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
@@ -34,6 +37,9 @@ public class EventoControl {
 
 	@Autowired
 	BitacoraDAO bitacora;
+	
+	@Autowired
+	ServicioDAO servdao;
 
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -51,6 +57,12 @@ public class EventoControl {
 		}
 		String tipo = vo.getEvento().getTipo();
 		
+		tipo=EstatusMap.getStatus(tipo);
+		if(tipo!=null){
+			ServicioEntity ser= servdao.cargar(e.getId());
+			ser.getMetadata().setStatus(tipo);
+			servdao.guardar(ser);
+		}
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}
 	
@@ -95,10 +107,4 @@ public class EventoControl {
 		response.getWriter().println(JsonConvertidor.toJson(bit.getEventos()));
 	}
 
-	private String getStatus(String tipo){
-		if(tipo.compareToIgnoreCase("Entrada de Auto")==0){
-			return "Diagnóstico";
-		}
-		return "Activo";
-	}
 }

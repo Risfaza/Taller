@@ -48,20 +48,21 @@ public class CotizacionController {
 		response.getWriter().println(JsonConvertidor.toJson(cotizaciondao.consultar(tipo, Integer.parseInt(anio))));
 	}
 
-	@RequestMapping(value = { "/getFull" }, method = RequestMethod.GET, produces = "Application/Json")
-	public void getFull(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = { "/getFull" }, method = RequestMethod.POST, produces = "Application/Json",consumes="Application/Json")
+	public void getFull(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws NumberFormatException, IOException {
 		AsignadorDeCharset.asignar(request, response);
-		String cadena = request.getParameter("cadena");
-		String tipo = request.getParameter("tipo");
-		String anio = request.getParameter("modelo");
-		CotizacionVO datosProv= (CotizacionVO) JsonConvertidor.fromJson(request.getParameter("proveedores"), CotizacionVO.class);
-		Long idServicio = Long.parseLong(request.getParameter("idServicio"));
+		CotizacionVO datosCot= (CotizacionVO) JsonConvertidor.fromJson(json, CotizacionVO.class);
+		String cadena = datosCot.getCadena();
+		String tipo = datosCot.getTipo();
+		String anio = datosCot.getModelo();
+		List<String> datosProv=datosCot.getProveedores();
+		Long idServicio = Long.parseLong(datosCot.getIdServicio());
 
 		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
 		System.out.println("sgasd");
 		List<String> todos = new ArrayList<String>();
-		boolean completa = Boolean.parseBoolean(request.getParameter("full"));
+		boolean completa = datosCot.isFull();
 		if (completa) {
 			DatosServicioVO datos = (DatosServicioVO) JsonConvertidor.fromJson(cadena, DatosServicioVO.class);
 			for (GruposCosto g : datos.getPresupuesto()) {
@@ -108,7 +109,7 @@ public class CotizacionController {
 		}
 		Map<String, List<CotizacionEntity>> mapa = new HashMap<String, List<CotizacionEntity>>();
 		List<String> proveedores = new ArrayList<String>();
-		for(String provee:datosProv.getProveedores()){
+		for(String provee:datosProv){
 			List<CotizacionEntity> precios = new ArrayList<CotizacionEntity>();
 			mapa.put(provee, precios);
 			proveedores.add(provee);

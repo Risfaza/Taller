@@ -532,13 +532,13 @@ app.controller("serviceController", [
 						tipo : $scope.servicio.auto.tipo,
 						modelo : $scope.servicio.auto.modelo,
 						idServicio:$scope.servicio.servicio.idServicio,
-						proveedores:{proveedores:$scope.listcotizaciones.proveedores},
-						cadena:{presupuesto:$scope.servicio.gruposCosto}
+						proveedores:$scope.listcotizaciones.proveedores,
+						cadena:"{presupuesto:"+JSON.stringify($scope.servicio.gruposCosto)+"}"
 				}
 				if(pre){
 					send2.presupuesto=pre;
 					send2.full=false;
-					send2.cadena=pre;
+					send2.cadena=JSON.stringify(pre);
 				}
 					$http.post('/cotizacion/getFull',send2).success(function(response){
 						if(!append){
@@ -567,7 +567,12 @@ app.controller("serviceController", [
 					}
 					
 				}
-				indiceReal+=indice;
+				for(var z = 0; z<indice;z++){
+					if(gru.presupuestos[z].subtipo=="RE" || gru.presupuestos[z].subtipo=="IN" || gru.presupuestos[z].subtipo=="SE"){
+						indiceReal++;
+					}
+				}
+//				indiceReal+=indice;
 				if($scope.contarCotizables()>$scope.listcotizaciones.costos.length){
 					var insert={concepto:pre.concepto,costos:[]};
 					for(var z=0; z< $scope.listcotizaciones.proveedores.length;z++){
@@ -586,6 +591,13 @@ app.controller("serviceController", [
 						$http.post('/cotizacion/save', {idServicio:$scope.servicio.servicio.idServicio,costos:lista.costos,tipo:$scope.servicio.auto.tipo,modelo:$scope.servicio.auto.modelo,proveedores:lista.proveedores}).then(function(response) {
 							$scope.cotizaciones(pre,true,indiceReal);
 						});
+					}else{
+						for(var j= 0; j<$scope.listcotizaciones.costos.length;j++){
+							if($scope.listcotizaciones.costos[j].concepto==pre.concepto){
+								$scope.listcotizaciones.costos.splice(j,1);
+								return null;
+							}
+						}
 					}
 				}
 			}
@@ -716,6 +728,37 @@ app.controller("serviceController", [
 					}
 				}
 				return valor;
+			}
+			
+			$scope.$watch('servicio.gruposCosto',function(){
+				calcularTotal();
+			},true);
+			
+			$scope.facturado=function(){
+					
+					var total= calcularTotal();
+					if($scope.servicio.servicio.cobranza.facturado){
+						total= total*1.16;
+						$scope.servicio.servicio.metadata.costoTotal.value=total;
+					}
+					
+			}
+			
+			function calcularTotal(){
+				var total=0;
+				for(var i = 0; i<$scope.servicio.gruposCosto.length;i++){
+					var gru= $scope.servicio.gruposCosto[i];
+					var subtotal=0;
+					for(var j = 0; j< gru.presupuestos.length; j++){
+						var pre = gru.presupuestos[j];
+						if(pre.autorizado){
+							subtotal= subtotal+(pre.cantidad*pre.precioCliente.value);
+						}
+					}
+					total= total+subtotal;
+				}
+				$scope.servicio.servicio.metadata.costoTotal.value=total;
+				return total;
 			}
 //			listcotizaciones.proveedores
 			

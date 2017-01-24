@@ -13,6 +13,7 @@ public class CotizacionVO {
 	private List<PiezaCotizacionVO> costos;
 	private String idServicio;
 	private String cadena;
+	private boolean full;
 	
 	
 	public CotizacionVO(){
@@ -74,6 +75,14 @@ public class CotizacionVO {
 
 	public void setCadena(String cadena) {
 		this.cadena = cadena;
+	}
+
+	public boolean isFull() {
+		return full;
+	}
+
+	public void setFull(boolean full) {
+		this.full = full;
 	}
 	
 	
