@@ -154,8 +154,11 @@ public class ServicioDAOImp implements ServicioDAO {
 		map.put("status", status);
 		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).list();
 		List<ServicioIndex> ret = new ArrayList<ServicioIndex>();
+		List<PresupuestoEntity> lista=ofy().load().type(PresupuestoEntity.class).order("indice").list();
+		int tama=0;
 		for (ServicioEntity s : servicios) {
 			if (s.getMetadata().getStatus().compareTo("Finalizado") != 0) {
+				tama++;
 				ServicioIndex si = new ServicioIndex();
 				si.setCobranza(s.getCobranza());
 				si.setDescripcion(s.getDescripcion());
@@ -164,15 +167,30 @@ public class ServicioDAOImp implements ServicioDAO {
 				si.setIdAuto(s.getIdAuto());
 				si.setIdCliente(s.getIdCliente());
 				si.setStatus(s.getMetadata().getStatus());
-				List<PresupuestoEntity> presupuesto = ofy().load().type(PresupuestoEntity.class)
-						.filter("id", si.getId()).list();
+				
+				List<PresupuestoEntity> presupuesto= new ArrayList<PresupuestoEntity>();
+				for(PresupuestoEntity p: lista){
+		    		if(p.getId()==null){
+		    			ofy().delete().entity(p).now();
+		    			continue;
+		    		}
+		    		if(p.getId().compareTo(s.getIdServicio())==0){
+		    			presupuesto.add(p);
+		    		}
+		    	}
+				
 				float total = 0;
 				for (PresupuestoEntity pr : presupuesto) {
-					total += Float.parseFloat(pr.getPrecioCliente().getValue()) * pr.getCantidad();
+					if(pr.isAutorizado()){
+						total += Float.parseFloat(pr.getPrecioCliente().getValue()) * pr.getCantidad();
+					}
 				}
 				si.setCostoTotal(new Moneda());
 				si.getCostoTotal().setValue(total + "");
 				ret.add(si);
+				if(tama>=20){
+					break;
+				}
 			}
 		}
 		// PaginaServicioIndex r =

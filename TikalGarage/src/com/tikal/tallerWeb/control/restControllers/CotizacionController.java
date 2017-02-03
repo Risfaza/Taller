@@ -168,6 +168,25 @@ public class CotizacionController {
 		// response.getWriter().println(JsonConvertidor.toJson(cotizaciondao.consultar(tipo,
 		// Integer.parseInt(anio))));
 	}
+	
+	@RequestMapping(value = { "/delete" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void delete(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
+			throws NumberFormatException, IOException {
+		CotizacionVO lista = (CotizacionVO) JsonConvertidor.fromJson(json, CotizacionVO.class);
+		List<PiezaCotizacionVO> costos= lista.getCostos();
+		List<CotizacionEntity> borrar=new ArrayList<CotizacionEntity>();
+		Long id= Long.parseLong(lista.getIdServicio());
+		for(PiezaCotizacionVO p:costos){
+			for(CotizacionEntity c: p.getCostos()){
+				if(c.getId()!=null){
+					if(c.getServicio().compareTo(id)==0){
+						borrar.add(c);
+					}
+				}
+			}
+		}
+		cotizaciondao.eliminar(borrar);
+	}
 
 	@RequestMapping(value = { "/save" }, method = RequestMethod.POST, consumes = "Application/Json")
 	public void save(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)

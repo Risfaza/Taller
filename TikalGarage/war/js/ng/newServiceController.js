@@ -9,8 +9,13 @@ app
 				"newServiceController",
 				[
 						"$scope",
-						'$http','$location','eventoService','$rootScope',
-						function($scope, $http,$location,eventoService,$rootScope) {
+						'$http','$location','eventoService','$rootScope','sessionService',
+						function($scope, $http,$location,eventoService,$rootScope,sessionService) {
+							
+							sessionService.isAuthenticated().then(function(){
+								
+							
+							
 							$scope.mensaje = "Texto cargado desde el controlador Pagina1Controller";
 							$scope.ids = [ "cliente", "auto", "bitacora",
 									"presupuesto", "damage", "cobranza" ];
@@ -112,5 +117,5 @@ app
 								$scope.showTab('auto');
 								window.scrollTo(0, 0);
 							}
-
+							});
 						} ]);

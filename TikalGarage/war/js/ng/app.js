@@ -96,7 +96,7 @@ function(sessionService,$rootScope, $scope, $http, $location) {
 	};
 }]);
 
-app.service('sessionService',['$rootScope','$http','$location',function($rootScope,$http,$location){
+app.service('sessionService',['$rootScope','$http','$location','$q',function($rootScope,$http,$location,$q){
 	this.authenticate = function(credentials, callback) {
 
 		var headers = credentials ? {
@@ -115,5 +115,17 @@ app.service('sessionService',['$rootScope','$http','$location',function($rootSco
 				$location.path("/login");
 		});
 
+	}
+	this.isAuthenticated=function(){
+		
+		var d = $q.defer();
+		$http.get("currentSession").success(function(data){
+			$rootScope.authenticated=true;
+			d.resolve(data);
+		}).error(function(data) {
+			//$rootScope.authenticated = false;
+			$location.path("/login");
+		});
+		return d.promise;
 	}
 }]);

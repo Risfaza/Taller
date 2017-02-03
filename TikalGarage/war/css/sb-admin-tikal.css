@@ -1631,3 +1631,10 @@ font-size: 12px;
 width: 70px;
 
 }
+
+.panel-body {
+
+padding: 15px;
+margin: 20px;
+
+}

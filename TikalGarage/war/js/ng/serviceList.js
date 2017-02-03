@@ -16,9 +16,7 @@ app.service('listService',['$http','$q','$location',function($http,$q,$location)
 
 
 app.controller('serviceListController',['$rootScope','$scope','$location','listService','sessionService','$http',function($rootScope,$scope,$location,listService,sessionService,$http){
-	if(!$rootScope.authenticated){
-		$location.path("/login");
-	}
+	sessionService.isAuthenticated().then(function(){
 	$scope.busca="";
 	$scope.entontrados=[]
 	$scope.$watch('busca',function(){
@@ -64,8 +62,7 @@ app.controller('serviceListController',['$rootScope','$scope','$location','listS
 			}
 		});
 	
-	$scope.states = [{postcode:'B1',address:'Bull ring'},{postcode:'M1',address:'Manchester'}];
-	$scope.encontrados= ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
-	
+
+	});	
 	
 }]);

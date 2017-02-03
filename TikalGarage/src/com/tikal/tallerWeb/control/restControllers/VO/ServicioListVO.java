@@ -41,10 +41,17 @@ public class ServicioListVO {
 		Moneda ct = si.getCostoTotal();
 		if (ct != null) {
 			float saldo= Float.parseFloat(ct.getValue());
+			boolean hayPagos= si.getCobranza().getPagos().size()>0;
+			if(hayPagos){
 			for(PagoCobranza pago:si.getCobranza().getPagos()){
 				saldo= saldo - Float.parseFloat(pago.getMonto().getValue());
 			}
 			this.setSaldo(saldo+"");
+			this.setCobranza("Pagado");
+			if(saldo>0){
+				this.setCobranza("Adeudo");
+			}
+			}
 		}
 		this.setStatus(si.getStatus());
 		this.setCoche(a.getTipo()+" "+a.getColor());

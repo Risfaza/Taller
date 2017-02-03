@@ -95,7 +95,7 @@ public class SearchController {
 		if (tipo.compareTo("placas") == 0) {
 			AutoEntity cli = autodao.buscarPlacas(busca).get(0);
 			for (ServicioIndex sind : lista) {
-				if (sind.getIdAuto().compareToIgnoreCase(busca) == 0) {
+				if (sind.getIdAuto().compareToIgnoreCase(cli.getIdAuto().toString()) == 0) {
 					result.add(sind);
 				}
 			}
@@ -115,7 +115,6 @@ public class SearchController {
 			ret.add(svo);
 		}
 		resp.getWriter().println(JsonConvertidor.toJson(ret));
-
 	}
 
 }

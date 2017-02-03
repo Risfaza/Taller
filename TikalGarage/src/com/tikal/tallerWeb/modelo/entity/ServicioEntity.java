@@ -17,6 +17,7 @@ public class ServicioEntity extends Servicio {
 	
 	public long getIdServicio() {
 		return idServicio;
+		
 	}
 
 	public void setIdServicio(long idServicio) {

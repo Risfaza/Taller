@@ -70,4 +70,34 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 			$scope.stop = function() {
 				$timeout.cancel(mytimeout);
 			}
+			
+			$scope.getFecha= function(fecha){
+				if(fecha instanceof Date){
+				}else{
+					fecha= new Date(fecha);
+				}
+				var day=fecha.getDay();
+				var mes=fecha.getMonth()+1;
+				var anio=fecha.getFullYear();
+				var hora=fecha.getHours()+6;
+				var minutos=fecha.getMinutes();
+				var seg= fecha.getSeconds();
+				if(day<10){
+					day='0'+day;
+				}
+				if(mes<10){
+					mes='0'+mes;
+				}
+				if(hora<10){
+					hora='0'+hora;
+				}
+				if(minutos<10){
+					minutos='0'+minutos
+				}
+				if(seg<10){
+					seg='0'+seg;
+				}
+			
+				return day+"-"+mes+"-"+anio+" "+hora+":"+minutos+":"+seg;
+			}
 		} ]);

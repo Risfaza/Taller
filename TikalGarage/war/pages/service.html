@@ -449,6 +449,7 @@
 									<th>Autorizado <input style="width: auto;" type="checkbox"
 										ng-model="gru.autoTodos" value="false"
 										ng-click="seleccionarTodoAutorizado(gru)" /></th>
+										<th style="width:1%"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -480,7 +481,7 @@
 									<td><label ng-show="servicio.servicio.cobranza.facturado">{{'$'+currency(pres.precioCliente.value*pres.cantidad*0.16,2,
 											[',', "'", '.'])}}</label></td>
 									<td><input type="checkbox" ng-model="pres.autorizado" /></td>
-
+									<td><button class="btn btn-small" ng-click="borraPresupuesto(gru,$index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 									<!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
 								</tr>
 							</tbody>
@@ -502,7 +503,7 @@
 								<tr>
 									<th></th>
 									<th ng-repeat="prove in listcotizaciones.proveedores"><input
-										id="proveedor{{$index}}" type="text" ng-model="prove" /></th>
+										id="proveedor{{$index}}" type="text" ng-model="prove" />  <button class="btn btn-danger" ng-click="borrarProveedor($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -574,27 +575,35 @@
 		<hr>
 		<div class="row">
 			<div class="row" ng-repeat="pago in servicio.servicio.cobranza.pagos">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd">Fecha:</label>
 						<div class="col-sm-10">
-							<label>{{pago.fecha}}</label>
+							<label>{{getFecha(pago.fecha)}}</label>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="pwd">Responsable:</label>
-						<div class="col-sm-9">
+						<label class="control-label" for="pwd">Responsable:</label>
+						<div class="">
 							<input type="text" ng-model="pago.responsable" />
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd">Monto:</label>
-						<div class="col-sm-10">
+						<label class="control-label" for="pwd">Monto:</label>
+						<div class="">
 							<input type="text" ng-model="pago.monto.value" />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="control-label" for="pwd">Factura:</label>
+						<div class="">
+							<input type="text" ng-model="pago.numeroFactura" />
 						</div>
 					</div>
 				</div>

@@ -11,4 +11,5 @@ public interface CotizacionDAO {
 	public List<CotizacionEntity> consultar(String tipo, int modelo);
 	public List<CotizacionEntity> consultarFull(String tipo, int modelo,List<String> conceptos);
 	public List<CotizacionEntity> consultar(Long idServicio);
+	public void eliminar(List<CotizacionEntity> borrar);
 }

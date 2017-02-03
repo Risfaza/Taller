@@ -74,7 +74,30 @@ public class CostoDAOImp implements CostoDAO {
 
     @Override
     public List<PresupuestoEntity> guardar(Long idServicio, List<PresupuestoEntity> datos) {
+    	List<PresupuestoEntity> guardados=ofy().load().type(PresupuestoEntity.class).list();
+    	List<PresupuestoEntity> asdf= new ArrayList<PresupuestoEntity>();
+    	for(PresupuestoEntity p:guardados){
+    		if(p.getId().compareTo(idServicio)==0){
+    			asdf.add(p);
+    		}
+    	}
+    	guardados=new ArrayList<PresupuestoEntity>();
+    	
+    	for(PresupuestoEntity p:asdf){
+    		boolean esta=false;
+    		for(PresupuestoEntity p2:datos){
+    			if(p.getIdPresupuesto().compareTo(p2.getIdPresupuesto())==0){
+    				esta=true;
+    				break;
+    			}
+    		}
+    		if(!esta){
+    			guardados.add(p);
+    		}
+    	}
+    	
     	ofy().save().entities(datos).now();
+    	ofy().delete().entities(guardados).now();
 //        RegistroCosto[] r = factory.getTemplate().postForObject(factory.getRootUlr() + "/servicios/{idServicio}/costo", datos, RegistroCosto[].class, map);
 //        return Arrays.asList(r);
         return datos;

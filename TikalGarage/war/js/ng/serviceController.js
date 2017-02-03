@@ -602,12 +602,12 @@ app.controller("serviceController", [
 				}
 			}
 			
-			$scope.selectImage=function(img){
-				if(img.appended == true){
-					img.appended=false;
-				}else{img.appended=true;}
-				$('#'+img.image).toggleClass("selected");
-			}
+//			$scope.selectImage=function(img){
+//				if(img.appended == true){
+//					img.appended=false;
+//				}else{img.appended=true;}
+//				$('#'+img.image).toggleClass("selected");
+//			}
 			
 			$scope.imprimir=function(){
 				$scope.guardar2();
@@ -760,13 +760,56 @@ app.controller("serviceController", [
 				$scope.servicio.servicio.metadata.costoTotal.value=total;
 				return total;
 			}
-//			listcotizaciones.proveedores
 			
-//			$scope.cambiaProveedor= function(index,pro){
-//				$scope.listcotizaciones.proveedores[index]=pro;
-//			}
-//			$scope.$watch('listcotizaciones.proveedores',function(){
-//				alert("cambia");
-//			},true);
+			$scope.getFecha= function(fecha){
+				if(fecha instanceof Date){
+				}else{
+					fecha= new Date(fecha);
+				}
+				var day=fecha.getDay();
+				var mes=fecha.getMonth()+1;
+				var anio=fecha.getFullYear();
+				var hora=fecha.getHours();
+				var minutos=fecha.getMinutes();
+				var seg= fecha.getSeconds();
+				if(day<10){
+					day='0'+day;
+				}
+				if(mes<10){
+					mes='0'+mes;
+				}
+				if(hora<10){
+					hora='0'+hora;
+				}
+				if(minutos<10){
+					minutos='0'+minutos
+				}
+				if(seg<10){
+					seg='0'+seg;
+				}
+			
+				return day+"-"+mes+"-"+anio+" "+hora+":"+minutos+":"+seg;
+			}
+			
+			$scope.borraPresupuesto=function(grupo,indice){
+				grupo.presupuestos.splice(indice,1);
+				$scope.cotizaciones();
+			}
+			
+			$scope.borrarProveedor=function(indice){
+				$scope.listcotizaciones.proveedores.splice(indice,1);
+				var borrar=[];
+				for(var i=0; i<$scope.listcotizaciones.costos.length;i++){
+					var reng= $scope.listcotizaciones.costos[i];
+					borrar.push(reng.costos[indice]);
+					reng.costos.splice(indice,1);
+				}
+				console.log(borrar);
+				var costos=[]
+				costos.push({costos:borrar})
+				$http.post("/cotizacion/delete",{idServicio:$scope.servicio.servicio.idServicio,costos:costos}).then(function(response){
+					console.log(response);
+				});
+			}
 			
 		} ]);

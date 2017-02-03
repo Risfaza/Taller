@@ -54,4 +54,10 @@ public class CotizacionDAOImp implements CotizacionDAO {
 		return lista;
 	}
 
+	@Override
+	public void eliminar(List<CotizacionEntity> borrar) {
+		ofy().delete().entities(borrar).now();
+		
+	}
+
 }
