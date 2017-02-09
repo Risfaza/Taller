@@ -141,8 +141,10 @@ public class AutoDAOImp  implements AutoDAO
 		List<AutoEntity> lista= ObjectifyService.ofy().load().type(AutoEntity.class).list();
 		List<AutoEntity> result= new ArrayList<AutoEntity>();
 		for(AutoEntity auto:lista){
+			if(auto.getNumeroSerie()!=null){
 			if(auto.getNumeroSerie().contains(numeroSerie)){
 				result.add(auto);
+			}
 			}
 		}
 		

@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -25,9 +26,16 @@ public class GenererReporteController {
 	@Autowired
 	GeneradorReporteGlobal generador;
 	
-	@RequestMapping(value={"/getReporte.xlsx"}, method= RequestMethod.GET)
+	@RequestMapping(value={"/getReporte.xls"}, method= RequestMethod.GET)
 	public ModelAndView handleRequest(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+		HttpSession s= request.getSession();
+		String n= (String) s.getAttribute("userName");
+		if(n==null){
+			response.sendError(400);
+			return null;
+		}
+		else{
 			response.getOutputStream();
         try {
         	ParametrosReporteGlobal param= new ParametrosReporteGlobal();
@@ -46,6 +54,7 @@ public class GenererReporteController {
         }
         
         return null;
+		}
     }
 	
 	private String getMoneda(String valor){
