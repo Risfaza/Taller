@@ -26,7 +26,7 @@ public class GenererReporteController {
 	@Autowired
 	GeneradorReporteGlobal generador;
 	
-	@RequestMapping(value={"/getReporte.xls"}, method= RequestMethod.GET)
+	@RequestMapping(value={"/getReporte.xlsx"}, method= RequestMethod.GET)
 	public ModelAndView handleRequest(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 		HttpSession s= request.getSession();

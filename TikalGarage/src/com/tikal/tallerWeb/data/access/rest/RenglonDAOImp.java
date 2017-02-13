@@ -48,7 +48,7 @@ public class RenglonDAOImp implements RenglonDAO {
 				cliente = clientedao.cargar(servicio.getIdCliente());
 			}
 			if (servicio.getIdAuto() != null) {
-				auto = autodao.cargar(servicio.getIdAuto());
+				auto = autodao.cargar(Long.parseLong(servicio.getIdAuto()));
 			}
 			bita = bitacora.cargar(servicio.getIdServicio());
 			costos = costodao.cargar(servicio.getIdServicio());

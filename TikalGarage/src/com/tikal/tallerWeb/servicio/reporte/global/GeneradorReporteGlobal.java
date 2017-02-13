@@ -186,6 +186,7 @@ public class GeneradorReporteGlobal implements GeneradorReporte<ParametrosReport
                         String formulaRaw = valueMap[i].getValue();
                         ST formula = new ST(formulaRaw);
                         formula.add("row", rowCount + "");
+                        String render = formula.render();
                         actual.setCellFormula(formula.render());
                         actual.setCellStyle(moneyCellStyle);
                     }
