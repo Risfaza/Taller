@@ -48,5 +48,14 @@ public class UsariosControl {
 
 		    System.out.printf("Bucket %s created.%n", bucket.getName());
 	}
+	
+	@RequestMapping(value = {"/setup"}, method = RequestMethod.GET)
+	public void crearUsuarioMaster(HttpServletRequest request, HttpServletResponse response){
+		Usuario usuario = new Usuario();
+		usuario.setTipo("Administrador");
+		usuario.setUsuario("root");
+		usuario.setPass("root");
+		usuarioImp.crearUsuario(usuario);
+	}
 
 }

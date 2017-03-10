@@ -1,11 +1,13 @@
 package com.tikal.tallerWeb.util;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -249,7 +251,8 @@ public class PdfMaker {
 		cell2table6.setFixedHeight(35f);
 		cell2table6.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell2table6.setHorizontalAlignment(Element.ALIGN_CENTER);
-		PdfPCell cell3table6 = new PdfPCell(new Paragraph(datos.getNivelCombustible(), font2));
+		//PdfPCell cell3table6 = new PdfPCell(new Paragraph(datos.getNivelCombustible(), font2));
+		PdfPCell cell3table6 = crearImagenNivelGasolina(Integer.parseInt(datos.getNivelCombustible()));
 		cell3table6.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell3table6.setHorizontalAlignment(Element.ALIGN_CENTER);
 
@@ -752,6 +755,21 @@ public class PdfMaker {
 
 	public void setDocument(Document document) {
 		this.document = document;
+	}
+	
+	private static PdfPCell crearImagenNivelGasolina(int nivel) throws BadElementException, MalformedURLException, IOException{
+		Image img;
+		if(nivel == 25){
+			img = Image.getInstance("WEB-INF/Images/1.PNG");
+		}else if(nivel == 50){
+			img = Image.getInstance("WEB-INF/Images/2.PNG");
+		}else if(nivel == 75){
+			img = Image.getInstance("WEB-INF/Images/3.PNG");
+		}else{
+			img = Image.getInstance("WEB-INF/Images/4.PNG");
+		} 
+		return new PdfPCell(img, true);
+		
 	}
 
 }
