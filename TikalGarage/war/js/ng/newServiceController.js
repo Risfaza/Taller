@@ -11,7 +11,11 @@ app
 						"$scope",
 						'$http','$location','eventoService','$rootScope','sessionService',
 						function($scope, $http,$location,eventoService,$rootScope,sessionService) {
-							
+							var slider = new Slider("#ex6");
+							slider.on("change", function(sliderValue) {
+								document.getElementById("ex6SliderVal").textContent = sliderValue.newValue;
+								$scope.servicio.servicio.datosAuto.combustible=sliderValue.newValue;
+							});
 							sessionService.isAuthenticated().then(function(){
 							$scope.mensaje = "Texto cargado desde el controlador Pagina1Controller";
 							$scope.ids = [ "cliente", "auto", "bitacora",
