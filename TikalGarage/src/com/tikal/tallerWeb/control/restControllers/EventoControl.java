@@ -58,8 +58,12 @@ public class EventoControl {
 		String tipo = vo.getEvento().getTipo();
 		
 		tipo=EstatusMap.getStatus(tipo);
+		
 		if(tipo!=null){
 			ServicioEntity ser= servdao.cargar(e.getId());
+			if(tipo.compareTo("Diagnóstico")==0){
+				ser.setAsesor(vo.getEvento().getResponsable());
+			}
 			ser.getMetadata().setStatus(tipo);
 			servdao.guardar(ser);
 		}

@@ -253,6 +253,7 @@ app.controller("serviceController", [
 							}
 						}
 					}
+					$scope.cargarServicio();
 //					$window.location.href = '/reporte/presupuestoPDF/'+$routeParams.id;
 				});
 			}
@@ -304,7 +305,9 @@ app.controller("serviceController", [
 								}
 								if(notfound){
 									$scope.eventos.push(data);
+									
 								}
+								$scope.cargarServicio();
 								// recursivo
 							});
 				}
@@ -334,6 +337,7 @@ app.controller("serviceController", [
 						$scope.sendImages(data.idEvento);
 					}else{
 						$scope.eventos.push(data);
+						$scope.cargarServicio();
 					}
 				})
 				

@@ -23,7 +23,16 @@ public class DatosPresupuestoVO {
 	private String servicio;
 	private String nivelCombustible;
 	private String observaciones;
+	private long numeroServicio;
 	
+	
+	
+	public Long getNumeroServicio() {
+		return numeroServicio;
+	}
+	public void setNumeroServicio(Long numeroServicio) {
+		this.numeroServicio = numeroServicio;
+	}
 	//Inventario de reparaciones
 	private List<GruposCosto> listaServicios;
 	

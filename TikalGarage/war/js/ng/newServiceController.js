@@ -13,9 +13,6 @@ app
 						function($scope, $http,$location,eventoService,$rootScope,sessionService) {
 							
 							sessionService.isAuthenticated().then(function(){
-								
-							
-							
 							$scope.mensaje = "Texto cargado desde el controlador Pagina1Controller";
 							$scope.ids = [ "cliente", "auto", "bitacora",
 									"presupuesto", "damage", "cobranza" ];

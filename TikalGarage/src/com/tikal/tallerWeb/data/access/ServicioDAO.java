@@ -54,4 +54,6 @@ public interface ServicioDAO {
     List<ServicioIndex> getServiciosHoy();
     
 	public Key<ServicioEntity> getKey(Long id);
+	
+	public void crearFoliador(int folio);
 }

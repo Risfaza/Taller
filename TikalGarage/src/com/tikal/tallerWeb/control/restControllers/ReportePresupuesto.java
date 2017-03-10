@@ -238,6 +238,11 @@ public class ReportePresupuesto {
 		ClienteEntity cliente = interfacin.getCliente();
 		ServicioEntity servicin = interfacin.getServicio();
 		
+		String asesor=servicin.getAsesor();
+		if(servicin.getAsesor()==null){
+			asesor="S/D";
+		}
+		
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
@@ -245,12 +250,13 @@ public class ReportePresupuesto {
 		datos.setConFirmas(false);
 		datos.setConImagenes(false);
 		datos.setConDiagnostico(true);
+		datos.setNumeroServicio(servicin.getIdServicio());
 		datos.setEsFacturado(servicin.getCobranza().isFacturado());
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
 		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
-		datos.setAsesor("S/D");
+		datos.setAsesor(asesor);
 		datos.setMarca(auto.getMarca());
 		datos.setTipo(auto.getTipo());
 		datos.setModelo(auto.getModelo());
@@ -312,6 +318,11 @@ public class ReportePresupuesto {
 		ClienteEntity cliente = interfacin.getCliente();
 		ServicioEntity servicin = interfacin.getServicio();
 		
+		String asesor=servicin.getAsesor();
+		if(servicin.getAsesor()==null){
+			asesor="S/D";
+		}
+		
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
@@ -319,12 +330,13 @@ public class ReportePresupuesto {
 		datos.setConFirmasSencillas(true);
 		datos.setConDiagnostico(true);
 		datos.setConCosto(true);
+		datos.setNumeroServicio(servicin.getIdServicio());
 		datos.setEsFacturado(servicio.servicio.getCobranza().isFacturado());
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
 		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
-		datos.setAsesor("S/D");
+		datos.setAsesor(asesor);
 		datos.setMarca(auto.getMarca());
 		datos.setTipo(auto.getTipo());
 		datos.setModelo(auto.getModelo());
@@ -362,6 +374,17 @@ public class ReportePresupuesto {
 		servicio.setAuto(autodao.cargar(Long.parseLong(servicio.getServicio().getIdAuto())));
 		servicio.setCliente(clientedao.cargar(servicio.getServicio().getIdCliente()));
 		List<GruposCosto> grupos = costodao.cargar(servicio.getServicio().getIdServicio());
+//		for(GruposCosto gru:grupos){
+//			List<PresupuestoEntity> news= new ArrayList<PresupuestoEntity>();
+//			for(PresupuestoEntity pre:gru.getPresupuestos()){
+//				if(pre.isAutorizado()){
+//					news.add(pre);
+//				}
+//			}
+//			gru.setPresupuestos(news);
+//		}
+//		for(GruposCosto gru:grupos){
+		List<GruposCosto> gruposf=new ArrayList<GruposCosto>();
 		for(GruposCosto gru:grupos){
 			List<PresupuestoEntity> news= new ArrayList<PresupuestoEntity>();
 			for(PresupuestoEntity pre:gru.getPresupuestos()){
@@ -369,18 +392,26 @@ public class ReportePresupuesto {
 					news.add(pre);
 				}
 			}
+			
 			gru.setPresupuestos(news);
+			if(news.size()>0){
+				gruposf.add(gru);
+			}
 		}
-		
+	
 		DatosServicioVO datosin = new DatosServicioVO();
 		datosin.setServicio(servicio);
-		datosin.setPresupuesto(grupos);
+		datosin.setPresupuesto(gruposf);
 		
 		NewServiceObject interfacin = datosin.getServicio();
 		List<GruposCosto> presupuestin = datosin.getPresupuesto();
 		AutoEntity auto = interfacin.getAuto();
 		ClienteEntity cliente = interfacin.getCliente();
 		ServicioEntity servicin = interfacin.getServicio();
+		String asesor=servicin.getAsesor();
+		if(servicin.getAsesor()==null){
+			asesor="S/D";
+		}
 		
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
@@ -392,8 +423,9 @@ public class ReportePresupuesto {
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
+		datos.setNumeroServicio(servicin.getIdServicio());
 		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
-		datos.setAsesor("S/D");
+		datos.setAsesor(asesor);
 		datos.setMarca(auto.getMarca());
 		datos.setTipo(auto.getTipo());
 		datos.setModelo(auto.getModelo());
@@ -451,6 +483,11 @@ public class ReportePresupuesto {
 		ClienteEntity cliente = interfacin.getCliente();
 		ServicioEntity servicin = interfacin.getServicio();
 		
+		String asesor=servicin.getAsesor();
+		if(servicin.getAsesor()==null){
+			asesor="S/D";
+		}
+		
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
@@ -459,10 +496,11 @@ public class ReportePresupuesto {
 		datos.setConImagenes(false);
 		datos.setConDiagnostico(true);
 		datos.setNombre(cliente.getNombre());
+		datos.setNumeroServicio(servicin.getIdServicio());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
 		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
-		datos.setAsesor("S/D");
+		datos.setAsesor(asesor);
 		datos.setMarca(auto.getMarca());
 		datos.setTipo(auto.getTipo());
 		datos.setModelo(auto.getModelo());
@@ -518,6 +556,11 @@ public class ReportePresupuesto {
 		ClienteEntity cliente = interfacin.getCliente();
 		ServicioEntity servicin = interfacin.getServicio();
 		
+		String asesor=servicin.getAsesor();
+		if(servicin.getAsesor()==null){
+			asesor="S/D";
+		}
+		
 		String domicilio = cliente.getDomicilio().getCalle() + "," +cliente.getDomicilio().getColonia() + "," +cliente.getDomicilio().getCiudad();
 				
 		DatosPresupuestoVO datos = new DatosPresupuestoVO();
@@ -529,8 +572,9 @@ public class ReportePresupuesto {
 		datos.setNombre(cliente.getNombre());
 		datos.setDireccion(domicilio);
 		datos.setEmail(cliente.getEmail());
+		datos.setNumeroServicio(servicin.getIdServicio());
 		datos.setTelefono(cliente.getTelefonoContacto().get(0).getValor());
-		datos.setAsesor("S/D");
+		datos.setAsesor(asesor);
 		datos.setMarca(auto.getMarca());
 		datos.setTipo(auto.getTipo());
 		datos.setModelo(auto.getModelo());

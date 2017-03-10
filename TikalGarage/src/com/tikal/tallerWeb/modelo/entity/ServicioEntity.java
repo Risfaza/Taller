@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import technology.tikal.taller.automotriz.model.servicio.Servicio;
 
@@ -14,8 +15,9 @@ public class ServicioEntity extends Servicio {
 	@Id
 	Long idServicio;
 	private List<String> proveedores;
+	@Index private String asesor; 
 	
-	public long getIdServicio() {
+	public Long getIdServicio() {
 		return idServicio;
 		
 	}
@@ -35,6 +37,14 @@ public class ServicioEntity extends Servicio {
 
 	public void setProveedores(List<String> proveedores) {
 		this.proveedores = proveedores;
+	}
+
+	public String getAsesor() {
+		return asesor;
+	}
+
+	public void setAsesor(String asesor) {
+		this.asesor = asesor;
 	}
 	
 

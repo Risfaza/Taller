@@ -357,4 +357,10 @@ public class ServicioControl {
 		s.getMetadata().setCostoTotal(costoTotal);
 		return s;
 	}
+	
+	@RequestMapping(value = "/setup/{folio}", method = RequestMethod.GET)
+	public void setUp(HttpServletResponse res,@PathVariable int folio) throws IOException{
+		servdao.crearFoliador(folio);
+		res.getWriter().println("Setup finalizado");
+	}
 }

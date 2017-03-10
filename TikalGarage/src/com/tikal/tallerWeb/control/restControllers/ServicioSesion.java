@@ -37,4 +37,9 @@ public class ServicioSesion {
 			res.sendError(400);
 		}
 	}
+	
+	@RequestMapping(value={"/cerrarSession"},method=RequestMethod.GET,produces="application/json")
+	  public void close(HttpServletResponse res, HttpServletRequest req) throws IOException {
+		req.getSession().invalidate();
+	}
 }

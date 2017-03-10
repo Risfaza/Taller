@@ -63,7 +63,7 @@ public class PdfMaker {
 
 		Phrase line1 = new Phrase();
 		Chunk line1_1 = new Chunk("No. de Servicio ", font4);
-		Chunk line1_2 = new Chunk(" ", font2);
+		Chunk line1_2 = new Chunk(datos.getNumeroServicio() + "", font2);
 
 		line1.add(line1_1);
 		line1.add(line1_2);
@@ -151,7 +151,7 @@ public class PdfMaker {
 
 		PdfPTable table4 = new PdfPTable(7);
 		table4.setWidthPercentage(100);
-
+		table4.setWidths(new int[] { 3, 1, 2, 2, 2, 2, 5 });
 		PdfPCell cell1table4 = new PdfPCell(new Paragraph("Marca", font4));
 		PdfPCell cell2table4 = new PdfPCell(new Paragraph("Tipo", font4));
 		PdfPCell cell3table4 = new PdfPCell(new Paragraph("Modelo", font4));
@@ -283,19 +283,20 @@ public class PdfMaker {
 			firmasTableS.addCell(em);
 			firmasTableS.addCell(em);
 
-			PdfPCell fechaLabel = new PdfPCell(new Paragraph("Fecha ", font4));
+			PdfPCell fechaLabel = new PdfPCell(new Paragraph("Nombre y firma", font4));
 			firmasTableS.addCell(fechaLabel);
 
-			PdfPCell nombreFirmaLabel = new PdfPCell(new Paragraph("Nombre y Firma ", font4));
+			PdfPCell nombreFirmaLabel = new PdfPCell(new Paragraph("Nombre y firma de quien recibe la unidad", font4));
 			firmasTableS.addCell(nombreFirmaLabel);
 
-			PdfPCell fechaInput = new PdfPCell();
-			fechaInput.setFixedHeight(60f);
-			firmasTableS.addCell(fechaInput);
+			// PdfPCell fechaInput = new PdfPCell();
+			// fechaInput.setFixedHeight(60f);
+			// firmasTableS.addCell(fechaInput);
 
 			PdfPCell nombreFirmaInput = new PdfPCell(new Paragraph("Autorizo la revisión \n" + "de la unidad", font4));
 			nombreFirmaInput.setFixedHeight(50f);
 			nombreFirmaInput.setVerticalAlignment(Element.ALIGN_BOTTOM);
+			firmasTableS.addCell(nombreFirmaInput);
 			firmasTableS.addCell(nombreFirmaInput);
 
 			firmasTableS.addCell(em);
@@ -319,7 +320,7 @@ public class PdfMaker {
 
 			Phrase line1t7 = new Phrase();
 			Chunk line1_1t7 = new Chunk("No. de Servicio ", font4);
-			Chunk line1_2t7 = new Chunk(" ", font2);
+			Chunk line1_2t7 = new Chunk(datos.getNumeroServicio() + "", font2);
 
 			line1t7.add(line1_1t7);
 			line1t7.add(line1_2t7);
@@ -330,7 +331,7 @@ public class PdfMaker {
 
 			Phrase line2t7 = new Phrase();
 			Chunk line2_1t7 = new Chunk("Nombre Cliente ", font4);
-			Chunk line2_2t7 = new Chunk(" ", font2);
+			Chunk line2_2t7 = new Chunk(datos.getNombre(), font2);
 
 			line2t7.add(line2_1t7);
 			line2t7.add(line2_2t7);
@@ -368,12 +369,20 @@ public class PdfMaker {
 			emptytable8.setMinimumHeight(5);
 
 			table8.addCell(cell1table8);
-			table8.addCell(cell2table8);
-			table8.addCell(cell3table8);
+
+			if (datos.isConCosto() == true) {
+				table8.addCell(cell2table8);
+				table8.addCell(cell3table8);
+			} else {
+				cell2table8.setColspan(2);
+				table8.addCell(cell2table8);
+
+			}
 
 			PdfPCell emptyCell = new PdfPCell();
 			emptyCell.setBorderWidthBottom(0);
 			emptyCell.setBorderWidthTop(0);
+			// emptyCell.setBorderWidthLeft(0);
 
 			float total = 0;
 			int contadorRenglones = 0;
@@ -573,7 +582,11 @@ public class PdfMaker {
 					PdfPCell nombreGrupo = new PdfPCell(new Paragraph(grupo.getNombre(), font4));
 					nombreGrupo.setBorderWidth(0);
 					table8.addCell(nombreGrupo);
-					table8.addCell(emptyCell);
+					PdfPCell jk = new PdfPCell();
+					jk.setBorderWidthBottom(0);
+					jk.setBorderWidthTop(0);
+					jk.setBorderWidthLeft(0);
+					table8.addCell(jk);
 					contadorRenglones += 1;
 
 					for (PresupuestoEntity presupuesto : grupo.getPresupuestos()) {
@@ -590,45 +603,57 @@ public class PdfMaker {
 						PdfPCell precioClienteCell = new PdfPCell(new Paragraph("", font2));
 						precioClienteCell.setBorderWidthTop(0);
 						precioClienteCell.setBorderWidthBottom(0);
+						precioClienteCell.setBorderWidthLeft(0);
 						precioClienteCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table8.addCell(precioClienteCell);
 						contadorRenglones += 1;
 					}
 
-					table8.addCell(emptyCell);
-					float subtotal = 0;
-					for (PresupuestoEntity presupuesto : grupo.getPresupuestos()) {
-						subtotal += presupuesto.getCantidad()
-								* Float.parseFloat(presupuesto.getPrecioCliente().getValue());
-					}
-					total += subtotal;
-
-					PdfPCell subTotalCellLabel = new PdfPCell(new Paragraph("\n", font4));
-					subTotalCellLabel.setBorderWidth(0);
-					subTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					table8.addCell(subTotalCellLabel);
-
-					PdfPCell subTotalCell = new PdfPCell(new Paragraph("", font4));
-					subTotalCell.setBorderWidthBottom(0);
-					subTotalCell.setBorderWidthTop(0);
-					subTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					table8.addCell(subTotalCell);
+					// table8.addCell(emptyCell);
+					// float subtotal = 0;
+					// for (PresupuestoEntity presupuesto :
+					// grupo.getPresupuestos()) {
+					// subtotal += presupuesto.getCantidad()
+					// *
+					// Float.parseFloat(presupuesto.getPrecioCliente().getValue());
+					// }
+					// total += subtotal;
+					//
+					// PdfPCell subTotalCellLabel = new PdfPCell(new
+					// Paragraph("\n", font4));
+					// subTotalCellLabel.setBorderWidth(0);
+					// subTotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					// table8.addCell(subTotalCellLabel);
+					//
+					// PdfPCell subTotalCell = new PdfPCell(new Paragraph("",
+					// font4));
+					// subTotalCell.setBorderWidth(0);
+					// subTotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					// table8.addCell(subTotalCell);
 					contadorRenglones += 1;
 				}
 
-				table8.addCell(emptytable8);
+				PdfPCell TecnicoLabel = new PdfPCell(new Paragraph("Técnico: " + datos.getAsesor(), font4));
+				TecnicoLabel.setColspan(3);
+				TecnicoLabel.setFixedHeight(30f);
+				TecnicoLabel.setHorizontalAlignment(Element.ALIGN_CENTER);
+				TecnicoLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				table8.addCell(TecnicoLabel);
+				// table8.addCell(emptytable8);
 
-				PdfPCell TotalCellLabel = new PdfPCell(new Paragraph("", font4));
-				TotalCellLabel.setBorderWidthLeft(0);
-				TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				table8.addCell(TotalCellLabel);
-
-				PdfPCell TotalCell = new PdfPCell(new Paragraph("", font4));
-				TotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				TotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				TotalCell.setFixedHeight(30f);
-				table8.addCell(TotalCell);
+				// PdfPCell TotalCellLabel = new PdfPCell(new
+				// Paragraph("fggfxx", font4));
+				// TotalCellLabel.setBorderWidthLeft(0);
+				// TotalCellLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				// TotalCellLabel.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				// table8.addCell(TotalCellLabel);
+				//
+				// PdfPCell TotalCell = new PdfPCell(new Paragraph("hjgvcfgc",
+				// font4));
+				// TotalCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// TotalCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				// TotalCell.setFixedHeight(30f);
+				// table8.addCell(TotalCell);
 			}
 
 			document.add(table8);

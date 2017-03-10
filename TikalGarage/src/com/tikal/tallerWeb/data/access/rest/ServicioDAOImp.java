@@ -21,7 +21,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +30,7 @@ import org.springframework.stereotype.Service;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
+import com.tikal.tallerWeb.modelo.entity.FoliadorServicio;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.rest.util.AsyncRestCall;
@@ -61,22 +61,14 @@ public class ServicioDAOImp implements ServicioDAO {
 			sm.setStatus("Diagnositco");
 			dato.setMetadata(sm);
 		}
+		
+		if (dato.getIdServicio()==null) {
+			FoliadorServicio f=ObjectifyService.ofy().load().type(FoliadorServicio.class).list().get(0);
+			dato.setIdServicio(f.getFolio());
+			f.incrementar();
+			ObjectifyService.ofy().save().entity(f);
+		} 
 		ObjectifyService.ofy().save().entity(dato).now();
-		if (dato.getId() == null) {
-			// URI resource =
-			// factory.getTemplate().postForLocation(factory.getRootUlr() +
-			// "/servicios", dato);
-			// String[] uri = StringUtils.split(resource.toString(), '/');
-			// String id = uri[uri.length - 1];
-			// dato.setId(Long.valueOf(id));
-			// dato.setId(Long.valueOf(ObjectifyService.ofy().load().type(Servicio.class).list().size()-1));
-		} else {
-			// Map<String, Object> map = new HashMap<>();
-			// map.put("id", dato.getId());
-			// factory.getTemplate().postForLocation(factory.getRootUlr() +
-			// "/servicios/{id}", dato, map);
-		}
-
 	}
 
 	@Override
@@ -231,4 +223,9 @@ public class ServicioDAOImp implements ServicioDAO {
 		return Key.create(ServicioEntity.class,id);
 	}
 
+	public void crearFoliador(int folio){
+		FoliadorServicio f= new FoliadorServicio();
+		f.setFolio(folio);
+		ObjectifyService.ofy().save().entity(f);
+	}
 }

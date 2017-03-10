@@ -31,19 +31,20 @@ app
 					$routeProvider.when('/registro', {
 						templateUrl : 'pages/registro.html',
 						controller : 'usuarioController'
-					})
+					});
 
+					$routeProvider.when('/changePass', {
+						templateUrl : 'pages/pss.html',
+						controller : 'chgPassController'
+					});
+					
 					$routeProvider.otherwise({
 						redirectTo : '/listServicios'
 					});
 
-					$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-					$httpProvider.defaults.headers.common["Access-Control-Allow-Methods"] = "POST";
-					$httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = '*';
-
 				} ]);
 
-app.run([ '$rootScope', '$http', function($rootScope, $http) {
+app.run([ '$rootScope', '$http','$location', function($rootScope, $http,$location) {
 	$rootScope.serviciosHoy = [];
 	$rootScope.detallesView=false;
 	$rootScope.abiertos = [];
@@ -51,6 +52,15 @@ app.run([ '$rootScope', '$http', function($rootScope, $http) {
 		$rootScope.serviciosHoy = response.data;
 		console.log(response.data);
 	})
+	
+	$rootScope.cerrarSesion= function(){
+		if($rootScope.authenticated){
+			$http.get("/cerrarSession").then(function(response){
+				$rootScope.authenticated=false;
+				$location.path("/login");
+			});
+		}
+	}
 
 } ]);
 
@@ -99,12 +109,13 @@ function(sessionService,$rootScope, $scope, $http, $location) {
 app.service('sessionService',['$rootScope','$http','$location','$q',function($rootScope,$http,$location,$q){
 	this.authenticate = function(credentials, callback) {
 
-		var headers = credentials ? {
+		var headers1 = credentials ? {
 			authorization : "Basic "
 					+ btoa(credentials.username + ":" + credentials.password)
 		} : {};
-		$http.get('user',{headers:headers}).success(function(data) {
+		$http.get('user',{headers:headers1}).success(function(data) {
 			if (data.principal.usuario) {
+				$rootScope.userNameCurr=data.principal.usuario;
 				$rootScope.authenticated = true;
 				$location.path("/listServicios");
 			} else {
