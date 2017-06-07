@@ -1,6 +1,7 @@
 package com.tikal.tallerWeb.modelo.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
@@ -8,6 +9,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 import technology.tikal.taller.automotriz.model.servicio.Servicio;
+import technology.tikal.taller.automotriz.model.servicio.metadata.ServicioMetadata;
 
 @Entity
 public class ServicioEntity extends Servicio {
@@ -16,6 +18,8 @@ public class ServicioEntity extends Servicio {
 	Long idServicio;
 	private List<String> proveedores;
 	@Index private String asesor; 
+	@Index private Date fechaInicio;
+
 	
 	public Long getIdServicio() {
 		return idServicio;
@@ -29,6 +33,8 @@ public class ServicioEntity extends Servicio {
 
 	public ServicioEntity(){
 		this.proveedores= new ArrayList<String>();
+		ServicioMetadata sm= new ServicioMetadata();
+		sm.setStatus("Activo");
 	}
 
 	public List<String> getProveedores() {
@@ -46,6 +52,15 @@ public class ServicioEntity extends Servicio {
 	public void setAsesor(String asesor) {
 		this.asesor = asesor;
 	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	
 	
 
 }

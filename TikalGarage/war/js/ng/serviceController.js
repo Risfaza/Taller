@@ -108,6 +108,11 @@ app.controller("serviceController", [
 		'$window',
 		function($scope, $http, fileService, $sce, fileUpload, eventoService,
 				$routeParams, modalService, $rootScope,$window) {
+			var slider = new Slider("#ex6");
+			slider.on("change", function(sliderValue) {
+				document.getElementById("ex6SliderVal").textContent = sliderValue.newValue;
+				$scope.servicio.servicio.datosAuto.combustible=sliderValue.newValue;
+			});
 			$scope.ids = [ "cliente", "auto", "bitacora", "presupuesto",
 					"damage", "cobranza" ];
 			$scope.uri = {
@@ -161,6 +166,7 @@ app.controller("serviceController", [
 					$scope.proveedores2=proveedores;
 					console.log($scope.servicio);
 					$scope.cotizaciones();
+					document.getElementById("ex6SliderVal").textContent=$scope.servicio.servicio.datosAuto.combustible;
 			});
 			}
 			$scope.showTab = function(id) {

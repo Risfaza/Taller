@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>webproyect-1332</application>
-  <version>1m</version>
+  <version>1</version>
 
   <!--
     Allows App Engine to send multiple requests to one instance in parallel:
@@ -25,7 +25,6 @@
   </system-properties>
   
   <sessions-enabled>true</sessions-enabled>
-  
 
   <!--
     HTTP Sessions are disabled by default. To enable HTTP sessions specify:

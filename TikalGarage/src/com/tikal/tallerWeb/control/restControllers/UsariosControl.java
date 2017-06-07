@@ -22,7 +22,7 @@ import com.tikal.tallerWeb.util.JsonConvertidor;
 
 
 @Controller
-@RequestMapping(value={" /usuario "})
+@RequestMapping(value={" /usuario"})
 public class UsariosControl {
 	
 	@Autowired

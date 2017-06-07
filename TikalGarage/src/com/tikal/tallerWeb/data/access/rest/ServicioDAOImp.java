@@ -18,6 +18,8 @@ package com.tikal.tallerWeb.data.access.rest;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,12 +59,16 @@ public class ServicioDAOImp implements ServicioDAO {
 
 		if (dato.getMetadata() == null) {
 			ServicioMetadata sm = new ServicioMetadata();
-			sm.setFechaInicio(d);
 			sm.setStatus("Diagnositco");
 			dato.setMetadata(sm);
+		}else{
+			if(dato.getMetadata().getStatus()==null){
+				dato.getMetadata().setStatus("Diagnositco");
+			}
 		}
 		
 		if (dato.getIdServicio()==null) {
+			dato.setFechaInicio(d);
 			FoliadorServicio f=ObjectifyService.ofy().load().type(FoliadorServicio.class).list().get(0);
 			dato.setIdServicio(f.getFolio());
 			f.incrementar();
@@ -85,7 +91,7 @@ public class ServicioDAOImp implements ServicioDAO {
 				ServicioIndex si = new ServicioIndex();
 				si.setCobranza(s.getCobranza());
 				si.setDescripcion(s.getDescripcion());
-				si.setFechaInicio(s.getMetadata().getFechaInicio());
+				si.setFechaInicio(s.getFechaInicio());
 				si.setId(s.getIdServicio());
 				si.setIdAuto(s.getIdAuto());
 				si.setIdCliente(s.getIdCliente());
@@ -144,7 +150,7 @@ public class ServicioDAOImp implements ServicioDAO {
 	public List<ServicioIndex> getIndiceServiciosPorStatus(String status) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("status", status);
-		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).list();
+		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).order("-fechaInicio").limit(20).list();
 		List<ServicioIndex> ret = new ArrayList<ServicioIndex>();
 		List<PresupuestoEntity> lista=ofy().load().type(PresupuestoEntity.class).order("indice").list();
 		int tama=0;
@@ -154,12 +160,12 @@ public class ServicioDAOImp implements ServicioDAO {
 				ServicioIndex si = new ServicioIndex();
 				si.setCobranza(s.getCobranza());
 				si.setDescripcion(s.getDescripcion());
-				si.setFechaInicio(s.getMetadata().getFechaInicio());
+				si.setFechaInicio(s.getFechaInicio());
 				si.setId(s.getIdServicio());
 				si.setIdAuto(s.getIdAuto());
 				si.setIdCliente(s.getIdCliente());
 				si.setStatus(s.getMetadata().getStatus());
-				
+				 	 	
 				List<PresupuestoEntity> presupuesto= new ArrayList<PresupuestoEntity>();
 				for(PresupuestoEntity p: lista){
 		    		if(p.getId()==null){
@@ -194,19 +200,28 @@ public class ServicioDAOImp implements ServicioDAO {
 	}
 
 	@Override
-	public List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal) {
-
-		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).list();
+	public List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal){
+		Date hoy= new Date();
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
+		String fecha = dt1.format(hoy);
+		
+		try {
+			hoy= dt1.parse(fecha);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<ServicioEntity> servicios = ObjectifyService.ofy().load().type(ServicioEntity.class).filter("fechaInicio >",hoy).list();
 		List<ServicioEntity> res = new ArrayList<ServicioEntity>();
 		Date fi = fechaInicial.toDate();
 		Date ff = fechaFinal.toDate();
 		for (ServicioEntity servicio : servicios) {
-			if (servicio.getMetadata().getFechaInicio().getDate() >= fi.getDate()
-					&& servicio.getMetadata().getFechaInicio().getMonth() >= fi.getMonth()
-					&& servicio.getMetadata().getFechaInicio().getYear() >= fi.getYear()
-					&& servicio.getMetadata().getFechaInicio().getDate() <= ff.getDate()
-					&& servicio.getMetadata().getFechaInicio().getMonth() <= ff.getMonth()
-					&& servicio.getMetadata().getFechaInicio().getYear() <= ff.getYear()) {
+			if (servicio.getFechaInicio().getDate() >= fi.getDate()
+					&& servicio.getFechaInicio().getMonth() >= fi.getMonth()
+					&& servicio.getFechaInicio().getYear() >= fi.getYear()
+					&& servicio.getFechaInicio().getDate() <= ff.getDate()
+					&& servicio.getFechaInicio().getMonth() <= ff.getMonth()
+					&& servicio.getFechaInicio().getYear() <= ff.getYear()) {
 				res.add(servicio);
 			}
 		}

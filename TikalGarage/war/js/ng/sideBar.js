@@ -20,9 +20,10 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 			}
 
 			$scope.$watch('actual', function() {
-				if ($rootScope.actual.servicio.metadata.fechaInicio) {
+				if($rootScope.actual){
+				if ($rootScope.actual.servicio.fechaInicio) {
 					var hoy = new Date();
-					var inicio = new Date($rootScope.actual.servicio.metadata.fechaInicio)
+					var inicio = new Date($rootScope.actual.servicio.fechaInicio)
 					var dif = hoy - inicio;
 //					alert(dif);
 					$scope.counter = dif;
@@ -31,7 +32,7 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 //					$scope.minutos= Math.floor($scope.counter / (1000 * 60)) % (60); 
 //					$scope.segundos= Math.floor($scope.counter / (1000))%(60); 
 				}
-
+				}	
 			}, true);
 
 			$scope.$watch('counter', function() {

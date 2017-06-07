@@ -250,8 +250,10 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Combustible(%)</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="number" min="0" max="100"
-									ng-model="servicio.servicio.datosAuto.combustible" />
+							<input id="ex6" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="25" data-slider-value="0"/>
+								<span id="ex6CurrentSliderValLabel"><span id="ex6SliderVal">0</span></span>
+<!-- 								<input class="form-control" type="number" min="0" max="100" -->
+<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
 							</div>
 						</div>
 
@@ -817,4 +819,4 @@
 		</div>
 	</div>
 </div>
-{{servicio}}
+	
