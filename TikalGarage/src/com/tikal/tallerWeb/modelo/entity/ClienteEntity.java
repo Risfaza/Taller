@@ -11,7 +11,8 @@ public class ClienteEntity extends Cliente {
 	
 	@Id public Long idCliente;
 	
-	public ClienteEntity(){}
+	public ClienteEntity(){
+	}
 
 	public Long getIdCliente() {
 		return idCliente;
