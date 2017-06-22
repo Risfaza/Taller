@@ -12,6 +12,7 @@ public class PresupuestoEntity extends RegistroCosto {
 	
 	@Id public Long idPresupuesto;
 	@Index private int indice;
+	@Index private boolean facturado;
 	
 	public PresupuestoEntity(){
 		this.setPrecioUnitarioConIVA(true);
@@ -30,5 +31,12 @@ public class PresupuestoEntity extends RegistroCosto {
 		this.indice = indice;
 	}
 
-	
+	public boolean isFacturado() {			
+		return facturado;
+	}
+
+	public void setFacturado(boolean facturado) {
+		this.facturado = facturado;
+	}
+
 }
