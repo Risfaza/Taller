@@ -5,7 +5,9 @@ import com.tikal.tallerWeb.modelo.entity.AutoEntity;
 import com.tikal.tallerWeb.modelo.entity.ClienteEntity;
 import com.tikal.tallerWeb.modelo.entity.CotizacionEntity;
 import com.tikal.tallerWeb.modelo.entity.EventoEntity;
+import com.tikal.tallerWeb.modelo.entity.Factura;
 import com.tikal.tallerWeb.modelo.entity.FoliadorServicio;
+import com.tikal.tallerWeb.modelo.entity.Folio;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
 import com.tikal.tallerWeb.modelo.servicio.Person;
@@ -22,5 +24,8 @@ public class ObjectifyRegisterTikalWeb {
         ObjectifyService.register(Usuario.class);
         ObjectifyService.register(CotizacionEntity.class);
         ObjectifyService.register(FoliadorServicio.class);
+        ObjectifyService.register(Factura.class);
+        ObjectifyService.register(Folio.class);
+        
     }
 }

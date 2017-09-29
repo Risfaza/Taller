@@ -15,20 +15,22 @@
 			<table class="letraChica table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Status</th>
+					<th>No. Servicio</th>
+					<th>Estatus</th>
 						<th>Nombre Cliente</th>
 						<th>Placas</th>
 						<th>Recepci&oacute;n</th>
 						<th>Servicio</th>
 						<th>Cobranza</th>
-						<th>D&iacute;as de adeudo</th>
-						<th>Saldo</th>
+						<th>D&iacute;as en taller</th>
+						<th>Saldo
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="ser in listaServicios">
 						<td ng-click="addAbierto(ser)"><a
-							href="{{'#/servicio/view/'+ser.id}}">{{ser.status}}</a></td>
+							href="{{'#/servicio/view/'+ser.id}}">{{ser.id}}</a></td>
+						<td>{{ser.status}}</td>
 						<td>{{ser.nombreCliente}}</td>
 						<td>{{ser.placas}}</td>
 						<td>{{ser.fechaInicio}}</td>

@@ -195,7 +195,7 @@ app.controller("serviceController", [
 				}
 				 console.log(send);
 				$http.post('/servicio/save', send).then(function(response) {
-					alert("Servicio Guardado");
+					
 				}, function(response) {
 					alert("Something went wrong");
 				})
@@ -516,9 +516,11 @@ app.controller("serviceController", [
 				var f = new Date();
 				var fecha= new Date();
 				var pago= {fecha:fecha};
-				$scope.servicio.servicio.cobranza.pagos.push(pago);
+//				$scope.servicio.servicio.cobranza.pagos.push(pago);
 //				$scope.newDatoCobranza={monto:{value:""}};
-//				console.log($scope.servicio.servicio);
+				$scope.conceptosFact=[];
+				$scope.totalFactura=0;
+				$scope.verModal('modalPago');
 			}
 			
 			$scope.cotizaciones = function(pre,append,indice) {
@@ -657,6 +659,9 @@ app.controller("serviceController", [
 					$scope.aCuenta += parseFloat(cobranza.pagos[i].monto.value);
 				} 
 				$rootScope.saldo='$'+$scope.currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
+				$rootScope.adeudo=$scope.currency($scope.servicio.servicio.metadata.costoTotal.value- $scope.aCuenta,2,[]);
+				$rootScope.relojito();
+//				$rootSoc
 			},true);
 
 			$scope.utilidad1= function(pres){
@@ -822,4 +827,61 @@ app.controller("serviceController", [
 				});
 			}
 			
+			//tableConceptosF
+			
+			 $scope.toggle = function (item, list) {
+			        var idx = list.indexOf(item);
+			        var importe=item.precioCliente.value*item.cantidad*1.16;
+			        if (idx > -1) {
+			          list.splice(idx, 1);
+			          $scope.totalFactura-=importe;
+			        }
+			        else {
+			          list.push(item);
+			          $scope.totalFactura+=importe;
+			        }
+			      
+			      };
+
+		      $scope.exists = function (item, list) {
+		    	  if(list){
+		    		  return list.indexOf(item) > -1;
+		    	  }
+		    	  return false;
+		      };
+		      $scope.facturarPago=false;
+		      $scope.guardarPago=function(){
+		    	  $scope.guardar();
+		    	  if($scope.facturarPago){
+		    		  if($scope.conceptosFact.length>0){
+		    			  var send={
+		    				  conceptos:$scope.conceptosFact,
+		    				  receptor:$scope.newCliente,
+		    				  metodo:"Efectivo"
+		    			  }
+		    		  }else{
+		    			  alert("No se eligieron conceptos a facturar");
+		    		  }
+		    		  $http.post("facturar/facturar",send).then(function(response){
+		    			  var uuid=response.data[0];
+		    			  $scope.newPago.uuid=uuid;
+		    			  var pago=$scope.newPago;
+		    			  pago.monto.value=response.data[1];
+		    			  pago.detalle+="\n"+data[2];
+		    			  $scope.newCliente={};
+		    			  $scope.servicio.servicio.cobranza.pagos.push(pago);
+		    			  $scope.guardar2();
+		    		  },function(response){
+		    			  alert(":(");
+		    		  });
+		    	  }else{
+		    		  var f = new Date();
+						var fecha= new Date();
+						var pago=$scope.newPago;
+						pago.fecha=fecha;
+						$scope.servicio.servicio.cobranza.pagos.push(pago);
+						$scope.guardar2();
+						$scope.newPago={};
+		    	  }
+		      }
 		} ]);

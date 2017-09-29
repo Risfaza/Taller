@@ -19,11 +19,12 @@ public class ServicioEntity extends Servicio {
 	private List<String> proveedores;
 	@Index private String asesor; 
 	@Index private Date fechaInicio;
-
+	@Index private String aseguradora;
+	@Index private String numeroDeSiniestro;
+	private Date fechafin;
 	
 	public Long getIdServicio() {
 		return idServicio;
-		
 	}
 
 	public void setIdServicio(long idServicio) {
@@ -60,7 +61,34 @@ public class ServicioEntity extends Servicio {
 	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	
-	
 
+	public String getAseguradora() {
+		return aseguradora;
+	}
+
+	public void setAseguradora(String aseguradora) {
+		this.aseguradora = aseguradora;
+	}
+
+	public void setIdServicio(Long idServicio) {
+		this.idServicio = idServicio;
+	}
+
+	public String getNumeroDeSiniestro() {
+		return numeroDeSiniestro;
+	}
+
+	public void setNumeroDeSiniestro(String numeroDeSiniestro) {
+		this.numeroDeSiniestro = numeroDeSiniestro;
+	}
+
+	public Date getFechafin() {
+		return fechafin;
+	}
+
+	public void setFechafin(Date fechafin) {
+		this.fechafin = fechafin;
+	}
+	
+	
 }

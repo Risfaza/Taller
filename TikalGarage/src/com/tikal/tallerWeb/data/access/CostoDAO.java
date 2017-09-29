@@ -28,4 +28,5 @@ public interface CostoDAO {
 
     List<GruposCosto> cargar(Long idServicio);
     List<PresupuestoEntity> guardar(Long idServicio, List<PresupuestoEntity> datos);
+    void actualiza(List<PresupuestoEntity> datos);
 }

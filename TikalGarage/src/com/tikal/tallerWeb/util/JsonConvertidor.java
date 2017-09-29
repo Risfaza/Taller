@@ -1,7 +1,7 @@
 package com.tikal.tallerWeb.util;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
-import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class JsonConvertidor {
 	public static Object fromJson(String json, Class clase){

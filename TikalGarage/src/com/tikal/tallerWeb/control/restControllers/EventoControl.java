@@ -64,6 +64,9 @@ public class EventoControl {
 			if(tipo.compareTo("Diagnóstico")==0){
 				ser.setAsesor(vo.getEvento().getResponsable());
 			}
+			if(tipo.compareTo("Terminado")==0){
+				ser.setFechafin(new Date());
+			}
 			ser.getMetadata().setStatus(tipo);
 			servdao.guardar(ser);
 		}

@@ -19,21 +19,29 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 				$location.path("/servicio/view/" + id);
 			}
 
-			$scope.$watch('actual', function() {
+			$rootScope.relojito=function() {
 				if($rootScope.actual){
-				if ($rootScope.actual.servicio.fechaInicio) {
-					var hoy = new Date();
-					var inicio = new Date($rootScope.actual.servicio.fechaInicio)
-					var dif = hoy - inicio;
-//					alert(dif);
-					$scope.counter = dif;
-//					$scope.dias= Math.floor($scope.counter / (1000 * 60 * 60 * 24));
-//					$scope.horas= Math.floor($scope.counter / (1000 * 60 * 60))%24; 
-//					$scope.minutos= Math.floor($scope.counter / (1000 * 60)) % (60); 
-//					$scope.segundos= Math.floor($scope.counter / (1000))%(60); 
-				}
-				}	
-			}, true);
+					if ($rootScope.actual.servicio.fechaInicio) {
+						var hoy = new Date();
+						var inicio = new Date($rootScope.actual.servicio.fechaInicio)
+						if($rootScope.actual.servicio.fechafin){
+							hoy = new Date($rootScope.actual.servicio.fechafin);
+							var dif = hoy - inicio;
+							$scope.counter = dif;
+							$scope.dias= Math.floor($scope.counter / (1000 * 60 * 60 * 24));
+							$scope.horas= Math.floor($scope.counter / (1000 * 60 * 60))%24; 
+							$scope.minutos= Math.floor($scope.counter / (1000 * 60)) % (60); 
+							$scope.segundos= Math.floor($scope.counter / (1000))%(60); 
+						}else{
+							var dif = hoy - inicio;
+//						alert(dif);
+							$scope.counter = dif;
+						}
+					}
+					}	
+			}
+			$scope.$watch('actual', $rootScope.relojito()
+			, true);
 
 			$scope.$watch('counter', function() {
 //				if ($rootScope.actual.servicio.metadata.fechaInicio) {
@@ -59,12 +67,13 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 						document.getElementById("semaforo2").className = "alert-danger";
 					}
 //				}
-
 			}, true);
 			
 			$scope.onTimeout = function() {
+				if(! $rootScope.actual.servicio.fechafin){
 				$scope.counter+=1000;
 				mytimeout = $timeout($scope.onTimeout, 1000);
+				}
 			}
 			var mytimeout = $timeout($scope.onTimeout, 1000);
 

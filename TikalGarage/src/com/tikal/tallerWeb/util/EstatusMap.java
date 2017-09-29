@@ -12,7 +12,7 @@ public class EstatusMap {
 		mapa.put("Salida de Auto", "Finalizado");
 		mapa.put("Cancelación", "Cancelado");
 		mapa.put("Entrada de Auto", "Diagnóstico");
-		mapa.put("Termino de Servicio", "Terminado");
+		mapa.put("Termino de servicio", "Terminado");
 		
 		return mapa.get(evento);
 	}

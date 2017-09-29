@@ -85,7 +85,9 @@ public class CostoDAOImp implements CostoDAO {
     	
     	for(PresupuestoEntity p:asdf){
     		boolean esta=false;
+    		
     		for(PresupuestoEntity p2:datos){
+ 
     			if(p.getIdPresupuesto().compareTo(p2.getIdPresupuesto())==0){
     				esta=true;
     				break;
@@ -102,5 +104,10 @@ public class CostoDAOImp implements CostoDAO {
 //        return Arrays.asList(r);
         return datos;
     }
+
+	@Override
+	public void actualiza(List<PresupuestoEntity> datos) {
+		ofy().save().entities(datos).now();
+	}
 
 }

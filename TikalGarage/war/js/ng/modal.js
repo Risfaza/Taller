@@ -14,6 +14,9 @@ app.service('modalService', function() {
 		},{
 			modal : 'modalImprimir',
 			show : false
+		},{
+			modal : 'modalPago',
+			show : false
 		}];
 		for (var i = 0; i < modals.length; i++) {
 			modals[i].show

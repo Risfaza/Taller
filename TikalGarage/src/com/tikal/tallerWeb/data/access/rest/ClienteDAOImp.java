@@ -37,8 +37,8 @@ public class ClienteDAOImp implements ClienteDAO {
 //    @Autowired
 //    @Qualifier("taller-RestTemplateFactory")
 //    private RestTemplateFactory factory;
-    @Autowired
-    private MensajesControl mensajesControl;
+//    @Autowired
+//    private MensajesControl mensajesControl;
     @Override
     public void guardar(ClienteEntity dato) {
         if (dato.getId() == null) {
