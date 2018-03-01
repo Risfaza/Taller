@@ -151,23 +151,51 @@ public class PdfMaker {
 		///////////////////////////////////////////////////////////////////////////// TABLA3
 		///////////////////////////////////////////////////////////////////////////// TABLA4
 
-		PdfPTable table4 = new PdfPTable(7);
-		table4.setWidthPercentage(100);
-		table4.setWidths(new int[] { 3, 1, 2, 2, 2, 2, 5 });
-		PdfPCell cell1table4 = new PdfPCell(new Paragraph("Marca", font4));
-		PdfPCell cell2table4 = new PdfPCell(new Paragraph("Tipo", font4));
-		PdfPCell cell3table4 = new PdfPCell(new Paragraph("Modelo", font4));
+		PdfPTable tablaCoche= new PdfPTable(3);
+		PdfPCell marcat = new PdfPCell(new Paragraph("Marca", font4));
+		PdfPCell tipot = new PdfPCell(new Paragraph("Tipo", font4));
+		PdfPCell modelot = new PdfPCell(new Paragraph("Modelo", font4));
+		PdfPCell marcad = new PdfPCell(new Paragraph(datos.getMarca(), font2));
+		PdfPCell tipod = new PdfPCell(new Paragraph(datos.getTipo(), font2));
+		PdfPCell modelod = new PdfPCell(new Paragraph(datos.getModelo(), font2));
+		tablaCoche.addCell(marcat);
+		tablaCoche.addCell(tipot);
+		tablaCoche.addCell(modelot);
+		tablaCoche.addCell(marcad);
+		tablaCoche.addCell(tipod);
+		tablaCoche.addCell(modelod);
+		tablaCoche.setWidthPercentage(100);
+		document.add(tablaCoche);
+		
+		PdfPTable tablaCoche2= new PdfPTable(4);
+		tablaCoche2.setWidthPercentage(100);
 		PdfPCell cell4table4 = new PdfPCell(new Paragraph("Color", font4));
 		PdfPCell cell5table4 = new PdfPCell(new Paragraph("Placas", font4));
 		PdfPCell cell6table4 = new PdfPCell(new Paragraph("KM", font4));
 		PdfPCell cell7table4 = new PdfPCell(new Paragraph("Serie", font4));
-		PdfPCell cell8table4 = new PdfPCell(new Paragraph(datos.getMarca(), font2));
-		PdfPCell cell9table4 = new PdfPCell(new Paragraph(datos.getTipo(), font2));
-		PdfPCell cell10table4 = new PdfPCell(new Paragraph(datos.getModelo(), font2));
 		PdfPCell cell11table4 = new PdfPCell(new Paragraph(datos.getColor(), font2));
 		PdfPCell cell12table4 = new PdfPCell(new Paragraph(datos.getPlacas(), font2));
 		PdfPCell cell13table4 = new PdfPCell(new Paragraph(datos.getKilometros(), font2));
 		PdfPCell cell14table4 = new PdfPCell(new Paragraph(datos.getSerie(), font2));
+		
+		
+//		PdfPTable table4 = new PdfPTable(7);
+//		table4.setWidthPercentage(100);
+//		table4.setWidths(new float[] { 3, 3, 2, 2, 2, 2, 3 });
+//		PdfPCell cell1table4 = new PdfPCell(new Paragraph("Marca", font4));
+//		PdfPCell cell2table4 = new PdfPCell(new Paragraph("Tipo", font4));
+//		PdfPCell cell3table4 = new PdfPCell(new Paragraph("Modelo", font4));
+//		PdfPCell cell4table4 = new PdfPCell(new Paragraph("Color", font4));
+//		PdfPCell cell5table4 = new PdfPCell(new Paragraph("Placas", font4));
+//		PdfPCell cell6table4 = new PdfPCell(new Paragraph("KM", font4));
+//		PdfPCell cell7table4 = new PdfPCell(new Paragraph("Serie", font4));
+//		PdfPCell cell8table4 = new PdfPCell(new Paragraph(datos.getMarca(), font2));
+//		PdfPCell cell9table4 = new PdfPCell(new Paragraph(datos.getTipo(), font2));
+//		PdfPCell cell10table4 = new PdfPCell(new Paragraph(datos.getModelo(), font2));
+//		PdfPCell cell11table4 = new PdfPCell(new Paragraph(datos.getColor(), font2));
+//		PdfPCell cell12table4 = new PdfPCell(new Paragraph(datos.getPlacas(), font2));
+//		PdfPCell cell13table4 = new PdfPCell(new Paragraph(datos.getKilometros(), font2));
+//		PdfPCell cell14table4 = new PdfPCell(new Paragraph(datos.getSerie(), font2));
 		Phrase linea = new Phrase();
 		Chunk texto1 = new Chunk("    Servicio: ", font4);
 		Chunk texto2 = new Chunk(datos.getServicio(), font2);
@@ -176,25 +204,25 @@ public class PdfMaker {
 		PdfPCell cell15table4 = new PdfPCell(linea);
 		cell15table4.setFixedHeight(35f);
 		cell15table4.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell15table4.setColspan(7);
+		cell15table4.setColspan(4);
 
-		table4.addCell(cell1table4);
-		table4.addCell(cell2table4);
-		table4.addCell(cell3table4);
-		table4.addCell(cell4table4);
-		table4.addCell(cell5table4);
-		table4.addCell(cell6table4);
-		table4.addCell(cell7table4);
-		table4.addCell(cell8table4);
-		table4.addCell(cell9table4);
-		table4.addCell(cell10table4);
-		table4.addCell(cell11table4);
-		table4.addCell(cell12table4);
-		table4.addCell(cell13table4);
-		table4.addCell(cell14table4);
-		table4.addCell(cell15table4);
+//		table4.addCell(cell1table4);
+//		table4.addCell(cell2table4);
+//		table4.addCell(cell3table4);
+		tablaCoche2.addCell(cell4table4);
+		tablaCoche2.addCell(cell5table4);
+		tablaCoche2.addCell(cell6table4);
+		tablaCoche2.addCell(cell7table4);
+//		table4.addCell(cell8table4);
+//		table4.addCell(cell9table4);
+//		table4.addCell(cell10table4);
+		tablaCoche2.addCell(cell11table4);
+		tablaCoche2.addCell(cell12table4);
+		tablaCoche2.addCell(cell13table4);
+		tablaCoche2.addCell(cell14table4);
+		tablaCoche2.addCell(cell15table4);
 
-		document.add(table4);
+		document.add(tablaCoche2);
 
 		///////////////////////////////////////////////////////////////////////////// TABLA4
 
@@ -759,15 +787,32 @@ public class PdfMaker {
 	
 	private static PdfPCell crearImagenNivelGasolina(int nivel) throws BadElementException, MalformedURLException, IOException{
 		Image img;
-		if(nivel == 25){
+		if(nivel == 0){
+			img = Image.getInstance("WEB-INF/Images/0.PNG");
+		}else if(nivel == 10){
 			img = Image.getInstance("WEB-INF/Images/1.PNG");
-		}else if(nivel == 50){
+		}else if(nivel == 20){
 			img = Image.getInstance("WEB-INF/Images/2.PNG");
-		}else if(nivel == 75){
+		}else if(nivel == 30){
 			img = Image.getInstance("WEB-INF/Images/3.PNG");
-		}else{
+		}else if(nivel == 40){
 			img = Image.getInstance("WEB-INF/Images/4.PNG");
-		} 
+		}else if(nivel == 50){
+			img = Image.getInstance("WEB-INF/Images/5.PNG");
+		}else if(nivel == 60){
+			img = Image.getInstance("WEB-INF/Images/6.PNG");
+		}else if(nivel == 70){
+			img = Image.getInstance("WEB-INF/Images/7.PNG");
+		}else if(nivel == 80){
+			img = Image.getInstance("WEB-INF/Images/8.PNG");
+		}else if(nivel == 90){
+			img = Image.getInstance("WEB-INF/Images/9.PNG");
+		}else{
+			img = Image.getInstance("WEB-INF/Images/10.PNG");
+		}
+		img.setScaleToFitHeight(false);
+		img.scaleToFit(25f, 1);
+		
 		return new PdfPCell(img, true);
 		
 	}

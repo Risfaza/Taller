@@ -205,6 +205,20 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.3.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.antlr/ST4 -->
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>ST4</artifactId>
+			<version>4.0.7</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>

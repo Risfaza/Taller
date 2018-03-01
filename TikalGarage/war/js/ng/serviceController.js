@@ -521,6 +521,12 @@ app.controller("serviceController", [
 				$scope.conceptosFact=[];
 				$scope.totalFactura=0;
 				$scope.verModal('modalPago');
+				$scope.newCliente={
+						rfc:$scope.servicio.cliente.rfc,
+						nombre:$scope.servicio.cliente.nombre,
+						domicilio:$scope.servicio.cliente.domicilio,
+				}
+				$scope.newCliente.domicilio.pais="MX";
 			}
 			
 			$scope.cotizaciones = function(pre,append,indice) {

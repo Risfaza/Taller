@@ -60,7 +60,6 @@ public class CotizacionController {
 		Long idServicio = Long.parseLong(datosCot.getIdServicio());
 
 		List<CotizacionEntity> guardados = cotizaciondao.consultar(idServicio);
-		System.out.println("sgasd");
 		List<String> todos = new ArrayList<String>();
 		boolean completa = datosCot.isFull();
 		if (completa) {

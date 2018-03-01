@@ -5,8 +5,7 @@
 		</button>
 	</ol>
 	<ul class="nav nav-tabs">
-		<li><a data-toggle="tab"
-			ng-click="showTab('cliente')">Cliente</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('cliente')">Cliente</a></li>
 		<li><a data-toggle="tab" ng-click="showTab('auto')">Auto</a></li>
 	</ul>
 
@@ -21,9 +20,9 @@
 					<label for="nombreCliente" class="control-label col-sm-3">Nombre
 						o raz&oacute;n social</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" data-provide="typehead" id="searchCliente"
-							ng-model="servicio.cliente.nombre" />
-<!-- 							ng-change="findCliente()" /> -->
+						<input class="form-control" type="text" data-provide="typehead"
+							id="searchCliente" ng-model="servicio.cliente.nombre" />
+						<!-- 							ng-change="findCliente()" /> -->
 					</div>
 				</div>
 				<div class="form-group">
@@ -152,7 +151,8 @@
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
 									ng-model="servicio.auto.numeroSerie"
-									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)" />
+									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)"
+									maxlength="17" />
 							</div>
 						</div>
 					</div>
@@ -213,7 +213,8 @@
 							<label class="control-label col-sm-3">Placas</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.placas" />
+									ng-model="servicio.auto.placas"
+									ng-change="servicio.auto.placas=mayusculas(servicio.auto.placas)" />
 							</div>
 						</div>
 					</div>
@@ -245,10 +246,12 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Combustible(%)</label>
 							<div class="col-sm-6">
-								<input id="ex6" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="25" data-slider-value="0"/>
-								<span id="ex6CurrentSliderValLabel"><span id="ex6SliderVal">0</span></span>
-<!-- 								<input class="form-control" id="ex6SliderVal" type="number" min="0" max="100" -->
-<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
+								<input id="ex6" type="text" data-slider-min="0"
+									data-slider-max="100" data-slider-step="10"
+									data-slider-value="0" /> <span id="ex6CurrentSliderValLabel"><span
+									id="ex6SliderVal" style="padding-left: 15px;">0</span></span>
+								<!-- 								<input class="form-control" id="ex6SliderVal" type="number" min="0" max="100" -->
+								<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
 							</div>
 						</div>
 
@@ -339,7 +342,7 @@
 				</div>
 
 			</form>
-			
+
 
 		</div>
 	</div>

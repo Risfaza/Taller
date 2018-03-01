@@ -324,7 +324,7 @@ public class PDFFactura {
 		PdfPCell celdaLogo = new PdfPCell();
 		celdaLogo.setBorder(PdfPCell.NO_BORDER);
 		if (imagen != null) {
-			 Image imgLogo = Image.getInstance("imgs/acefac.png");
+			 Image imgLogo = Image.getInstance("imgs/acefac.jpg");
 			 //Image imgLogo = Image.getInstance(new URL(imagen.getImage()));
 			
 			 Chunk chunkLogo = new Chunk(imgLogo, 0, -35);
