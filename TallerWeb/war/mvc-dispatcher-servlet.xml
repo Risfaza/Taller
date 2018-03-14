@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+ 
+ <!-- Registro de Entities -->
+	<context:component-scan base-package="com.tikal.tallerWeb.ObjectifyRegisterTikalWeb"/>
+
+	<!-- beans daos -->
+	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.AutoDAOImp"></bean> -->
+	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"></bean> -->
+	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.ClienteDAOImp"></bean> -->
+	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.BitacoraDAOImp"></bean> -->
+
+	<!-- beans daos local -->
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.AutoDAOImpLocal"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.CostoDAOImp"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.RenglonDAOImp"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FacturaDAOImpl"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FolioDAOImp"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.BitacoraDAOImpLocal"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.UsuarioDAOImpLocal"/>
+	
+	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.CotizacionDAOImpLocal"/>
+
+
+	<context:component-scan base-package="com.tikal.tallerWeb.server.BlobServicio"/>
+<!-- 	<context:component-scan base-package="com.tikal.tallerWeb.control.imp" /> -->
+	<context:component-scan base-package="com.tikal.tallerWeb.control.restControllers" />
+
+	<context:component-scan base-package="com.tikal.tallerWeb.security.CustomUsuarioServicio"/>
+	
+	<context:component-scan base-package="com.tikal.tallerWeb.servicio.reporte.global.GeneradorReporteGlobal"/>
+	<context:component-scan base-package="com.tikal.tallerWeb.servicio.reporte.global.RenglonFactoryRG"/>
+	
+	<bean id="CustomAuthenticationProvider"
+		class="com.tikal.tallerWeb.security.CustomAuthenticationProvider"></bean>
+
+ 	<bean id="prodClient" class="com.tikal.cacao.factura.ws.GenericClient" />
+    
+    <bean id="testClient" class="com.tikal.tallerWeb.factura.ws.PruebaWSClient"/>
+
+	<mvc:annotation-driven />
+
+	<!-- Hay que indicar que archivo es el encargado de resolver el tipo de vista en este caso en pdf -->	
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+	   <property name="location">
+	       <value>/WEB-INF/spring-pdf-views.xml</value>
+	   </property>
+	   <property name="order" value="1" />
+	</bean>
+	
+	
+
+</beans>

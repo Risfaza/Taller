@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="app">
+
+<head>
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>ACE M&eacute;xico</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<link href="css/sb-admin-tikal.css" rel="stylesheet">
+<link href="css/plugins/morris.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script
+	src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.4.0/ui-bootstrap.min.js"></script>
+
+<script src="js/plugins/slide.js"></script>
+<script src="js/bootstrap-slider.min.js"></script>
+
+<script src="js/ng/app.js"></script>
+<script src="js/ng/uploadFile.js"></script>
+<script src="js/ng/modal.js"></script>
+<script src="js/ng/sideBar.js"></script>
+<script src="js/ng/newServiceController.js"></script>
+<script src="js/ng/serviceController.js"></script>
+<script src="js/ng/mainPageController.js"></script>
+<script src="js/ng/serviceList.js"></script>
+<script src="js/ng/usuarioController.js"></script>
+
+
+
+</head>
+
+<body>
+
+	<!-- <div ng-include="'pages/modals.html'"></div> -->
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<div class="topbar-left">
+                    <div class="text-center">
+                        <img alt="" src="imgs/ace-logo.png">
+                    </div>
+                </div>
+                
+<!-- 				<button type="button" class="navbar-toggle" data-toggle="collapse" -->
+<!-- 					data-target=".navbar-ex1-collapse"> -->
+<!-- 					<span class="sr-only">Toggle navigation</span> <span -->
+<!-- 						class="icon-bar"></span> <span class="icon-bar"></span> <span -->
+<!-- 						class="icon-bar"></span> -->
+<!-- 				</button> -->
+				<a class="navbar-brand" href="#/">Inicio</a> <a class="navbar-brand"
+					href="#/servicio/create">Nuevo</a> <a class="navbar-brand"
+					href="#/registro">Registro</a> <a class="navbar-brand"
+					target="_blank" href="/reporteGlobal/getReporte.xlsx" download>Reporte
+					Global</a>
+				<form role="search"
+					class="navbar-left app-search pull-left hidden-xs">
+<!-- 					<input type="text" placeholder="Búsqueda..." -->
+<!-- 						class="form-control app-search-input" data-provide="typeahead" data-source="["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]"> -->
+						
+				</form>
+<!-- 				<div class="bs-docs-example" style="background-color: #f5f5f5;"> -->
+<!--               <input type="text" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Alabama&quot;,&quot;Alaska&quot;,&quot;Arizona&quot;,&quot;Arkansas&quot;,&quot;California&quot;,&quot;Colorado&quot;,&quot;Connecticut&quot;,&quot;Delaware&quot;,&quot;Florida&quot;,&quot;Georgia&quot;,&quot;Hawaii&quot;,&quot;Idaho&quot;,&quot;Illinois&quot;,&quot;Indiana&quot;,&quot;Iowa&quot;,&quot;Kansas&quot;,&quot;Kentucky&quot;,&quot;Louisiana&quot;,&quot;Maine&quot;,&quot;Maryland&quot;,&quot;Massachusetts&quot;,&quot;Michigan&quot;,&quot;Minnesota&quot;,&quot;Mississippi&quot;,&quot;Missouri&quot;,&quot;Montana&quot;,&quot;Nebraska&quot;,&quot;Nevada&quot;,&quot;New Hampshire&quot;,&quot;New Jersey&quot;,&quot;New Mexico&quot;,&quot;New York&quot;,&quot;North Dakota&quot;,&quot;North Carolina&quot;,&quot;Ohio&quot;,&quot;Oklahoma&quot;,&quot;Oregon&quot;,&quot;Pennsylvania&quot;,&quot;Rhode Island&quot;,&quot;South Carolina&quot;,&quot;South Dakota&quot;,&quot;Tennessee&quot;,&quot;Texas&quot;,&quot;Utah&quot;,&quot;Vermont&quot;,&quot;Virginia&quot;,&quot;Washington&quot;,&quot;West Virginia&quot;,&quot;Wisconsin&quot;,&quot;Wyoming&quot;]"><ul class="typeahead dropdown-menu" style="top: 69px; left: 19px; display: none;"><li data-value="Alabama" class=""><a href="#"><strong>A</strong>l<strong>a</strong>b<strong>a</strong>m<strong>a</strong></a></li><li data-value="Alaska" class=""><a href="#"><strong>A</strong>l<strong>a</strong>sk<strong>a</strong></a></li><li data-value="Arizona" class=""><a href="#"><strong>A</strong>rizon<strong>a</strong></a></li><li data-value="Arkansas" class="active"><a href="#"><strong>A</strong>rk<strong>a</strong>ns<strong>a</strong>s</a></li></ul> -->
+<!--             </div>	 -->
+			</div>
+
+			<!-- Top Menu Items -->
+<!-- 			<ul class="nav navbar-right top-nav"> -->
+<!-- 				<li ng-show="authenticated"><a ng-click="cerrarSesion()">Cerrar Sesi&oacute;n</a> -->
+<!-- 			</ul> -->
+			 <ul class="nav navbar-right top-nav" ng-show="authenticated">
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{userNameCurr}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu" style="min-width:195px">
+                        <li>
+                            <a href="#/changePass"><i class="fa fa-fw fa-gear"></i> Cambiar Contrase&ntilde;a</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="" ng-click="cerrarSesion()"><i class="fa fa-fw fa-power-off"></i> Cerrar Sessi&oacute;n</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse"
+				ng-controller="sideBarController">
+				<ul class="nav navbar-nav side-nav">
+<!-- 					<li class="dropdown open"> -->
+<!-- 						<div class="user-details"> -->
+<!-- 							<div class="pull-left"> -->
+<!-- 								<img src="http://placehold.it/50x50" alt="" -->
+<!-- 									class="thumb-md img-circle"> -->
+<!-- 							</div> -->
+<!-- 							<div class="user-info"> -->
+<!-- 								<div class="dropdown"> -->
+<!-- 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" -->
+<!-- 										aria-expanded="false"><span class="caret"></span></a> -->
+<!-- 									<ul class="dropdown-menu"> -->
+<!-- 										<li><a><i class="fa fa-fw fa-user"></i> -->
+<!-- 												Profile</a></li> -->
+<!-- 										<li><a href="#"><i class="fa fa-fw fa-envelope"></i> -->
+<!-- 												Inbox</a></li> -->
+<!-- 										<li><a href="#"><i class="fa fa-fw fa-gear"></i> -->
+<!-- 												Settings</a></li> -->
+<!-- 										<li class="divider"></li> -->
+<!-- 										<li><a href="#"><i class="fa fa-fw fa-power-off"></i> -->
+<!-- 												Log Out</a></li> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+
+<!-- 								<p class="text-muted m-0">Administrador</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+
+<!-- 					</li> -->
+
+					<li><a href="javascript:;" data-toggle="collapse"
+						data-target="#demo"><i class="fa fa-fw fa-calendar"></i>
+							Servicios Nuevos<i class="fa fa-fw fa-caret-down"></i></a>
+						<ul id="demo" class="collapse in">
+							<li ng-repeat="serv in serviciosHoy"><button
+									class="btn-link" ng-click="goToView(serv.servicio.idServicio)">{{serv.auto.tipo}}
+									{{serv.auto.color}}</button></li>
+						</ul></li>
+					<li><a href="javascript:;" data-toggle="collapse"
+						data-target="#demo1"><i class="fa fa-fw fa-clock-o"></i>
+							Servicios Abiertos <i class="fa fa-fw fa-caret-down"></i></a>
+						<ul id="demo1" class="collapse in">
+							<li ng-repeat="abierto in abiertos"><button class="btn-link"
+									ng-click="goToView(abierto.id)">{{abierto.coche}}</button></li>
+						</ul></li>
+					<li ng-show="detallesView"><a href="javascript:;"
+						data-toggle="collapse" data-target="#demo2">Servicio</a>
+						<ul id="demo2" class="collapse in">
+							<li><a><b>Nombre o Raz&oacute;n Social</b></a></li>
+							<li><a>{{actual.cliente.nombre}}</a></li>
+							<li><a><b>Placas</b></a></li>
+							<li><a>{{actual.auto.placas}}</a></li>
+							<li><a>Inicio del Servicio</a></li>
+							<li><a>{{getFecha(actual.servicio.fechaInicio)}}</a></li>
+							<li><a>Duraci&oacute;n del servicio</a></li>
+							<li id="semaforo"><a>{{dias}}D {{horas - 6}}H {{minutos}}m
+									{{segundos}}s</a></li>
+							<li><a>Saldo</a></li>
+							<li id="semaforo2"><a>{{saldo}}</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+		<div id="page-wrapper" ng-view></div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+
+
+	<!-- 	<!-- Morris Charts JavaScript -->
+	<!-- 	<script src="js/plugins/morris/raphael.min.js"></script> -->
+	<!-- 	<script src="js/plugins/morris/morris.min.js"></script> -->
+	<!-- 	<script src="js/plugins/morris/morris-data.js"></script> -->
+
+</body>
+
+</html>
