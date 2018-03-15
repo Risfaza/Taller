@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 import com.tikal.tallerWeb.data.access.rest.UsuarioDAOImp;
 import com.tikal.tallerWeb.modelo.usuario.Usuario;
 import com.tikal.tallerWeb.util.AsignadorDeCharset;
 import com.tikal.tallerWeb.util.JsonConvertidor;
 
-@SessionAttributes({"usuario"})
+
 @Controller
 @RequestMapping(value={"/usuario"})
 public class UsariosControl {

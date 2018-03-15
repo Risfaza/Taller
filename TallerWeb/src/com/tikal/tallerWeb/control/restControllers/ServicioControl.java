@@ -9,7 +9,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
+//import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -266,7 +266,8 @@ public class ServicioControl {
 	@RequestMapping(value = "/serviciosHoy", method = RequestMethod.GET)
 	public void getHoy(HttpServletResponse resp, HttpServletRequest req) throws IOException {
 		AsignadorDeCharset.asignar(req, resp);
-		List<ServicioEntity> a = servdao.getByDate(new DateTime(), new DateTime());
+		//AList<ServicioEntity> a = servdao.getByDate(new DateTime(), new DateTime());  el renglon de abajo lo puso dapp
+		List<ServicioEntity> a = new ArrayList<ServicioEntity>();
 		List<NewServiceObject> ret = new ArrayList<NewServiceObject>();
 
 		for (ServicioEntity s : a) {
