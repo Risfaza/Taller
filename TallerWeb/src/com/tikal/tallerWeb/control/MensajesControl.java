@@ -16,11 +16,15 @@
 
 package com.tikal.tallerWeb.control;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 /**
  *
  */
+@Controller
 public interface MensajesControl {
-
+	@Autowired
     public void reportaError(String error);
     
     public void reportarAlerta(Long folio, String mensaje);

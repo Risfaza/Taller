@@ -35,11 +35,11 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 @RequestMapping(value = { "/eventos" })
 public class EventoControl {
 
-	@Autowired
+	//@Autowired
 	BitacoraDAO bitacora;
 	
-	@Autowired
-	ServicioDAO servdao;
+	//@Autowired
+	//ServicioDAO servdao;
 
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -60,7 +60,7 @@ public class EventoControl {
 		tipo=EstatusMap.getStatus(tipo);
 		
 		if(tipo!=null){
-			ServicioEntity ser= servdao.cargar(e.getId());
+		/*	ServicioEntity ser= servdao.cargar(e.getId());
 			if(tipo.compareTo("Diagnóstico")==0){
 				ser.setAsesor(vo.getEvento().getResponsable());
 			}
@@ -68,7 +68,7 @@ public class EventoControl {
 				ser.setFechafin(new Date());
 			}
 			ser.getMetadata().setStatus(tipo);
-			servdao.guardar(ser);
+			servdao.guardar(ser);*/
 		}
 		response.getWriter().println(JsonConvertidor.toJson(bitacora.agregar(e.getId(), e)));
 	}

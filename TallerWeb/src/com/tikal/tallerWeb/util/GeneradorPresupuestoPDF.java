@@ -12,8 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
+import com.itextpdf.awt.geom.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -63,12 +70,12 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 
 			PdfPCell dos = new PdfPCell(holis);
 
-			uno.setBorder(Rectangle.NO_BORDER);
-			dos.setBorder(Rectangle.NO_BORDER);
+			uno.setBorder(Rectangle.OUT_TOP);
+			dos.setBorder(Rectangle.OUT_TOP);
 
 			PdfPCell celulin = new PdfPCell(new Paragraph("\n\n\n\n"));
 			celulin.setColspan(2);
-			celulin.setBorder(Rectangle.NO_BORDER);
+			celulin.setBorder(Rectangle.OUT_TOP);
 
 			table.addCell(celulin);
 			table.addCell(uno);
@@ -86,7 +93,6 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 		}
 	}
 
-	@Override
 	protected void buildPdfDocument(Map<String, Object> mapa, Document documento, PdfWriter writer,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -121,14 +127,14 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 		//PdfPCell noServicio = new PdfPCell(new Paragraph("No. de Servicio: " + datos.getListaServicios().get(0).getPresupuestos().get(0).getId()));
 		PdfPCell noServicio = new PdfPCell(new Paragraph("No. de Servicio: "));
 
-		noServicio.setBorder(Rectangle.NO_BORDER);
+		noServicio.setBorder(Rectangle.OUT_TOP);
 		noServicio.setColspan(2);
 		
 		Date date = new Date();
 
 		//PdfPCell fecha = new PdfPCell(new Paragraph("Fecha: " + sdf.format(date)));
 		PdfPCell fecha = new PdfPCell(new Paragraph("Fecha: " + date));
-		fecha.setBorder(Rectangle.NO_BORDER);
+		fecha.setBorder(Rectangle.OUT_TOP);
 		fecha.setColspan(2);
 
 		PdfPCell nombreLabel = new PdfPCell(new Paragraph("Nombre: "));
@@ -241,7 +247,7 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 		vacio.setBorderWidthRight(0);
 		vacio.setBorderWidthTop(0);
 
-		Font boldFont = new Font(Font.HELVETICA, 12, Font.BOLD);
+		Font boldFont = new Font();
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
 		if (datos.isConCosto() == true) {
@@ -393,6 +399,14 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 		}else{
 			documento.add(leyendaLabel);
 		}
+	}
+
+	@Override
+	protected void buildPdfDocument(Map<String, Object> model, com.lowagie.text.Document document,
+			com.lowagie.text.pdf.PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

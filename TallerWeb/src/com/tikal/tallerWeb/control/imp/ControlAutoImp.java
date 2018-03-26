@@ -20,7 +20,7 @@ import technology.tikal.taller.automotriz.model.servicio.auto.DatosAuto;
 @RequestMapping(value = { "/auto" })
 public class ControlAutoImp implements ControlAuto {
 
-	@Autowired
+	//@Autowired
 	AutoDAO autoDAO;
 
 	@Override

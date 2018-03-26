@@ -32,17 +32,17 @@ import technology.tikal.taller.automotriz.model.servicio.Servicio;
 /**
  * @author Nekorp
  */
-@Component
+//@Component
 public class RenglonFactoryRG implements DataFactoryRG<RenglonRG> {
 
 	// @Autowired
 	// @Qualifier("taller-RestTemplateFactory")
 	// private RestTemplateFactory factory;
 	
-	@Autowired
+	//@Autowired
 	private RenglonDAO renglonDao;
 	
-	@Autowired
+	//@Autowired
 	private ClienteDAO customerDao;
 
 	@Override

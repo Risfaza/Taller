@@ -70,7 +70,7 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 			}, true);
 			
 			$scope.onTimeout = function() {
-				if(! $rootScope.actual.servicio.fechafin){
+				if(!$rootScope.actual.servicio.fechafin){
 				$scope.counter+=1000;
 				mytimeout = $timeout($scope.onTimeout, 1000);
 				}

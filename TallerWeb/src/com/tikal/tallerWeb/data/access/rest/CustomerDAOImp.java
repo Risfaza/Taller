@@ -54,9 +54,9 @@ public class CustomerDAOImp implements CustomerDAO {
 //    @Autowired
 //    @Qualifier("customer-RestTemplateFactory")
 //    private RestTemplateFactory factory;
-    @Autowired
+  //  @Autowired
     private MensajesControl mensajesControl;
-    @Autowired
+ //   @Autowired
     private ObjectMapper objectMapper;
     @Override
     public void guardar(Customer dato) {

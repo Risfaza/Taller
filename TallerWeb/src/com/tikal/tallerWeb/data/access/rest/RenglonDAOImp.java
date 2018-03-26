@@ -25,15 +25,15 @@ import com.tikal.tallerWeb.modelo.reporte.global.RenglonRG;
 
 public class RenglonDAOImp implements RenglonDAO {
 
-	@Autowired
+	//@Autowired
 	ServicioDAO servdao;
-	@Autowired
+	//@Autowired
 	ClienteDAO clientedao;
-	@Autowired
+	//@Autowired
 	CostoDAO costodao;
-	@Autowired
+	//@Autowired
 	AutoDAO autodao;
-	@Autowired
+//	@Autowired
 	BitacoraDAO bitacora;
 
 	@Override

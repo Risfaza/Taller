@@ -57,21 +57,29 @@ public class ServicioControl {
 	ServicioDAO servdao;
 	@Autowired
 	AutoDAO autodao;
-	@Autowired
+	//@Autowired
 	ClienteDAO clientedao;
 
-	@Autowired
+	//@Autowired
 	BitacoraDAO bitacora;
 
 	@Autowired
 	ServletContext context;
-	@Autowired
+	
+	//@Autowired
 	CostoDAO costodao;
 
 	public ServicioControl() {
 
 	}
+	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
+	    
+	    public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	 	   response.getWriter().println("Prueba del mètodo Session");
 
+	     }
+
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)

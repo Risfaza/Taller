@@ -17,7 +17,7 @@ import com.tikal.tallerWeb.modelo.usuario.Usuario;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider{
 	
-	@Autowired
+	//@Autowired
 	private UsuarioDAO userService;
 
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {

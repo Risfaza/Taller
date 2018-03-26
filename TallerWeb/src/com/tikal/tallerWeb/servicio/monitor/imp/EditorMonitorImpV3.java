@@ -16,7 +16,6 @@
 package com.tikal.tallerWeb.servicio.monitor.imp;
 
 import java.lang.reflect.InvocationTargetException;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -42,7 +41,7 @@ public class EditorMonitorImpV3 implements EditorMonitor {
     private EditorMonitorData data;
     private EditorLog currentUndo;
     private EditorLog currentRedo;
-    @Value("#{appConfig['app.service.monitor.undo.max']}")
+   // @Value("#{appConfig['app.service.monitor.undo.max']}")
     private int undoSize;
     /**
      * control interno para ignorar cambios cuando el monitor no los considere importantes.

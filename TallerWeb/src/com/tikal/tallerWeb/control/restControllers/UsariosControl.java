@@ -25,10 +25,12 @@ public class UsariosControl {
 	@Autowired
 	UsuarioDAOImp usuarioImp;
 	
+	
 	@RequestMapping(value={"/registro"}, method = RequestMethod.POST, consumes = "Application/Json")
 	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json) throws UnsupportedEncodingException{
 		AsignadorDeCharset.asignar(request, response);
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+		System.out.println("usuario:"+usuario);
 		usuarioImp.crearUsuario(usuario);
 		
 	}

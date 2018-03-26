@@ -200,19 +200,19 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 @RequestMapping(value= { "/reporte" })
 public class ReportePresupuesto {
 	
-	@Autowired
+//	@Autowired
 	ServicioDAO servdao;		
 	
-	@Autowired
+	//@Autowired
 	AutoDAO autodao;
 	
-	@Autowired
+	//@Autowired
 	ClienteDAO clientedao;
 	
-	@Autowired
+	//@Autowired
 	CostoDAO costodao;
 	
-	@Autowired
+	//@Autowired
 	BitacoraDAO bitacorin;
 	
 	@RequestMapping(value={"/presupuestoPDF/{id}"}, method = RequestMethod.GET, produces="application/pdf")

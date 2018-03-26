@@ -74,7 +74,7 @@ public class ValidationManager {
 //    private ValidacionDatosAuto validacionDatosAutoWizardProgramacion;
 //    @Autowired
 //    private BindingManager<Bindable> bindingManager;
-    @Autowired
+   // @Autowired
     private AbstractMessageSource messageSource;
     
     private ValidacionBeanFactory factory;

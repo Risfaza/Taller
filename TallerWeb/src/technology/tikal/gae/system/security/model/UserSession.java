@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.Valid;
+//import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.NotBlank;
+//import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,11 +27,11 @@ public class UserSession implements UserDetails {
      */
     private static final long serialVersionUID = 1L;
     @Id
-    @NotBlank
+ //   @NotBlank
     private String username;
-    @NotBlank
+   // @NotBlank
     private String token;
-    @Valid
+ //   @Valid
     private List<InternalGrantedAuthority> authorities;
     private String authenticationMethod;
     @JsonIgnore

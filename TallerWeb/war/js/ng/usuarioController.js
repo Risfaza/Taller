@@ -18,8 +18,8 @@ app.controller('usuarioController', [
 		'sessionService',
 		function($scope, $location, usuarioService, sessionService) {
 
-			sessionService.isAuthenticated().then(
-					function() {
+//			sessionService.isAuthenticated().then(
+//					function() {
 						$scope.EnviarFormulario = function() {
 							console.log($scope.usuario);
 							usuarioService.crearUsuario($scope.usuario).then(
@@ -28,7 +28,8 @@ app.controller('usuarioController', [
 										alert("Usuario creado correctamente");
 									});
 						}
-					});
+					
+//					});
 		} ]);
 
 app.controller('chgPassController',['$scope','$location','usuarioService','sessionService',function($scope,$location,usuarioService,sessionService){

@@ -18,7 +18,7 @@ package com.tikal.tallerWeb.servicio.binding;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
-import org.apache.commons.beanutils.BeanUtils;
+//import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.tikal.tallerWeb.servicio.validacion.DetalleValidacion;

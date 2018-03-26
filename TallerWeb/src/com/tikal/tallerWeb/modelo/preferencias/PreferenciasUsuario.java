@@ -24,9 +24,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PreferenciasUsuario {
-    @Value("#{appConfig['app.service.busqueda.firstId']}")
+  //  @Value("#{appConfig['app.service.busqueda.firstId']}")
     private Long firstId;
-    @Value("#{appConfig['app.service.busqueda.filtro.ultimo']}")
+  //  @Value("#{appConfig['app.service.busqueda.filtro.ultimo']}")
     private String ultimoFiltro;
 
     public Long getFirstId() {

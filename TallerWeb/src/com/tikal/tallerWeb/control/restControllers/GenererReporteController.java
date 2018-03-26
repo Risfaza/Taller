@@ -7,16 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.google.appengine.repackaged.org.joda.time.DateTime;
+import com.google.appengine.repackaged.org.joda.time.format.DateTimeFormat;
+import com.google.appengine.repackaged.org.joda.time.format.DateTimeFormatter;
 import com.tikal.tallerWeb.modelo.reporte.global.ParametrosReporteGlobal;
 import com.tikal.tallerWeb.servicio.reporte.global.GeneradorReporteGlobal;
 
@@ -24,7 +24,7 @@ import com.tikal.tallerWeb.servicio.reporte.global.GeneradorReporteGlobal;
 @RequestMapping(value={"/reporteGlobal"})
 public class GenererReporteController {
 	
-	@Autowired
+	//@Autowired
 	GeneradorReporteGlobal generador;
 	
 	@RequestMapping(value={"/getReporte.xlsx"}, method= RequestMethod.GET)

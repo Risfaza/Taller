@@ -51,7 +51,7 @@ public class GeneradorReporteGlobal implements GeneradorReporte<ParametrosReport
     private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(GeneradorReporteGlobal.class);
     @Autowired
     private RenglonFactoryRG renglonFactory;
-    @Autowired
+   // @Autowired
     private ServicioDAO servicioDAO;
     
     private String[] encabezado = new String[] {

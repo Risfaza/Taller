@@ -28,11 +28,11 @@ import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndex;
 @RequestMapping(value = { "/search" })
 public class SearchController {
 
-	@Autowired
+	//@Autowired
 	ServicioDAO servdao;
-	@Autowired
+//	@Autowired
 	AutoDAO autodao;
-	@Autowired
+	//@Autowired
 	ClienteDAO clientedao;
 
 	@RequestMapping(value = "/general/{busca}", method = RequestMethod.GET)

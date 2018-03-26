@@ -26,9 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.DateTime;
+//import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
+import com.google.appengine.repackaged.org.joda.time.DateTime;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.tallerWeb.data.access.ServicioDAO;
@@ -54,9 +55,9 @@ public class ServicioDAOImp implements ServicioDAO {
 	// private RestTemplateFactory factory;
 	//
 	
-	public ServicioDAOImp(){
+/*	public ServicioDAOImp(){
 		System.out.println("si crea los beans");
-	}
+	}*/
 	
 	@Override
 	public void guardar(ServicioEntity dato) {
@@ -204,6 +205,7 @@ public class ServicioDAOImp implements ServicioDAO {
 		return ret;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal){
 		Date hoy= new Date();

@@ -18,7 +18,7 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
-import org.joda.time.DateTime;
+//import org.joda.time.DateTime;
 
 import com.googlecode.objectify.Key;
 import com.tikal.tallerWeb.modelo.entity.ServicioEntity;
@@ -35,7 +35,7 @@ public interface ServicioDAO {
     
     ServicioEntity cargar(Long id);
     
-    List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal);
+  //  List<ServicioEntity> getByDate(DateTime fechaInicial, DateTime fechaFinal);
     
     List<ServicioIndex> getIndiceServicios();
     
@@ -56,4 +56,7 @@ public interface ServicioDAO {
 	public Key<ServicioEntity> getKey(Long id);
 	
 	public void crearFoliador(int folio);
+
+	List<ServicioEntity> getByDate(com.google.appengine.repackaged.org.joda.time.DateTime fechaInicial,
+			com.google.appengine.repackaged.org.joda.time.DateTime fechaFinal);
 }

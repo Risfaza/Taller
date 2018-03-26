@@ -11,7 +11,7 @@ import com.tikal.tallerWeb.modelo.usuario.Usuario;
 @Service
 public class CustomUsuarioServicio {
 	
-	@Autowired
+	//@Autowired
     private UsuarioDAOImp userDao;
     
     
