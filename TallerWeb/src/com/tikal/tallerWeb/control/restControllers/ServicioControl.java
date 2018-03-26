@@ -57,16 +57,16 @@ public class ServicioControl {
 	ServicioDAO servdao;
 	@Autowired
 	AutoDAO autodao;
-	//@Autowired
+	@Autowired
 	ClienteDAO clientedao;
 
-	//@Autowired
+	@Autowired
 	BitacoraDAO bitacora;
 
 	@Autowired
 	ServletContext context;
 	
-	//@Autowired
+	@Autowired
 	CostoDAO costodao;
 
 	public ServicioControl() {
@@ -93,13 +93,16 @@ public class ServicioControl {
 		} else {
 			s.setAuto(a);
 		}
+		System.out.println("**e :");
 		ClienteEntity c = clientedao.buscarCliente(s.getCliente().getNombre());
+		System.out.println("cliente :"+c);
 		if (c == null) {
 			clientedao.guardar(s.getCliente());
 		} else {
 			s.setCliente(c);
 		}
 		s.getServicio().getMetadata().getCostoTotal();
+		System.out.println("--------");
 		servdao.guardar(s.getServicio());
 		ServicioEntity ser = s.getServicio();
 		ser.setIdAuto(Long.toString(s.getAuto().getIdAuto()));

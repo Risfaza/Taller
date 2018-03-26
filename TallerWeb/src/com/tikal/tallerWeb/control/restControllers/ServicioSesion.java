@@ -19,7 +19,7 @@ import com.tikal.tallerWeb.util.JsonConvertidor;
 @Controller
 public class ServicioSesion {
 	
-	//@Autowired
+	@Autowired
 	UsuarioDAOImp usuariodao;
 	
 	@RequestMapping(value={"/user"},method=RequestMethod.GET,produces="application/json")

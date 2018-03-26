@@ -33,11 +33,11 @@ import com.tikal.tallerWeb.util.JsonConvertidor;
 @RequestMapping(value = { "/cotizacion" })
 public class CotizacionController {
 
-	//@Autowired
+	@Autowired
 	CotizacionDAO cotizaciondao;
 	
-//	@Autowired
-//	ServicioDAO servdao;
+	@Autowired
+	ServicioDAO servdao;
 
 	@RequestMapping(value = { "/get" }, method = RequestMethod.GET, produces = "Application/Json")
 	public void get(HttpServletRequest request, HttpServletResponse response)

@@ -15,7 +15,14 @@ public class FoliadorServicio {
 		this.id = id;
 	}
 	public int getFolio() {
+		
+		if (folio==0){
+			folio=1;
 		return folio;
+		}else
+			return folio;
+		
+		
 	}
 	public void incrementar() {
 		this.folio++;

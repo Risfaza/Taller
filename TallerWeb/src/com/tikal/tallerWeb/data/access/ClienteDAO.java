@@ -24,7 +24,7 @@ import com.tikal.tallerWeb.rest.util.Callback;
 /**
  * @author Nekorp
  */
-@Deprecated
+//@Deprecated
 public interface ClienteDAO {
 
     /**

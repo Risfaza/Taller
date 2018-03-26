@@ -24,7 +24,7 @@ import com.tikal.tallerWeb.servicio.reporte.global.GeneradorReporteGlobal;
 @RequestMapping(value={"/reporteGlobal"})
 public class GenererReporteController {
 	
-	//@Autowired
+	@Autowired
 	GeneradorReporteGlobal generador;
 	
 	@RequestMapping(value={"/getReporte.xlsx"}, method= RequestMethod.GET)

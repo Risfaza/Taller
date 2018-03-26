@@ -59,13 +59,13 @@ import localhost.TimbraCFDIResponse;
 @RequestMapping(value={"/facturar"})
 public class FacturaController {
 	
-	//@Autowired
+	@Autowired
 	FolioDAO foliodao;
 	
-	//@Autowired
+	@Autowired
 	FacturaDAO facturaDAO;
 	
-	//@Autowired
+	@Autowired
 	CostoDAOImp costodao;
 	
 	@Autowired

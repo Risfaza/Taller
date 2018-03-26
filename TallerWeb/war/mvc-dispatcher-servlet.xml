@@ -20,10 +20,10 @@
 		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"/>
 		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.CostoDAOImp"/>
 		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.RenglonDAOImp"/>
-		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FacturaDAOImpl"/>
-		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FolioDAOImp"/>
+	<!-- 	<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FacturaDAOImpl"/> 
+		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.FolioDAOImp"/>-->
 		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"/>		
-		<context:component-scan base-package="com.tikal.tallerWeb.data.access.rest.CotizacionDAOImp"/>
+	
 		
 	<!-- beans daos -->
 	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.AutoDAOImp"></bean> -->
@@ -36,17 +36,17 @@
 <!-- 	<bean class="com.tikal.tallerWeb.data.access.rest.ServicioDAOImp"></bean> -->
 <!-- 	<bean class="com.tikal.tallerWeb.data.access.rest.CostoDAOImp"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.RenglonDAOImp"></bean> -->
-<!-- 	<bean class="com.tikal.tallerWeb.data.access.rest.FacturaDAOImpl"></bean>
-	<bean class="com.tikal.tallerWeb.data.access.rest.FolioDAOImp"></bean>
-	<bean class="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"></bean>
+ 	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.FacturaDAOImpl"></bean> -->
+ 	<bean class="com.tikal.tallerWeb.data.access.rest.FolioDAOImp"></bean>
+	<!--<bean class="com.tikal.tallerWeb.data.access.rest.local.ClienteDAOImpLocal"></bean>
 	<bean class="com.tikal.tallerWeb.data.access.rest.local.BitacoraDAOImpLocal"></bean> -->
 	<!-- <bean class="com.tikal.tallerWeb.data.access.rest.local.UsuarioDAOImpLocal"></bean> -->
 	<!-- <bean class="com.tikal.tallerWeb.control.MensajesControl"></bean> -->
 	<!-- <bean
 		class="com.tikal.tallerWeb.data.access.rest.local.CotizacionDAOImpLocal"></bean> -->
 
-<!-- <bean
-		class="com.tikal.tallerWeb.data.access.rest.CotizacionDAOImp"></bean> -->
+ <bean
+		class="com.tikal.tallerWeb.data.access.rest.CotizacionDAOImp"></bean> 
 	<bean class="com.tikal.tallerWeb.server.BlobServicio"></bean>
 <!-- 	<context:component-scan base-package="com.tikal.tallerWeb.control.imp" /> -->
 

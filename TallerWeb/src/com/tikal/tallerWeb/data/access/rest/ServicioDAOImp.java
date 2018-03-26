@@ -62,7 +62,7 @@ public class ServicioDAOImp implements ServicioDAO {
 	@Override
 	public void guardar(ServicioEntity dato) {
 		Date d = new Date();
-
+		System.out.println("dato metadata:"+dato.getMetadata());
 		if (dato.getMetadata() == null) {
 			ServicioMetadata sm = new ServicioMetadata();
 			sm.setStatus("Diagnositco");
@@ -70,12 +70,13 @@ public class ServicioDAOImp implements ServicioDAO {
 		}else{
 			if(dato.getMetadata().getStatus()==null){
 				dato.getMetadata().setStatus("Diagnositco");
-			}
+			}	
 		}
-		
+		System.out.println("dato.servicio:"+dato.getIdServicio());
 		if (dato.getIdServicio()==null) {
 			dato.setFechaInicio(d);
-			FoliadorServicio f=ObjectifyService.ofy().load().type(FoliadorServicio.class).list().get(0);
+			FoliadorServicio f =ObjectifyService.ofy().load().type(FoliadorServicio.class).list().get(1);
+			System.out.println("ffffff"+f.getFolio());
 			dato.setIdServicio(f.getFolio());
 			f.incrementar();
 			ObjectifyService.ofy().save().entity(f);

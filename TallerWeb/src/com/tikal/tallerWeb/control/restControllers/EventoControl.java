@@ -35,11 +35,11 @@ import technology.tikal.taller.automotriz.model.servicio.bitacora.Evidencia;
 @RequestMapping(value = { "/eventos" })
 public class EventoControl {
 
-	//@Autowired
+	@Autowired
 	BitacoraDAO bitacora;
 	
-	//@Autowired
-	//ServicioDAO servdao;
+	@Autowired
+	ServicioDAO servdao;
 
 	@RequestMapping(value = {
 			"/add" }, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")

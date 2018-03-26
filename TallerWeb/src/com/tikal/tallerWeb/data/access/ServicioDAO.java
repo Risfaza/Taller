@@ -18,6 +18,8 @@ package com.tikal.tallerWeb.data.access;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 //import org.joda.time.DateTime;
 
 import com.googlecode.objectify.Key;
@@ -29,6 +31,7 @@ import technology.tikal.taller.automotriz.model.index.servicio.ServicioIndex;
 /**
  * @author Nekorp
  */
+
 public interface ServicioDAO {
 
     void guardar(ServicioEntity dato);

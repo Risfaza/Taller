@@ -107,7 +107,10 @@ public class ClienteDAOImp implements ClienteDAO {
 
 	@Override
 	public ClienteEntity buscarCliente(String nombre) {
+		System.out.println("esta en dao impl :");
 		List<ClienteEntity> lista=ObjectifyService.ofy().load().type(ClienteEntity.class).filter("nombre",nombre).list();
+		System.out.println("lista :"+lista);
+		
 		if(lista.size()>0){
 			return lista.get(0);
 		}
