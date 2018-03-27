@@ -24,27 +24,27 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-/*import com.ibm.icu.text.SimpleDateFormat;
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfWriter;*/
+//import com.ibm.icu.text.SimpleDateFormat;
+import com.itextpdf.text.Chunk;
+//import com.lowagie.text.Document;
+//import com.lowagie.text.DocumentException;
+//import com.lowagie.text.Element;
+import com.itextpdf.text.Font;
+//import com.lowagie.text.FontFactory;
+//import com.lowagie.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+//import com.lowagie.text.Phrase;
+//import com.lowagie.text.Rectangle;
+////////import com.lowagie.text.pdf.PdfPCell;
+//import com.lowagie.text.pdf.PdfPTable;
+//import com.lowagie.text.pdf.PdfPageEventHelper;
+//import com.lowagie.text.pdf.PdfWriter;
 import com.tikal.tallerWeb.control.restControllers.VO.DatosPresupuestoVO;
 import com.tikal.tallerWeb.control.restControllers.VO.GruposCosto;
 import com.tikal.tallerWeb.modelo.entity.PresupuestoEntity;
 
-public class GeneradorPresupuestoPDF extends AbstractPdfView {
+public class GeneradorPresupuestoPDF {//extends AbstractPdfView {
 
 	public class HeaderTable extends PdfPageEventHelper {
 		protected PdfPTable table;
@@ -401,12 +401,6 @@ public class GeneradorPresupuestoPDF extends AbstractPdfView {
 		}
 	}
 
-	@Override
-	protected void buildPdfDocument(Map<String, Object> model, com.lowagie.text.Document document,
-			com.lowagie.text.pdf.PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }
