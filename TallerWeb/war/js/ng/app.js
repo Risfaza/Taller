@@ -92,38 +92,80 @@ function(sessionService,$rootScope, $scope, $http, $location) {
 //	}
 
 //	authenticate();
-	$scope.credentials = {};
-	$scope.login = function() {
-		sessionService.authenticate($scope.credentials, function() {
-			if ($rootScope.authenticated) {
-				$location.path("/");
-				$scope.error = false;
-			} else {
-				$location.path("/login");
-				$scope.error = true;
-			}
-		});
-	};
+	$rootScope.authenticated = true;
+	$location.path("/listServicios");
+	isAuthenticated();
+
+//	$scope.credentials = {};
+//	$scope.login = function() {
+//		sessionService.authenticate($scope.credentials, function() {
+//			if ($rootScope.authenticated) {
+//				$location.path("/");
+//				$scope.error = false;
+//			} else {
+//				$location.path("/login");
+//				$scope.error = true;
+//			}
+//		});
+//	};
 }]);
 
 app.service('sessionService',['$rootScope','$http','$location','$q',function($rootScope,$http,$location,$q){
+
+//	this.authenticate = function(credentials, callback) {
+//
+//		var headers1 = credentials ? {
+//			authorization : "Basic "
+//					+ btoa(credentials.username + ":" + credentials.password)
+//		} : {};
+//		$http.get('user',{headers:headers1}).success(function(data) {
+//			if (data.principal.usuario) {
+//				$rootScope.userNameCurr=data.principal.usuario;
+//				$rootScope.authenticated = true;
+//				$location.path("/listServicios");
+//			} else {
+//				$rootScope.authenticated = false;
+//			}
+//		}).error(function(data) {
+//			//$rootScope.authenticated = false;
+//				$location.path("/login");
+//		});
+//
+//	}
+//	this.isAuthenticated=function(){
+//		
+//		var d = $q.defer();
+//		$http.get("currentSession").success(function(data){
+//			$rootScope.authenticated=true;
+//			d.resolve(data);
+//		}).error(function(data) {
+//			//$rootScope.authenticated = false;
+//			$location.path("/login");
+//		});
+//		return d.promise;
+//	}
+	
+	
+	
 	this.authenticate = function(credentials, callback) {
 
 		var headers1 = credentials ? {
 			authorization : "Basic "
-					+ btoa(credentials.username + ":" + credentials.password)
+					+ btoa("root" + ":" + "root")
 		} : {};
 		$http.get('user',{headers:headers1}).success(function(data) {
-			if (data.principal.usuario) {
-				$rootScope.userNameCurr=data.principal.usuario;
-				$rootScope.authenticated = true;
-				$location.path("/listServicios");
-			} else {
-				$rootScope.authenticated = false;
-			}
+			$rootScope.authenticated = true;
+			$location.path("/listServicios");
+//			if (data.principal.usuario) {
+//				$rootScope.userNameCurr=data.principal.usuario;
+//				$rootScope.authenticated = true;
+//				$location.path("/listServicios");
+//			} else {
+//				$rootScope.authenticated = false;
+//			}
 		}).error(function(data) {
 			//$rootScope.authenticated = false;
-				$location.path("/login");
+//				$location.path("/login");
 		});
 
 	}
@@ -135,8 +177,11 @@ app.service('sessionService',['$rootScope','$http','$location','$q',function($ro
 			d.resolve(data);
 		}).error(function(data) {
 			//$rootScope.authenticated = false;
-			$location.path("/login");
+//			$location.path("/login");
 		});
 		return d.promise;
 	}
 }]);
+
+	
+

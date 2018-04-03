@@ -33,6 +33,7 @@ public class PdfMaker {
 	static Font font4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 	static Font font5 = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
 	static Font font6 = new Font(Font.FontFamily.HELVETICA, 10, Font.ITALIC);
+	static Font font7 = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
 
 	public PdfMaker() throws DocumentException, IOException {
 		this.document = new Document();
@@ -77,7 +78,7 @@ public class PdfMaker {
 		Phrase line2 = new Phrase();
 		Chunk line2_1 = new Chunk("Fecha ", font4);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String date = sdf.format(new Date());
 		Chunk line2_2 = new Chunk(date, font2);
 
@@ -143,6 +144,8 @@ public class PdfMaker {
 
 		PdfPTable table3 = new PdfPTable(1);
 		table3.setWidthPercentage(100);
+		//table3.setWidthPercentage(100);
+		
 		PdfPCell cell1table3 = new PdfPCell(new Paragraph("Datos del Vehiculo", font3));
 		cell1table3.setBorderWidth(0);
 		table3.addCell(cell1table3);
@@ -151,32 +154,47 @@ public class PdfMaker {
 		///////////////////////////////////////////////////////////////////////////// TABLA3
 		///////////////////////////////////////////////////////////////////////////// TABLA4
 
-		PdfPTable tablaCoche= new PdfPTable(3);
+		PdfPTable tablaCoche= new PdfPTable(7);
+		tablaCoche.setWidths(new int[] { 15,15,10,12,15,10, 23 });
 		PdfPCell marcat = new PdfPCell(new Paragraph("Marca", font4));
 		PdfPCell tipot = new PdfPCell(new Paragraph("Tipo", font4));
 		PdfPCell modelot = new PdfPCell(new Paragraph("Modelo", font4));
+		PdfPCell color = new PdfPCell(new Paragraph("Color", font4));
+		PdfPCell placas = new PdfPCell(new Paragraph("Placas", font4));
+		PdfPCell km = new PdfPCell(new Paragraph("KM", font4));
+		PdfPCell serie = new PdfPCell(new Paragraph("Serie", font4));
+		
 		PdfPCell marcad = new PdfPCell(new Paragraph(datos.getMarca(), font2));
 		PdfPCell tipod = new PdfPCell(new Paragraph(datos.getTipo(), font2));
 		PdfPCell modelod = new PdfPCell(new Paragraph(datos.getModelo(), font2));
+		PdfPCell colord = new PdfPCell(new Paragraph(datos.getColor(), font2));
+		PdfPCell placasd = new PdfPCell(new Paragraph(datos.getPlacas(), font2));
+		PdfPCell kmd = new PdfPCell(new Paragraph(datos.getKilometros(), font2));
+		PdfPCell seried = new PdfPCell(new Paragraph(datos.getSerie(), font2));
+		
 		tablaCoche.addCell(marcat);
 		tablaCoche.addCell(tipot);
 		tablaCoche.addCell(modelot);
+		tablaCoche.addCell(color);
+		tablaCoche.addCell(placas);
+		tablaCoche.addCell(km);
+		tablaCoche.addCell(serie);
+		
 		tablaCoche.addCell(marcad);
 		tablaCoche.addCell(tipod);
 		tablaCoche.addCell(modelod);
+		tablaCoche.addCell(colord);
+		tablaCoche.addCell(placasd);
+		tablaCoche.addCell(kmd);
+		tablaCoche.addCell(seried);
+	
 		tablaCoche.setWidthPercentage(100);
 		document.add(tablaCoche);
 		
 		PdfPTable tablaCoche2= new PdfPTable(4);
 		tablaCoche2.setWidthPercentage(100);
-		PdfPCell cell4table4 = new PdfPCell(new Paragraph("Color", font4));
-		PdfPCell cell5table4 = new PdfPCell(new Paragraph("Placas", font4));
-		PdfPCell cell6table4 = new PdfPCell(new Paragraph("KM", font4));
-		PdfPCell cell7table4 = new PdfPCell(new Paragraph("Serie", font4));
-		PdfPCell cell11table4 = new PdfPCell(new Paragraph(datos.getColor(), font2));
-		PdfPCell cell12table4 = new PdfPCell(new Paragraph(datos.getPlacas(), font2));
-		PdfPCell cell13table4 = new PdfPCell(new Paragraph(datos.getKilometros(), font2));
-		PdfPCell cell14table4 = new PdfPCell(new Paragraph(datos.getSerie(), font2));
+		
+		
 		
 		
 //		PdfPTable table4 = new PdfPTable(7);
@@ -209,17 +227,11 @@ public class PdfMaker {
 //		table4.addCell(cell1table4);
 //		table4.addCell(cell2table4);
 //		table4.addCell(cell3table4);
-		tablaCoche2.addCell(cell4table4);
-		tablaCoche2.addCell(cell5table4);
-		tablaCoche2.addCell(cell6table4);
-		tablaCoche2.addCell(cell7table4);
+	
 //		table4.addCell(cell8table4);
 //		table4.addCell(cell9table4);
 //		table4.addCell(cell10table4);
-		tablaCoche2.addCell(cell11table4);
-		tablaCoche2.addCell(cell12table4);
-		tablaCoche2.addCell(cell13table4);
-		tablaCoche2.addCell(cell14table4);
+		
 		tablaCoche2.addCell(cell15table4);
 
 		document.add(tablaCoche2);
@@ -317,7 +329,7 @@ public class PdfMaker {
 			PdfPCell fechaLabel = new PdfPCell(new Paragraph("Nombre y firma", font4));
 			firmasTableS.addCell(fechaLabel);
 
-			PdfPCell nombreFirmaLabel = new PdfPCell(new Paragraph("Nombre y firma de quien recibe la unidad", font4));
+			PdfPCell nombreFirmaLabel = new PdfPCell(new Paragraph("Nombre y firma", font4));
 			firmasTableS.addCell(nombreFirmaLabel);
 
 			// PdfPCell fechaInput = new PdfPCell();
@@ -328,7 +340,13 @@ public class PdfMaker {
 			nombreFirmaInput.setFixedHeight(50f);
 			nombreFirmaInput.setVerticalAlignment(Element.ALIGN_BOTTOM);
 			firmasTableS.addCell(nombreFirmaInput);
-			firmasTableS.addCell(nombreFirmaInput);
+			
+			PdfPCell nombreFirma = new PdfPCell(new Paragraph("\n\n\nRETIRO VEHICULO A MI ENTERA SATISFACCIÓN", font4));
+			nombreFirmaInput.setFixedHeight(50f);
+			nombreFirmaInput.setVerticalAlignment(Element.ALIGN_BOTTOM);
+			firmasTableS.addCell(nombreFirma);
+			
+		
 
 			firmasTableS.addCell(em);
 			firmasTableS.addCell(em);
@@ -748,6 +766,7 @@ public class PdfMaker {
 		PdfPTable headerTable = new PdfPTable(2);
 		headerTable.setWidthPercentage(100);
 		Image img = Image.getInstance("WEB-INF/Images/ACELogo.PNG");
+		//Image img = Image.getInstance("imgs/ace-logo.png");
 		// Image img =
 		// Image.getInstance("http://tikal.mx/tallerWeb/images/1484941303.jpg");
 		PdfPCell cell1 = new PdfPCell(img, true);

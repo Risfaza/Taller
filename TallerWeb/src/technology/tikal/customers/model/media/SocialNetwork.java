@@ -18,7 +18,7 @@ package technology.tikal.customers.model.media;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.URL;
+//import org.hibernate.validator.constraints.URL;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
@@ -34,7 +34,7 @@ public class SocialNetwork extends MediaContact {
     private String network;
     @NotNull
     @Length(max=40)
-    @URL
+   // @URL
     private String networkUrl;
     
     public String getNetwork() {
