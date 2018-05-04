@@ -19,29 +19,21 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 				$location.path("/servicio/view/" + id);
 			}
 
-			$rootScope.relojito=function() {
+			$scope.$watch('actual', function() {
 				if($rootScope.actual){
-					if ($rootScope.actual.servicio.fechaInicio) {
-						var hoy = new Date();
-						var inicio = new Date($rootScope.actual.servicio.fechaInicio)
-						if($rootScope.actual.servicio.fechafin){
-							hoy = new Date($rootScope.actual.servicio.fechafin);
-							var dif = hoy - inicio;
-							$scope.counter = dif;
-							$scope.dias= Math.floor($scope.counter / (1000 * 60 * 60 * 24));
-							$scope.horas= Math.floor($scope.counter / (1000 * 60 * 60))%24; 
-							$scope.minutos= Math.floor($scope.counter / (1000 * 60)) % (60); 
-							$scope.segundos= Math.floor($scope.counter / (1000))%(60); 
-						}else{
-							var dif = hoy - inicio;
-//						alert(dif);
-							$scope.counter = dif;
-						}
-					}
-					}	
-			}
-			$scope.$watch('actual', $rootScope.relojito()
-			, true);
+				if ($rootScope.actual.servicio.fechaInicio) {
+					var hoy = new Date();
+					var inicio = new Date($rootScope.actual.servicio.fechaInicio)
+					var dif = hoy - inicio;
+//					alert(dif);
+					$scope.counter = dif;
+//					$scope.dias= Math.floor($scope.counter / (1000 * 60 * 60 * 24));
+//					$scope.horas= Math.floor($scope.counter / (1000 * 60 * 60))%24; 
+//					$scope.minutos= Math.floor($scope.counter / (1000 * 60)) % (60); 
+//					$scope.segundos= Math.floor($scope.counter / (1000))%(60); 
+				}
+				}	
+			}, true);
 
 			$scope.$watch('counter', function() {
 //				if ($rootScope.actual.servicio.metadata.fechaInicio) {
@@ -67,13 +59,12 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 						document.getElementById("semaforo2").className = "alert-danger";
 					}
 //				}
+
 			}, true);
 			
 			$scope.onTimeout = function() {
-				if(! $rootScope.actual.servicio.fechafin){
 				$scope.counter+=1000;
 				mytimeout = $timeout($scope.onTimeout, 1000);
-				}
 			}
 			var mytimeout = $timeout($scope.onTimeout, 1000);
 
@@ -86,10 +77,10 @@ app.controller('sideBarController', [ '$scope', 'sideBarService', '$rootScope',
 				}else{
 					fecha= new Date(fecha);
 				}
-				var day=fecha.getDay();
+				var day=fecha.getDay()+15;
 				var mes=fecha.getMonth()+1;
 				var anio=fecha.getFullYear();
-				var hora=fecha.getHours()+6;
+				var hora=fecha.getHours();
 				var minutos=fecha.getMinutes();
 				var seg= fecha.getSeconds();
 				if(day<10){

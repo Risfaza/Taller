@@ -573,10 +573,10 @@
 							<tbody>
 								<tr ng-repeat="cot in listcotizaciones.costos">
 									<td>{{cot.concepto}}</td>
-									<td ng-repeat="costo in cot.costos"><input type="number"
-										ng-model="costo.precio" value="{{costo.precio}}"> <input type="checkbox"
-										name="{{cot.concepto}}" ng-model="costo.selected"
-										ng-click="setPrecio(costo.precio,cot.concepto,costo)"></td>
+									<td ng-repeat="costo in cot.costos">
+										<input type="number" ng-model="costo.precio" value="{{costo.precio}}"> 
+										<input type="checkbox" name="{{cot.concepto}}" ng-model="costo.selected" ng-click="setPrecio(costo.precio,cot.concepto,costo)">
+									</td>
 									<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
 								<!-- 								<tr> -->

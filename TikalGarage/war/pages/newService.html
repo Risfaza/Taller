@@ -1,3 +1,14 @@
+<head>
+<style type="">
+	.error {
+  border-color: red;
+}
+ 
+.warning {
+  border-color: yellow;
+}
+</style>
+</head>
 <div class="container-fluid">
 	<ol class="breadcrumb">
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
@@ -5,7 +16,8 @@
 		</button>
 	</ol>
 	<ul class="nav nav-tabs">
-		<li><a data-toggle="tab" ng-click="showTab('cliente')">Cliente</a></li>
+		<li><a data-toggle="tab"
+			ng-click="showTab('cliente')">Cliente</a></li>
 		<li><a data-toggle="tab" ng-click="showTab('auto')">Auto</a></li>
 	</ul>
 
@@ -20,9 +32,9 @@
 					<label for="nombreCliente" class="control-label col-sm-3">Nombre
 						o raz&oacute;n social</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="text" data-provide="typehead"
-							id="searchCliente" ng-model="servicio.cliente.nombre" />
-						<!-- 							ng-change="findCliente()" /> -->
+						<input class="form-control" type="text" data-provide="typehead" id="searchCliente"
+							ng-model="servicio.cliente.nombre" />
+<!-- 							ng-change="findCliente()" /> -->
 					</div>
 				</div>
 				<div class="form-group">
@@ -94,9 +106,21 @@
 				<div class="form-group">
 					<label for="nombreCliente" class="control-label col-sm-3">Tel&eacute;fono</label>
 					<div class="col-sm-6">
-						<div class="col-sm-6">
+						<div class="col-sm-3">
 							<select class="form-control"
 								ng-model="servicio.cliente.telefonoContacto[0].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[1].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[2].label">
 								<option>Casa</option>
 								<option>Oficina</option>
 								<option>Movil</option>
@@ -107,24 +131,8 @@
 								ng-model="servicio.cliente.telefonoContacto[0].valor" />
 						</div>
 						<div class="col-sm-6">
-							<select class="form-control"
-								ng-model="servicio.cliente.telefonoContacto[1].label">
-								<option>Casa</option>
-								<option>Oficina</option>
-								<option>Movil</option>
-							</select>
-						</div>
-						<div class="col-sm-6">
 							<input class="form-control" type="text"
 								ng-model="servicio.cliente.telefonoContacto[1].valor" />
-						</div>
-						<div class="col-sm-6">
-							<select class="form-control"
-								ng-model="servicio.cliente.telefonoContacto[2].label">
-								<option>Casa</option>
-								<option>Oficina</option>
-								<option>Movil</option>
-							</select>
 						</div>
 						<div class="col-sm-6">
 							<input class="form-control" type="text"
@@ -142,7 +150,7 @@
 			<div class="clearfix">
 				<h4>Datos del auto</h4>
 			</div>
-			<form class="form-horizontal">
+			<form name="autoForm" class="form-horizontal">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -152,7 +160,10 @@
 								<input class="form-control" type="text"
 									ng-model="servicio.auto.numeroSerie"
 									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)"
-									maxlength="17" />
+									maxlength="17" name="serie" required ng-class="{ error: autoForm.serie.$error.required && !autoForm.$pristine }">
+
+									<span ng-show="!autoForm.$pristine && autoForm.serie.$error.required">Numero de serie es requerido.</span>
+
 							</div>
 						</div>
 					</div>
@@ -192,7 +203,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Modelo</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="text"
+								<input class="form-control" type="number"
 									ng-model="servicio.auto.modelo" />
 							</div>
 						</div>
@@ -212,9 +223,9 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Placas</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.auto.placas"
-									ng-change="servicio.auto.placas=mayusculas(servicio.auto.placas)" />
+								<input class="form-control" id="m" type="text"
+								ng-change="servicio.auto.placas=mayusculas(servicio.auto.placas)"
+									ng-model="servicio.auto.placas">
 							</div>
 						</div>
 					</div>
@@ -222,8 +233,10 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Kilometraje</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="text"
-									ng-model="servicio.servicio.datosAuto.kilometraje" />
+								<input class="form-control" type="number"
+									ng-model="servicio.servicio.datosAuto.kilometraje" name="kilometraje" required ng-class="{ error: autoForm.kilometraje.$error.required && !autoForm.$pristine }">
+
+									<span ng-show="!autoForm.$pristine && autoForm.kilometraje.$error.required">El kilometraje es necesario.</span>
 							</div>
 						</div>
 					</div>
@@ -247,7 +260,7 @@
 							<label class="control-label col-sm-3">Combustible(%)</label>
 							<div class="col-sm-6">
 								<input id="ex6" type="text" data-slider-min="0"
-									data-slider-max="100" data-slider-step="10"
+									data-slider-max="100" data-slider-step="5"
 									data-slider-value="0" /> <span id="ex6CurrentSliderValLabel"><span
 									id="ex6SliderVal" style="padding-left: 15px;">0</span></span>
 								<!-- 								<input class="form-control" id="ex6SliderVal" type="number" min="0" max="100" -->
@@ -328,7 +341,7 @@
 								ng-model="caracteristicaAuto" />
 						</div>
 						<button class="btn btn-small btn-primary" ng-click="addCaract()">Agregar</button>
-						<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+						<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!autoForm.$valid">Guardar</button>
 					</div>
 					<br>
 					<table class="table table-striped">
@@ -342,7 +355,7 @@
 				</div>
 
 			</form>
-
+			
 
 		</div>
 	</div>

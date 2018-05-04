@@ -78,7 +78,7 @@ public class PdfMaker {
 		Phrase line2 = new Phrase();
 		Chunk line2_1 = new Chunk("Fecha ", font4);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
 		String date = sdf.format(new Date());
 		Chunk line2_2 = new Chunk(date, font2);
 
@@ -155,7 +155,7 @@ public class PdfMaker {
 		///////////////////////////////////////////////////////////////////////////// TABLA4
 
 		PdfPTable tablaCoche= new PdfPTable(7);
-		tablaCoche.setWidths(new int[] { 15,15,10,12,15,10, 23 });
+		tablaCoche.setWidths(new int[] { 15,10,10,12,15,15, 23 });
 		PdfPCell marcat = new PdfPCell(new Paragraph("Marca", font4));
 		PdfPCell tipot = new PdfPCell(new Paragraph("Tipo", font4));
 		PdfPCell modelot = new PdfPCell(new Paragraph("Modelo", font4));

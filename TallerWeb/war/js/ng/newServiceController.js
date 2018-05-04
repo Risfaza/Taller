@@ -15,8 +15,6 @@ app
 							slider.on("change", function(sliderValue) {
 								document.getElementById("ex6SliderVal").textContent = sliderValue.newValue;
 								$scope.servicio.servicio.datosAuto.combustible=sliderValue.newValue;
-								console.log("valor de la barra");
-								console.log($scope.servicio.servicio.datosAuto.combustible);
 							});
 							sessionService.isAuthenticated().then(function(){
 							$scope.mensaje = "Texto cargado desde el controlador Pagina1Controller";
@@ -47,6 +45,7 @@ app
 							}
 
 							$scope.guardar = function() {
+								console.log("datos de objeto");
 								console.log($scope.servicio);
 								var send={servicio:$scope.servicio};
 								$http.post('/servicio/add', send)

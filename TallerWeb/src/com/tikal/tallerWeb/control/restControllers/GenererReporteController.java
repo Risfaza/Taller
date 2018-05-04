@@ -41,8 +41,8 @@ public class GenererReporteController {
         try {
         	ParametrosReporteGlobal param= new ParametrosReporteGlobal();
         	param.setFechaFinal(new DateTime());
-        	DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
-        	DateTime dt = formatter.parseDateTime("01/01/2010");
+        	DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+        	DateTime dt = formatter.parseDateTime("01/01/2010 00:00:00");
         	param.setFechaInicial(dt);
         	generador.generaReporte(param, response.getOutputStream());
 //            response.getOutputStream().write(buffer);

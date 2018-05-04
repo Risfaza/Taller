@@ -1,13 +1,3 @@
-
-<style type="">
-	.error {
-  border-color: red;
-}
- 
-.warning {
-  border-color: yellow;
-}
-</style>
 <div class="container-fluid">
 	<ol class="breadcrumb">
 		<button class="btn btn-large btn-primary" ng-click="guardar()">
@@ -152,7 +142,7 @@
 			<div class="clearfix">
 				<h4>Datos del auto</h4>
 			</div>
-			<form name="autoForm" class="form-horizontal">
+			<form class="form-horizontal">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -162,10 +152,7 @@
 								<input class="form-control" type="text"
 									ng-model="servicio.auto.numeroSerie"
 									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)"
-									maxlength="17" name="serie" required ng-class="{ error: autoForm.serie.$error.required && !autoForm.$pristine }">
-
-									<span ng-show="!autoForm.$pristine && autoForm.serie.$error.required">Numero de serie es requerido.</span>
-
+									maxlength="17" />
 							</div>
 						</div>
 					</div>
@@ -205,7 +192,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Modelo</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="number"
+								<input class="form-control" type="text"
 									ng-model="servicio.auto.modelo" />
 							</div>
 						</div>
@@ -235,10 +222,8 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Kilometraje</label>
 							<div class="col-sm-6">
-								<input class="form-control" type="number"
-									ng-model="servicio.servicio.datosAuto.kilometraje" name="kilometraje" required ng-class="{ error: autoForm.kilometraje.$error.required && !autoForm.$pristine }">
-
-									<span ng-show="!autoForm.$pristine && autoForm.kilometraje.$error.required">El kilometraje es necesario.</span>
+								<input class="form-control" type="text"
+									ng-model="servicio.servicio.datosAuto.kilometraje" />
 							</div>
 						</div>
 					</div>
@@ -263,7 +248,7 @@
 							<div class="col-sm-6">
 								<input id="ex6" type="text" data-slider-min="0"
 									data-slider-max="100" data-slider-step="5"
-									data-slider-value="0" /> <span id="ex6CurrentSliderValLabel"><span
+									data-slider-value="0" ng-model="servicio.servicio.datosAuto.combustible" /> <span id="ex6CurrentSliderValLabel"><span
 									id="ex6SliderVal" style="padding-left: 15px;">0</span></span>
 								<!-- 								<input class="form-control" id="ex6SliderVal" type="number" min="0" max="100" -->
 								<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
@@ -343,7 +328,7 @@
 								ng-model="caracteristicaAuto" />
 						</div>
 						<button class="btn btn-small btn-primary" ng-click="addCaract()">Agregar</button>
-						<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!autoForm.$valid">Guardar</button>
+						<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
 					</div>
 					<br>
 					<table class="table table-striped">

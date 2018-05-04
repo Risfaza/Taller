@@ -65,14 +65,14 @@
 
 	<mvc:annotation-driven />
 
-	<!--  Hay que indicar que archivo es el encargado de resolver el tipo de vista en este caso en pdf 	
+	<!--  Hay que indicar que archivo es el encargado de resolver el tipo de vista en este caso en pdf 
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
 	   <property name="location">
 	       <value>/WEB-INF/spring-pdf-views.xml</value>
 	   </property>
 	   <property name="order" value="1" />
 	</bean>
-<bean
+	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
 			<value>/pages/</value>
@@ -80,6 +80,6 @@
 		<property name="suffix">
 			<value>*.html</value>
 		</property>
-	</bean> --> 
+	</bean> 	--> 
 	
 </beans>

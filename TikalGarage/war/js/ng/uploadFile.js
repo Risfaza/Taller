@@ -137,7 +137,7 @@ app.service('fileUpload', ['$http','$q',
             headers: {
               'Content-Type': undefined,
               'Access-Control-Allow-Methods':"POST",
-//              'Access-Control-Allow-Origin': 'http://127.0.0.1:8888'
+              'Access-Control-Allow-Origin': 'http://127.0.0.1:8888'
             },	
             transformRequest: angular.identity,
             params: {

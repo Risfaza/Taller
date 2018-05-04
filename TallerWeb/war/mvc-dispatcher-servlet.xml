@@ -80,6 +80,6 @@
 		<property name="suffix">
 			<value>*.html</value>
 		</property>
-	</bean> --> 
+	</bean> 
 	
 </beans>
