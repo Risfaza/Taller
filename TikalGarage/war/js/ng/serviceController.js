@@ -113,6 +113,9 @@ app.controller("serviceController", [
 				document.getElementById("ex6SliderVal").textContent = sliderValue.newValue;
 				$scope.servicio.servicio.datosAuto.combustible=sliderValue.newValue;
 			});
+			console.log("valor de la barra");
+			console.log(slider);
+			console.log("no manches");
 			$scope.ids = [ "cliente", "auto", "bitacora", "presupuesto",
 					"damage", "cobranza" ];
 			$scope.uri = {
@@ -148,6 +151,11 @@ app.controller("serviceController", [
 					}
 				},
 			}
+			
+			eventoService.getServicio($routeParams.id).then(function(data) {
+				$scope.Pdatos=data;
+				console.log("Estos son los datos",$scope.Pdatos);
+			});
 			$scope.cargarServicio=function(){
 				eventoService.getServicio($routeParams.id).then(function(data) {
 					$scope.servicio.servicio = data.servicio.servicio;
@@ -167,8 +175,20 @@ app.controller("serviceController", [
 					console.log($scope.servicio);
 					$scope.cotizaciones();
 					document.getElementById("ex6SliderVal").textContent=$scope.servicio.servicio.datosAuto.combustible;
+			$scope.servicio.servicio.datosAuto.combustible;
+			console.log("cargar servicio");
+			console.log($scope.servicio.servicio.datosAuto.combustible);
+			console.log($scope.servicio.auto.placas);
+			console.log("grupo costos");
+			console.log($scope.servicio.gruposCosto);
+			console.log("lista de cotizaciones");
+			console.log($scope.listcotizaciones);
+			console.log($scope.proveedores2);
+				
+
 			});
 			}
+
 			$scope.showTab = function(id) {
 				$scope.ids.forEach(function(i) {
 					// console.log(i);
@@ -195,9 +215,13 @@ app.controller("serviceController", [
 				}
 				 console.log(send);
 				$http.post('/servicio/save', send).then(function(response) {
-					
+					alert("Servicio Guardado");
+					console.log("objeto de la ruta")
+					console.log(send);
+					//location.reload();
 				}, function(response) {
-					alert("Something went wrong");
+					console.log(response);
+					alert("Hay un problema");
 				})
 				var lista=$scope.listcotizaciones;
 				$scope.servicio.servicio.proveedores= $scope.listcotizaciones.proveedores;
@@ -379,6 +403,7 @@ app.controller("serviceController", [
 			}
 			$scope.modalEvento = true;
 			$scope.verModal = function(modal) {
+			
 				$scope.modals = modalService.aver(modal);
 			}
 			$scope.addPresupuesto = function(gru,tipo) {
@@ -393,6 +418,7 @@ app.controller("serviceController", [
 //				var tipo = $scope.filtro.tipo;
 				gru.presupuestos.push({
 					tipo : tipo,
+					subtipo:"MO",
 					id : $routeParams.id,
 					concepto : "",
 					precioUnitario:{value:""},
@@ -405,7 +431,7 @@ app.controller("serviceController", [
 //					$scope.cotizaciones();
 				}, function(response) {
 				})
-//				$scope.cotizaciones();
+				$scope.cotizaciones();
 			}
 			$scope.filtro = {
 				tipo : "HP"
@@ -418,9 +444,9 @@ app.controller("serviceController", [
 			}
 
 			$scope.addCot = function() {
-//				var cot = $scope.newCot;
-//				var concepto = $scope.cotizando.concepto;
-				
+				var cot = $scope.newCot;
+				var concepto = $scope.cotizando.concepto;
+			
 				for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
 					var bla = $('#proveedor'+i).val();
 					$scope.listcotizaciones.proveedores[i]=bla+"";
@@ -435,13 +461,13 @@ app.controller("serviceController", [
 					
 					$scope.listcotizaciones.costos[i].costos.push(costo);
 				}
-//				$scope.newCot = {
-//					proveedor : "",
-//					precio : "",
-//					tiempo : "",
-//					concepto : concepto,
-//					selected:false
-//				};
+				$scope.newCot = {
+					proveedor : "",
+					precio : "",
+					tiempo : "",
+					concepto : concepto,
+					selected:false
+				};
 				console.log($scope.listcotizaciones);
 			}
 			$scope.newCot = {selected:false};
@@ -516,17 +542,9 @@ app.controller("serviceController", [
 				var f = new Date();
 				var fecha= new Date();
 				var pago= {fecha:fecha};
-//				$scope.servicio.servicio.cobranza.pagos.push(pago);
+				$scope.servicio.servicio.cobranza.pagos.push(pago);
 //				$scope.newDatoCobranza={monto:{value:""}};
-				$scope.conceptosFact=[];
-				$scope.totalFactura=0;
-				$scope.verModal('modalPago');
-				$scope.newCliente={
-						rfc:$scope.servicio.cliente.rfc,
-						nombre:$scope.servicio.cliente.nombre,
-						domicilio:$scope.servicio.cliente.domicilio,
-				}
-				$scope.newCliente.domicilio.pais="MX";
+//				console.log($scope.servicio.servicio);
 			}
 			
 			$scope.cotizaciones = function(pre,append,indice) {
@@ -574,6 +592,7 @@ app.controller("serviceController", [
 			}
 			
 			$scope.conceptoChg= function(pre,indice,gru){
+				console.log(gru);
 				var indiceReal=0;
 				var indiceGrupo= $scope.servicio.gruposCosto.indexOf(gru);
 				for(var i = 0; i<indiceGrupo; i++){
@@ -665,9 +684,6 @@ app.controller("serviceController", [
 					$scope.aCuenta += parseFloat(cobranza.pagos[i].monto.value);
 				} 
 				$rootScope.saldo='$'+$scope.currency($scope.servicio.servicio.metadata.costoTotal.value - $scope.aCuenta, 2, [',', "'", '.']);
-				$rootScope.adeudo=$scope.currency($scope.servicio.servicio.metadata.costoTotal.value- $scope.aCuenta,2,[]);
-				$rootScope.relojito();
-//				$rootSoc
 			},true);
 
 			$scope.utilidad1= function(pres){
@@ -833,61 +849,4 @@ app.controller("serviceController", [
 				});
 			}
 			
-			//tableConceptosF
-			
-			 $scope.toggle = function (item, list) {
-			        var idx = list.indexOf(item);
-			        var importe=item.precioCliente.value*item.cantidad*1.16;
-			        if (idx > -1) {
-			          list.splice(idx, 1);
-			          $scope.totalFactura-=importe;
-			        }
-			        else {
-			          list.push(item);
-			          $scope.totalFactura+=importe;
-			        }
-			      
-			      };
-
-		      $scope.exists = function (item, list) {
-		    	  if(list){
-		    		  return list.indexOf(item) > -1;
-		    	  }
-		    	  return false;
-		      };
-		      $scope.facturarPago=false;
-		      $scope.guardarPago=function(){
-		    	  $scope.guardar();
-		    	  if($scope.facturarPago){
-		    		  if($scope.conceptosFact.length>0){
-		    			  var send={
-		    				  conceptos:$scope.conceptosFact,
-		    				  receptor:$scope.newCliente,
-		    				  metodo:"Efectivo"
-		    			  }
-		    		  }else{
-		    			  alert("No se eligieron conceptos a facturar");
-		    		  }
-		    		  $http.post("facturar/facturar",send).then(function(response){
-		    			  var uuid=response.data[0];
-		    			  $scope.newPago.uuid=uuid;
-		    			  var pago=$scope.newPago;
-		    			  pago.monto.value=response.data[1];
-		    			  pago.detalle+="\n"+data[2];
-		    			  $scope.newCliente={};
-		    			  $scope.servicio.servicio.cobranza.pagos.push(pago);
-		    			  $scope.guardar2();
-		    		  },function(response){
-		    			  alert(":(");
-		    		  });
-		    	  }else{
-		    		  var f = new Date();
-						var fecha= new Date();
-						var pago=$scope.newPago;
-						pago.fecha=fecha;
-						$scope.servicio.servicio.cobranza.pagos.push(pago);
-						$scope.guardar2();
-						$scope.newPago={};
-		    	  }
-		      }
 		} ]);
