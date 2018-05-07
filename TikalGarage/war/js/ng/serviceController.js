@@ -202,6 +202,42 @@ app.controller("serviceController", [
 			};
 			
 			$scope.guardar = function() {
+				if(document.FormAuto.NoSerie.value.length==0){
+					alert("Tiene que escribir el N\u00FAmero de Serie del Auto");
+//					document.getElementById("NoSerie").style.border = "1px solid #f00";
+					document.FormAuto.NoSerie.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.tipo.value.length==0){
+					alert("Tiene que escribir el Tipo del Auto");
+					document.FormAuto.tipo.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.marca.value.length==0){
+					alert("Tiene que escribir la Marca del Auto");
+					document.FormAuto.marca.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.version.value.length==0){
+					alert("Tiene que escribir la Verion del Auto");
+					document.FormAuto.version.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.modelo.value.length==0){
+					alert("Tiene que escribir el Modelo del Auto");
+					document.FormAuto.modelo.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.placas.value.length==0){
+					alert("Tiene que escribir las Placas del Auto");
+					document.FormAuto.placas.focus() 
+			      	return 0; 
+				}
+				if(document.FormAuto.color.value.length==0){
+					alert("Tiene que escribir el Color del Auto");
+					document.FormAuto.color.focus() 
+			      	return 0; 
+				}
 				if($scope.listcotizaciones.proveedores){
 					for(var i = 0; i<$scope.listcotizaciones.proveedores.length;i++){
 						var bla = $('#proveedor'+i).val();

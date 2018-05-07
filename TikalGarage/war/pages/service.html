@@ -11,7 +11,9 @@
 </head>
 <div class="container-fluid">
 	<ol class="breadcrumb">
-		<button class="btn btn-large btn-primary" ng-click="guardar()" ng-disabled="(!PresupuestoForm.$valid)">
+		<button class="btn btn-large btn-primary" 
+		ng-click="guardar()" 
+		ng-disabled="(!PresupuestoForm.$valid)">
 			<i class="fa fa-floppy-o"></i>
 		</button>
 		<button class="btn btn-large btn-primary" data-toggle="modal"
@@ -19,6 +21,8 @@
 			<i class="fa fa-print"></i>
 		</button>
 	</ol>
+	<div>
+	</div>
 	<!-- 	{{eventos}}	-->
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab"
@@ -157,7 +161,7 @@
 			<div class="clearfix">
 				<h4>Datos del Auto</h4>
 			</div>
-			<form class="form-horizontal">
+			<form class="form-horizontal" name="FormAuto">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -166,7 +170,8 @@
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
 									ng-model="servicio.auto.numeroSerie"
-									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)" />
+									name="NoSerie" id="NoSerie"
+									ng-change="servicio.auto.numeroSerie=mayusculas(servicio.auto.numeroSerie)" required/>
 							</div>
 						</div>
 					</div>
@@ -175,7 +180,8 @@
 							<label class="control-label col-sm-3">Marca</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.marca" />
+								name="marca"
+									ng-model="servicio.auto.marca" required/>
 							</div>
 						</div>
 					</div>
@@ -186,7 +192,8 @@
 							<label class="control-label col-sm-3">Tipo</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.tipo" />
+								name="tipo"
+									ng-model="servicio.auto.tipo" required/>
 							</div>
 						</div>
 					</div>
@@ -195,6 +202,7 @@
 							<label class="control-label col-sm-3">Versi&oacute;n</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
+								name="version"
 									ng-model="servicio.auto.version" />
 							</div>
 						</div>
@@ -207,7 +215,8 @@
 							<label class="control-label col-sm-3">Modelo</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.modelo" />
+								name="modelo"
+									ng-model="servicio.auto.modelo" required/>
 							</div>
 						</div>
 					</div>
@@ -216,7 +225,8 @@
 							<label class="control-label col-sm-3">Color</label>
 							<div class="col-sm-6">
 								<input class="form-control" type="text"
-									ng-model="servicio.auto.color" />
+								name="color"
+									ng-model="servicio.auto.color" ng-required="true"/>
 							</div>
 						</div>
 					</div>
@@ -227,7 +237,8 @@
 							<label class="control-label col-sm-3">Placas</label>
 							<div class="col-sm-6">
 								<input class="form-control"  type="text" ng-change="servicio.auto.placas=mayusculas(servicio.auto.placas)"
-									ng-model="servicio.auto.placas"/>
+								name="placas"
+									ng-model="servicio.auto.placas" required/>
 							</div>
 						</div>
 					</div>
@@ -574,9 +585,11 @@
 							<tbody>
 								<tr ng-repeat="cot in listcotizaciones.costos">
 									<td>{{cot.concepto}}</td>
-									<td ng-repeat="costo in cot.costos">
+									<td class="ng-binding" ng-repeat="costo in cot.costos">
 										<input type="number" ng-model="costo.precio" value="{{costo.precio}}"> 
+										<div ng-if="costo.precio == 'null'">
 										<input type="checkbox" name="{{cot.concepto}}" ng-model="costo.selected" ng-click="setPrecio(costo.precio,cot.concepto,costo)">
+										</div>
 									</td>
 									<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
 								</tr>
@@ -596,8 +609,11 @@
 		<div id="cobranza" class="tab-pane fade">
 			<!-- 			{{servicio.servicio}} -->
 			<div class="row">
+			
 				<button class="btn btn-small btn-primary" ng-click="appendPago()">
+				
 					<i class="fa fa-plus"></i>
+					Agregar Pago
 				</button>
 			</div>
 			<div class="row">
@@ -607,15 +623,15 @@
 							ng-model="servicio.servicio.cobranza.facturado"
 							ng-click="facturado()">Facturado</label>
 					</div>
-					<div class="form-group">
-						<label class="control-label" for="pwd">N&uacute;mero
-							Factura</label>
-						<div>
-							<input type="text"
-								ng-model="servicio.servicio.cobranza.numeroFactura"
-								ng-enabled="servicio.servicio.cobranza.facturado">
-						</div>
-					</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label class="control-label" for="pwd">N&uacute;mero -->
+<!-- 							Factura</label> -->
+<!-- 						<div> -->
+<!-- 							<input type="text" -->
+<!-- 								ng-model="servicio.servicio.cobranza.numeroFactura" -->
+<!-- 								ng-enabled="servicio.servicio.cobranza.facturado"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 				<div class="col-md-8">
 				<table class="table">

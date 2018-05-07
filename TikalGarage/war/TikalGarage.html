@@ -31,6 +31,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-mx.js"></script>
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.4.0/ui-bootstrap.min.js"></script>
 
@@ -165,7 +166,8 @@
 							<li><a><b>Placas</b></a></li>
 							<li><a>{{actual.auto.placas}}</a></li>
 							<li><a>Inicio del Servicio</a></li>
-							<li><a>{{getFecha(actual.servicio.fechaInicio)}}</a></li>
+<!-- 							<li><a>{{getFecha(actual.servicio.fechaInicio)}}</a></li> -->
+							<li><a>{{actual.servicio.fechaInicio | date}}</a></li>
 							<li><a>Duraci&oacute;n del servicio</a></li>
 							<li id="semaforo"><a>{{dias}}D {{horas}}H {{minutos}}m
 									{{segundos}}s</a></li>
